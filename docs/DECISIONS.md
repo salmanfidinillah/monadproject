@@ -1,5 +1,12 @@
 # Keputusan dan perubahan
 
+## 24 Oktober 2026 WIB — receipt deploy terverifikasi dan alamat bersama
+
+- Pengguna memberikan record `10143.json`; hash diverifikasi ulang lewat RPC Monad Testnet. Receipt sukses, transaksi creation tanpa value, init/runtime bytecode, alamat berdasarkan deployer/nonce, blok kanonis, serta `TARGET_CHAIN_ID` dan `nextRoomId` cocok dengan artifact lokal.
+- Simpan bukti lengkap di `deployments/10143.json`. `verified:false` tetap menyatakan source explorer belum diverifikasi.
+- Guard transaksi mengambil alamat publik dari `deploymentConfig.json` yang diekspor dari record itu. Build menolak chain/alamat/hash/source revision/hash/compiler yang tidak cocok. Guard belum dipanggil gameplay; integrasi aksi masih tahap berikutnya.
+- Build, 23 tes Hardhat dan 15 tes pemulihan lulus setelah perubahan. Ini belum menguji wallet bermain, transaksi gameplay, multiplayer atau ronde publik. Warning reputasi MetaMask tetap belum jelas.
+
 ## 24 Oktober 2026 WIB — RPC rate limited, retry manual dengan nonce sama
 
 - Pengguna memilih melanjutkan warning secara manual, mendanai akun dan mencapai pra-deploy lulus. Error berikutnya berasal dari pengiriman RPC wallet, bukan aturan kontrak. Status warning domain tetap belum diselesaikan; tidak mengubah proteksi atas nama pengguna.

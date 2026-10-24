@@ -1,4 +1,5 @@
 import { JsonRpcProvider, Wallet, getAddress, isAddress, resolveAddress, type TransactionRequest } from "ethers";
+import deploymentConfig from "./contract/deploymentConfig.json";
 
 export const MONAD_CHAIN_ID = 10143n;
 export const MONAD_RPC_URL = "https://testnet-rpc.monad.xyz";
@@ -79,9 +80,11 @@ export function getPlaySigner(provider: JsonRpcProvider): Wallet {
 }
 
 export function getConfiguredGameAddress(): string {
-  const address = import.meta.env.VITE_BOM_OPER_ADDRESS?.trim();
-  if (!address || !isAddress(address)) throw new Error("Alamat kontrak belum dikonfigurasi dari bukti deployment publik.");
-  return getAddress(address);
+  if (deploymentConfig.network !== "Monad Testnet" || deploymentConfig.chainId !== Number(MONAD_CHAIN_ID)
+    || !isAddress(deploymentConfig.address) || !/^0x[\da-f]{64}$/i.test(deploymentConfig.transactionHash)) {
+    throw new Error("Konfigurasi kontrak tidak cocok dengan record deployment Monad Testnet.");
+  }
+  return getAddress(deploymentConfig.address);
 }
 
 export function updateActiveRoom(roomId: string | undefined) {

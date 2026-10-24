@@ -1,0 +1,24 @@
+{
+  "network": "Monad Testnet",
+  "chainId": 10143,
+  "address": "0x18097A160477E49d52A5A637d51D6B831144aDDd",
+  "transactionHash": "0x2ea47703572772f2f32ccb65421b921ebf728b62008fc41c0340d8deb879ed82",
+  "blockNumber": 73761560,
+  "blockHash": "0x8fafc7af64e35c1cb2d13d8d231e7dcbaf3487ba185c10c57543af8ef2ce9e85",
+  "deployer": "0x721eAD92398fD41b115c70e2B4360Cbca1FaC71F",
+  "gasUsed": "986825",
+  "runtimeCodeBytes": 4148,
+  "runtimeCodeKeccak256": "0xba4a41a82503183edb9f996ff824528592b1ccab25998400c7b9e10efeac3583",
+  "sourceRevision": "dda41e09d47ae406dc205656af0d0d71d62d7796",
+  "sourceSha256": "70c27b9a8b3e1f4f398de9582626989c38dbd1a9fc6147f86bc72b89f444ce4b",
+  "compiler": {
+    "version": "0.8.30+commit.73712a01",
+    "evmVersion": "cancun",
+    "optimizer": {
+      "enabled": true,
+      "runs": 200
+    }
+  },
+  "verified": false,
+  "nextRoomId": "1"
+}

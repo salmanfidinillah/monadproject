@@ -32,7 +32,7 @@ Satu transaksi pending per pemain, simpan hash untuk pemulihan refresh. Oper men
 1. Verifikasi informasi resmi Monad, RPC eth_chainId = 10143, dukungan compiler/EVM target, compile/test, dan biaya gas aktual.
 2. Deploy melalui antarmuka setup minimal yang memakai ethers ContractFactory dan wallet browser pengguna; pengguna menyetujui transaksi. Jangan meminta private key di chat/.env.
 3. Verifikasi receipt sukses dan code di alamat kontrak. Catat chain, address, tx hash, blok, compiler/source dan artifact/ABI yang tepat di deployments/10143.json setelah bukti tersedia.
-4. Ekspor ABI sesuai artifact ke app; masukkan chain/address sebagai konfigurasi publik build yang sama untuk semua pemain. Jangan mengandalkan localStorage satu perangkat sebagai satu-satunya konfigurasi kontrak.
+4. `scripts/export-contract-artifact.mjs` memeriksa record itu terhadap source revision/hash dan compiler saat ini, lalu membangkitkan `app/src/contract/deploymentConfig.json`. Wallet memakai alamat publik bersama dari konfigurasi tersebut; build dihentikan bila record dan artifact tidak cocok. Jangan mengandalkan localStorage satu perangkat sebagai satu-satunya konfigurasi kontrak.
 5. .env.example hanya contoh publik; VITE_ masuk bundle browser dan tidak boleh berisi rahasia. Estimasi gas berdasarkan pengukuran/RPC, bukan gasLimit besar atau biaya pasti yang dikarang.
 6. Build/deploy Cloudflare, uji perangkat lain dan link room, catat URL/receipt aktual di STATUS dan tes.
 

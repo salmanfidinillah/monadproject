@@ -2,6 +2,7 @@ import { createHash } from "node:crypto";
 import { execFileSync } from "node:child_process";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { dirname, resolve } from "node:path";
+import { keccak256 } from "ethers";
 
 const root = process.cwd();
 const artifactPath = resolve(root, "artifacts/hardhat/contracts/BomOper.sol/BomOper.json");
@@ -49,4 +50,28 @@ const output = {
 const outputPath = resolve(root, "app/src/contract/BomOper.artifact.json");
 await mkdir(dirname(outputPath), { recursive: true });
 await writeFile(outputPath, `${JSON.stringify(output, null, 2)}\n`);
+
+const deploymentPath = resolve(root, "deployments/10143.json");
+const deployment = JSON.parse(await readFile(deploymentPath, "utf8"));
+if (deployment.network !== "Monad Testnet" || deployment.chainId !== 10143
+  || !/^0x[\da-f]{40}$/i.test(deployment.address)
+  || !/^0x[\da-f]{64}$/i.test(deployment.transactionHash)
+  || deployment.sourceRevision !== sourceRevision
+  || deployment.sourceSha256 !== output.sourceSha256
+  || deployment.runtimeCodeBytes !== (artifact.deployedBytecode.length - 2) / 2
+  || deployment.runtimeCodeKeccak256 !== keccak256(artifact.deployedBytecode)
+  || deployment.compiler?.version !== output.compiler.version
+  || deployment.compiler?.evmVersion !== output.compiler.evmVersion
+  || deployment.compiler?.optimizer?.enabled !== output.compiler.optimizer.enabled
+  || deployment.compiler?.optimizer?.runs !== output.compiler.optimizer.runs) {
+  throw new Error("Record deployment publik tidak cocok dengan source/compiler BomOper saat ini. Build dihentikan.");
+}
+const deploymentConfigPath = resolve(root, "app/src/contract/deploymentConfig.json");
+await writeFile(deploymentConfigPath, `${JSON.stringify({
+  network: deployment.network,
+  chainId: deployment.chainId,
+  address: deployment.address,
+  transactionHash: deployment.transactionHash,
+}, null, 2)}\n`);
 console.log(`Exported ${requiredFunctions.length} verified ABI functions and deployment bytecode to ${outputPath}`);
+console.log(`Loaded verified public deployment ${deployment.address} from deployments/10143.json`);

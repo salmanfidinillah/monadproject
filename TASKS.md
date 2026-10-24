@@ -5,25 +5,25 @@
 - [x] Cocokkan dokumen status, berkas proyek, branch dan origin; tiga berkas lokal belum terlacak dijaga tetap di luar checkpoint.
 - [x] Verifikasi lokal ulang: build, 23 tes Hardhat, 15 tes pemulihan, dan Wrangler dry-run lulus; catatan di `TEST-RESULTS.md`.
 - [x] Periksa advisori dependency: production audit 0; full audit 16 advisori dev tooling (14 high, 2 moderate). Upgrade belum dilakukan karena kompatibilitas/fix belum ditetapkan.
-- [ ] Tetap selesaikan review warning MetaMask dan deploy kontrak secara eksplisit; belum ada hash/receipt.
-- [ ] Sesudah kontrak terverifikasi, integrasikan wallet/gameplay, lakukan QA browser/Figma dan HP, uji minimal dua pemain sampai Finished, lalu Prompt 8. Jangan masuk Prompt 9.
+- [x] Verifikasi receipt deploy yang diberikan pengguna; simpan record publik dan gunakan alamat terverifikasi sebagai konfigurasi build.
+- [ ] Status warning MetaMask masih belum jelas. Lanjutkan wallet/gameplay, QA browser/Figma dan HP, uji minimal dua pemain sampai Finished, lalu Prompt 8. Jangan masuk Prompt 9.
 
 ## Kelanjutan terbaru sampai Prompt 8 — 24 Oktober 2026 WIB
 
 - [x] Investigasi awal peringatan domain MetaMask dari screenshot pengguna; siapkan draf review di `docs/references/METAMASK-REVIEW.md`. Pemeriksaan awal tidak membuktikan false positive.
 - [ ] Peninjauan/remediasi domain masih belum selesai dan laporan belum dikirim. Pengguna kemudian memilih melanjutkan sendiri; ini bukan bukti warning sudah diperbaiki. Agen tidak mengubah proteksi wallet.
 - [x] Tangani error pengiriman rate limited: dua RPC read-only, error singkat, panduan RPC wallet, guard coba ulang manual dengan nonce/pengirim sama; 23 tes Hardhat + 15 tes pemulihan lulus, helper terbaru dideploy.
-- [ ] Pengguna menjalankan pemeriksaan pemulihan dan konfirmasi deploy manual; hash/receipt sukses tetap belum tersedia.
+- [x] Pengguna memberikan hash deploy publik; receipt/code/view kemudian diverifikasi ulang di RPC Monad Testnet.
 
 - [x] Baca panduan enam jam, cocokkan progres/Git dan Prompt 4; tahap terbukti tidak dibuat ulang. Verifikasi HP Tahap 1 tetap pending.
 - [x] Baca PDF workshop integrasi Monad; simpan ringkasan aman di `docs/references/MONAD-BLITZ.md`.
 - [x] Perbaiki pemulihan deploy saat refresh/timeout, blokir deploy ulang yang belum jelas, cocokkan receipt/init/runtime bytecode/blok/view, dan tambahkan CLI verifikasi read-only.
 - [x] Build produksi, 22 tes Hardhat, 4 tes jurnal, Wrangler dry-run, deploy helper dan HTTP/bundle publik lulus; detail di TEST-RESULTS.md.
 - [ ] Pengguna menyetujui deploy sekali melalui `/setup` atau memberikan hash yang sudah dikirim. Sudah diminta hash publik, bukan rahasia.
-- [ ] Selesaikan Prompt 4 setelah receipt/code/view nyata terbukti, lalu lanjut Prompt 5, 6, 7, 8 berurutan. Simulasi bukan bukti gerbang publik selesai.
+- [x] Gerbang publik Prompt 4 selesai dengan receipt/code/view nyata; lanjut Prompt 5, 6, 7, 8 berurutan. Simulasi bukan bukti gameplay publik selesai.
 - [ ] Berhenti setelah Prompt 8; jangan menjalankan Prompt 9/submission.
 
-Prompt Induk dan Prompt 0 selesai dengan checkpoint GitHub terverifikasi. Tahap 1 masih menunggu verifikasi HP; scaffold sudah dibuild dan URL publik merespons. Tahap 2 dan Tahap 3 selesai lokal; helper Tahap 4 sudah publik, tetapi deployment kontrak menunggu transaksi wallet pengguna. Persiapan UI Tahap 5 sekarang ada di lokal, belum diuji dengan dua wallet atau dideploy. Tahap 6 menunggu koneksi plugin Figma dan alamat kontrak terverifikasi. Centang hanya setelah kriteria tahap terbukti. Jadwal relatif; contoh waktu 12.00-18.00 bukan konfirmasi panitia. Checkpoint GitHub 1-2 menit termasuk dalam slot yang sama.
+Prompt Induk dan Prompt 0 selesai dengan checkpoint GitHub terverifikasi. Tahap 1 masih menunggu verifikasi HP; scaffold sudah dibuild dan URL publik merespons. Tahap 2 dan Tahap 3 selesai lokal. Kontrak Tahap 4 sudah terbit dan receipt/code/view terverifikasi; konfigurasi alamat bersumber dari record tersebut. Wallet Tahap 5 dan gameplay nyata belum diuji. Tahap 6 masih menunggu implementasi/QA; plugin Figma tidak tersedia di sesi ini. Centang hanya setelah kriterianya terbukti. Jadwal relatif; contoh waktu 12.00-18.00 bukan konfirmasi panitia.
 
 | Tahap | Slot | Syarat lulus |
 |---|---|---|
@@ -43,8 +43,8 @@ Prompt Induk dan Prompt 0 selesai dengan checkpoint GitHub terverifikasi. Tahap 
 - [ ] 1: app scaffold, lockfile, .gitignore, .env.example, SPA hosting dan URL publik sudah tersedia; verifikasi buka dari HP masih pending.
 - [x] 2: `BomOper.sol`, state machine/event/snapshot, expectedTurn, panas, deadline, compiler/EVM target dan guard chain 10143; compile, ABI, serta tes chain guard lulus. Full rule tests ada di Tahap 3.
 - [x] 3: tes aturan dan batas lulus di simulasi chain ID 10143 dengan pengaturan timestamp jaringan; gas enam aksi dicatat di TEST-RESULTS.md. Bukan sleep dunia nyata.
-- [ ] 4: helper `/setup` publik dan pra-pemeriksaan siap; menunggu pengguna menyetujui deploy 10143, lalu verifikasi receipt/code/view dan simpan record.
-- [ ] 5: UI persetujuan EOA/sessionStorage 10 menit, saldo/funding ekstensi, budget gas dan guard aksi tersedia lokal di `/wallet`; belum ada deployment kontrak, receipt game, atau uji dua alamat. Fallback belum diaktifkan.
+- [x] 4: deployment testnet dibuktikan receipt/code/view; record tersimpan di `deployments/10143.json`, konfigurasi build hanya menerima record yang cocok source/compiler.
+- [ ] 5: UI EOA/sessionStorage 10 menit, saldo/funding ekstensi, budget gas dan guard aksi tersedia lokal di `/wallet`; belum diuji dengan dua alamat atau receipt game. Fallback belum diaktifkan.
 - [ ] 6: Pratinjau interaktif `/prototype` sudah dideploy; CTA, invite, panduan status, dan logo vektor minimal sudah diterapkan di landing/setup/demo. Room/oper/hasil tetap simulasi; gameplay kontrak, polling, settle, design context langsung lewat plugin, dan ronde publik belum ada. Tahap 6 belum lulus.
 - [ ] 7: dua sampai empat konteks nyata, kasus gagal, hasil sama, perbaikan terbukti.
 - [ ] 8: build/deploy final, cek HP/room link, ronde final, dokumentasi/video.

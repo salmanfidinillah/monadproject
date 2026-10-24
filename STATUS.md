@@ -1,5 +1,16 @@
 # Status aktual BOM OPER
 
+## Deployment kontrak terverifikasi — 24 Oktober 2026
+
+Pengguna memberikan `10143.json` di folder Downloads. Hash transaksi diverifikasi ulang secara read-only dengan `npm run deployment:verify -- 0x2ea47703572772f2f32ccb65421b921ebf728b62008fc41c0340d8deb879ed82`.
+
+- Chain 10143; alamat `0x18097A160477E49d52A5A637d51D6B831144aDDd`; blok `73761560`.
+- Receipt sukses, transaksi deploy tanpa value, init bytecode cocok, alamat cocok dengan pengirim/nonce, runtime bytecode cocok, hash blok kanonis cocok, serta `TARGET_CHAIN_ID=10143` dan `nextRoomId=1` terbaca pada blok receipt.
+- Record tersimpan di `deployments/10143.json`; source explorer belum diverifikasi. `verified:false` pada record menunjukkan source explorer belum diverifikasi, bukan receipt gagal.
+- Build exporter membuat `app/src/contract/deploymentConfig.json` dari record dan menggagalkan build bila source revision/hash/compiler tidak cocok. Guard transaksi pemain sudah membaca alamat dari konfigurasi itu, tetapi belum ada alur gameplay yang memanggil guard tersebut.
+- Build, 23 tes Hardhat, dan 15 tes pemulihan lulus setelah perubahan konfigurasi. Wallet browser, aksi game, dua pemain, dan ronde publik belum diuji.
+- MetaMask pernah menandai domain berbahaya; keberhasilan deploy tidak membuktikan warning sudah dihapus atau ditinjau resmi.
+
 ## Pemeriksaan repo terbaru — 24 Oktober 2026
 
 Working tree awal: perubahan belum terlacak `.agents/`, `BOM-OPER-Panduan-6-Jam.md`, dan `skills-lock.json` dipertahankan tanpa diubah. `main` semula sama dengan `origin/main` pada `3a12d7a46e21268b21e75eb6b770d325342a760e`.
@@ -10,7 +21,9 @@ Working tree awal: perubahan belum terlacak `.agents/`, `BOM-OPER-Panduan-6-Jam.
 - Kekurangan penghalang MVP tetap: peringatan reputasi MetaMask belum ditinjau resmi; deployment kontrak menunggu tindakan/hash pengguna; `/wallet` dan gameplay kontrak belum terintegrasi/diuji; tidak ada uji dua pemain, HP, atau ronde Finished publik. `/prototype` tetap simulasi.
 - Lanjut paling aman: pengguna menuntaskan peninjauan warning sesuai `docs/references/METAMASK-REVIEW.md`; sesudah aman, periksa receipt/hash yang sama atau ulangi hanya melalui langkah terkonfirmasi di `docs/DEPLOY-RECOVERY.md`. Setelah alamat/receipt diverifikasi, lanjutkan Prompt 5–8 secara berurutan. Prompt 9 tetap di luar lingkup.
 
-## Hambatan berjalan — pengiriman deploy dibatasi RPC
+## Riwayat insiden — pengiriman deploy dibatasi RPC
+
+Catatan ini merekam keadaan sebelum hash deployment kemudian diberikan dan diverifikasi pada bagian paling atas berkas.
 
 Pengguna secara eksplisit memilih melanjutkan koneksi wallet sendiri meskipun warning domain belum terjelaskan; tidak ada bukti klasifikasi sudah diperbaiki. Screenshot berikutnya menunjukkan pra-deploy lulus, chain 10143 dan saldo 5 MON. Setelah menekan deploy, pengguna memberi error RPC rate limited dan melaporkan Aktivitas MetaMask **Gagal**.
 
@@ -20,13 +33,13 @@ Pengguna secara eksplisit memilih melanjutkan koneksi wallet sendiri meskipun wa
 - Probe fungsi pemulihan read-only pada akun pengguna menghasilkan kesiapan nonce 0 dengan input konfirmasi kegagalan sebagai fixture. Probe tidak memakai wallet, mengirim transaksi atau mengubah storage browser pengguna. Interaksi checkbox/signature/retry pengguna belum diuji end-to-end.
 - Langkah berikutnya: pengguna mengganti RPC wallet bila perlu, refresh helper, periksa akun lewat jalur pemulihan, lalu meninjau/menyetujui percobaan manual. Detail: `docs/DEPLOY-RECOVERY.md`. Prompt 4 belum lulus; target tetap sampai Prompt 8.
 
-## Hambatan terbaru — peringatan domain MetaMask
+## Peringatan domain MetaMask — status review belum diketahui
 
-24 Oktober 2026 WIB: screenshot pengguna saat menghubungkan wallet ke `bom-oper.salmansegaf52.workers.dev` memperlihatkan **Berbahaya—ditandai sebagai tidak aman**. Pengguna diarahkan memilih **Kembali ke keamanan** dan menghentikan koneksi/deploy. Penyebab belum diketahui; belum dinyatakan false positive. Belum ada hash/receipt deployment kontrak.
+24 Oktober 2026 WIB: screenshot awal saat menghubungkan wallet ke `bom-oper.salmansegaf52.workers.dev` memperlihatkan **Berbahaya—ditandai sebagai tidak aman**. Pengguna diarahkan memilih **Kembali ke keamanan**. Penyebab belum diketahui; belum dinyatakan false positive. Deployment kemudian berhasil dan receipt-nya terverifikasi; status warning tetap belum diketahui.
 
-Pemeriksaan read-only: domain dan parent tidak cocok persis dengan entri config publik MetaMask yang diunduh; 12 aset publik identik dengan build lokal setelah mengikuti redirect kanonis. Ini bukan audit keamanan lengkap atau bukti klasifikasi salah. Tidak mengubah source/hosting atau menonaktifkan proteksi. Draf dan langkah support resmi disiapkan di `docs/references/METAMASK-REVIEW.md`; belum dikirim. Prompt 4 tetap terbuka. Langkah berikutnya: peninjauan klasifikasi/remediasi domain, baru koneksi/pra-deploy; batas pekerjaan tetap Prompt 8.
+Pemeriksaan read-only: domain dan parent tidak cocok persis dengan entri config publik MetaMask yang diunduh; 12 aset publik identik dengan build lokal setelah mengikuti redirect kanonis. Ini bukan audit keamanan lengkap atau bukti klasifikasi salah. Tidak mengubah source/hosting atau menonaktifkan proteksi. Draf dan langkah support resmi disiapkan di `docs/references/METAMASK-REVIEW.md`; belum dikirim. Peninjauan warning masih tugas terpisah dari deployment.
 
-## Kelanjutan Prompt 4 — 24 Oktober 2026 WIB
+## Snapshot kelanjutan Prompt 4 sebelum hash diterima — 24 Oktober 2026 WIB
 
 Arahan terbaru: lanjutkan panduan secara berurutan sampai Prompt 8 lalu berhenti; Prompt 9 tidak diotorisasi. Titik lanjut tetap Prompt 4 yang belum memiliki kontrak publik. Tidak membuat ulang tahap yang sudah terbukti. Sumber yang dibaca: AGENTS/SPEC/TASKS/STATUS, panduan pengguna dan BUILD-GUIDE, ARCHITECTURE, DECISIONS, TEST-RESULTS, desain README/MOTION, serta PDF workshop bagian integrasi. Ringkasan aman: `docs/references/MONAD-BLITZ.md`.
 
@@ -40,13 +53,13 @@ Arahan terbaru: lanjutkan panduan secara berurutan sampai Prompt 8 lalu berhenti
 
 ## Keadaan aktual
 
-**TAHAP 3 SELESAI; TAHAP 4 MASIH MENUNGGU DEPLOY KONTRAK. PERSIAPAN UI TAHAP 5 DAN PRATINJAU VISUAL TAHAP 6 TERSEDIA, TANPA GAMEPLAY ON-CHAIN.** URL `/setup` dan `/prototype` tersedia di Worker BOM OPER, tetapi belum ada bukti receipt/alamat deploy kontrak. Route `/wallet` belum diuji dengan dua pemain; transaksi game belum dapat diuji tanpa kontrak publik.
+**TAHAP 3 SELESAI; GERBANG DEPLOY TAHAP 4 SELESAI. TAHAP 5–8 MASIH BERJALAN.** Receipt kontrak publik terverifikasi. URL `/setup` dan `/prototype` ada, tetapi `/prototype` masih simulasi. Route `/wallet` belum diuji dengan dua pemain dan belum ada transaksi gameplay.
 
 | Hal | Status/nilai aktual |
 |---|---|
-| Tahap terakhir selesai penuh | Tahap 3 lokal: seluruh tes aturan dan gas simulasi lulus |
+| Tahap terakhir selesai | Gerbang Tahap 4: receipt/code/view kontrak terverifikasi; Tahap 5–8 belum lulus |
 | Status tahap berjalan | Pratinjau `/prototype` dipublikasikan untuk review visual; semua room, timer, oper, dan hasil adalah contoh lokal. Tahap 5 belum diuji dengan dua pemain; Tahap 6 belum lulus |
-| Tahap berikutnya | Deploy kontrak lewat `/setup` dengan persetujuan wallet, kirim alamat/hash atau `deployments/10143.json`; lalu ganti simulasi dengan snapshot/aksi kontrak dan uji dua pemain. Plugin Figma/design context masih menunggu koneksi |
+| Tahap berikutnya | Prompt 5: lanjutkan integrasi wallet pemain dan aksi menggunakan alamat terverifikasi; lalu Prompt 6–8. Plugin Figma/design context belum tersedia di sesi ini |
 | Repository GitHub tujuan | https://github.com/salmanfidinillah/monadproject |
 | Branch pembangunan | main; Git lokal diinisialisasi dan branch diperiksa |
 | Akun GitHub terhubung | salmanfidinillah; profil berhasil dibaca melalui plugin GitHub |
@@ -56,14 +69,14 @@ Arahan terbaru: lanjutkan panduan secara berurutan sampai Prompt 8 lalu berhenti
 | Checkpoint desain terverifikasi | f826af720c7ca88232bdd859d09df05a525e3076; commit desain sudah di-push. SHA commit catatan sesudahnya dilaporkan di chat |
 | Kode frontend/kontrak | Landing dan helper deploy `/setup` tersedia publik; wallet bermain/funding `/wallet` baru lokal; gameplay create/join/pass belum diaktifkan |
 | Desain Figma URL dan frame | https://www.figma.com/design/T8zhiDboW04KOC9sDJrlz6/BOM-OPER?node-id=11-60; detail node/frame di docs/design/README.md |
-| Build / tes lokal | Root `npm run build` LULUS: export artifact ABI/bytecode dan Vite build; `npm run contracts:test` LULUS 16 tes Tahap 3 |
+| Build / tes lokal | Build terbaru LULUS; 23 tes Hardhat dan 15 tes pemulihan LULUS (simulasi/lokal). Detail di `TEST-RESULTS.md` |
 | URL publik landing | https://bom-oper.salmansegaf52.workers.dev; Worker `bom-oper`, versi `0b0c8d8a-350d-442f-a44f-1246795488a5` |
 | Helper deploy publik | https://bom-oper.salmansegaf52.workers.dev/setup; Worker `bom-oper`, versi `6476e73c-b6d5-4e3a-8209-1d2cffa56b62`; pemulihan hash dan coba ulang manual dengan nonce sama, HTTP 200/bundle cocok |
 | Pratinjau visual publik | https://bom-oper.salmansegaf52.workers.dev/prototype; Worker `bom-oper`, versi `b5c621c4-f2a7-4d53-a148-32a636988d69`; `/prototype` merespons HTTP 200; simulasi saja |
 | Chain target | RPC Monad Testnet `eth_chainId` = 10143; simulasi lokal 10143; constructor menolak deployment pada ID lain |
 | Compiler/EVM target | solc 0.8.30; Cancun; optimizer 200 runs; dikompilasi lokal |
-| Alamat kontrak aktual | BELUM ADA; helper menunggu wallet pengguna mengirim dan menyetujui deploy |
-| Tx deploy / blok / receipt | BELUM ADA |
+| Alamat kontrak aktual | `0x18097A160477E49d52A5A637d51D6B831144aDDd` (Monad Testnet 10143) |
+| Tx deploy / blok / receipt | `0x2ea47703572772f2f32ccb65421b921ebf728b62008fc41c0340d8deb879ed82` / `73761560` / status 1; bytecode/view cocok via RPC |
 | ABI/artifact yang dipakai | Hardhat: `artifacts/hardhat/contracts/BomOper.sol/BomOper.json`; app: `app/src/contract/BomOper.artifact.json`; bytecode 4,227 byte, 32 item ABI |
 | Receipt oper / finalisasi | BELUM ADA |
 | Uji perangkat / jumlah pemain | BELUM DIUJI |

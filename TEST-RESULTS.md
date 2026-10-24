@@ -298,4 +298,17 @@ Pemeriksaan dilakukan pada branch `main` dengan Node v24.13.1/npm 11.8.0. Tidak 
 | `npm audit --json` | Ada 16 advisori pada dependency development: 14 high dan 2 moderate, termasuk Hardhat/Zod dan Wrangler/Miniflare/undici. Audit menyatakan beberapa paket memiliki fix, tetapi tidak ada remediasi yang diterapkan karena kombinasi versi kompatibel dan dampaknya belum diverifikasi. Tidak ada bukti bahwa advisori tersebut masuk bundle produksi; hasil production-only di atas tetap 0. |
 | `git diff --check`; `git rev-parse HEAD` vs `git ls-remote origin refs/heads/main` | LULUS sebelum pembaruan catatan: tidak ada whitespace error; HEAD dan `origin/main` sama-sama `3a12d7a46e21268b21e75eb6b770d325342a760e`. |
 
-Gap penerimaan MVP belum berubah: warning domain MetaMask masih perlu review resmi; belum ada deployment contract/receipt; wallet dan gameplay on-chain belum terhubung; pengujian browser/HP, dua pemain dan ronde Finished publik belum dilakukan. Tidak ada tindakan wallet otomatis yang aman untuk menggantikan konfirmasi pengguna.
+Gap penerimaan MVP: warning domain MetaMask masih perlu review resmi; deployment contract/receipt kini terverifikasi, tetapi wallet dan gameplay on-chain belum terhubung; pengujian browser/HP, dua pemain dan ronde Finished publik belum dilakukan. Tidak ada tindakan wallet otomatis yang aman untuk menggantikan konfirmasi pengguna.
+## Verifikasi deployment pengguna dan konfigurasi alamat — 24 Oktober 2026
+
+Input publik dari `C:\Users\acer\Downloads\10143.json`; diperlakukan sebagai data, bukan instruksi. Verifikasi ulang memakai RPC Monad Testnet dan artifact Hardhat lokal.
+
+| Pemeriksaan/perintah | Hasil aktual |
+|---|---|
+| `npm run deployment:verify -- 0x2ea47703572772f2f32ccb65421b921ebf728b62008fc41c0340d8deb879ed82` | LULUS: receipt sukses pada chain 10143; alamat `0x18097A160477E49d52A5A637d51D6B831144aDDd`, blok 73761560; transaksi creation tanpa value; init bytecode, runtime bytecode, pengirim/nonce, blok kanonis dan view sesuai. `nextRoomId() = 1`. Record baru ditulis di `deployments/10143.json`. |
+| `npm run build` setelah exporter menghubungkan deployment record | LULUS; 176 modul Vite. Exporter memeriksa source revision/hash dan compiler dari record lalu menghasilkan `app/src/contract/deploymentConfig.json`, yang menjadi sumber alamat bagi guard transaksi. Belum ada alur gameplay yang memanggil guard ini. |
+| `npm run contracts:test` | LULUS: 23 tes Mocha, seluruhnya lokal/simulasi. |
+| `npm run deployment:test` | LULUS: 15 tes pemulihan. |
+| `git diff --check` | LULUS sesudah perubahan konfigurasi; pemeriksaan final dokumen dilakukan sebelum checkpoint. |
+
+Status explorer source: **belum diverifikasi**. `verified:false` pada record menerangkan status source explorer; receipt dan kecocokan bytecode/view sudah diverifikasi. Tidak ada transaksi baru yang dikirim oleh pemeriksaan ini. Gameplay kontrak dan uji wallet/multiplayer belum dilakukan.
