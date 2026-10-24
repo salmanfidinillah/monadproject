@@ -8,7 +8,7 @@ Sumber pengguna: `blitz-slides-redesign.pdf`, 79 halaman, dibaca pada 24 Oktober
 - Halaman 76: Monad Testnet, chain 10143, MON, faucet `https://faucet.monad.xyz`. RPC dan explorer dicocokkan lagi dengan dokumentasi resmi, bukan hanya slide.
 - Halaman 77 memakai explorer contoh lama. Proyek mempertahankan MonadVision Testnet yang masih tercantum pada dokumentasi resmi: `https://testnet.monadvision.com`.
 - Halaman 10–12: repo publik, README yang akurat, app publik yang bekerja, kontrak Monad yang diterbitkan dalam waktu acara, dan alamat kontrak di README menjadi bukti penting. Belum boleh diklaim terpenuhi semuanya.
-- Halaman 11 mencantumkan demo tiga menit dan batas submit 16.45; panduan proyek sebelumnya memakai jadwal contoh enam jam dan pitch dua menit. Perbedaan ini perlu diperiksa dengan panitia saat Prompt 9, yang berada di luar pekerjaan pengguna saat ini. Tidak melakukan submission atau publikasi sosial.
+- Halaman 11 mencantumkan demo tiga menit dan batas submit 16.45; panduan proyek sebelumnya memakai jadwal contoh enam jam dan pitch dua menit. Pengguna meminta menjalankan Prompt 9 pada 24 Oktober 2026; tautan form resmi tetap belum tersedia, dan draft disiapkan tanpa mengklaim ada submission. Waktu/persyaratan perlu dicocokkan dengan form atau panitia.
 - Instalasi skill tambahan, mainnet, token, mint, pembayaran, dan fitur contoh pada slide tidak dijalankan otomatis. Lingkup tetap SPEC.md, ethers v6, Hardhat, dan Monad Testnet.
 
 ## Dokumentasi resmi yang benar-benar diperiksa

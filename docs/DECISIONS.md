@@ -1,5 +1,12 @@
 # Keputusan dan perubahan
 
+## 24 Oktober 2026 WIB — mulai Prompt 9 atas permintaan terbaru
+
+- Pengguna meminta melanjutkan sampai MVP/submission; arahan sebelumnya berhenti di Prompt 8 kini digantikan.
+- Menyiapkan naskah pitch dan form draft tanpa mengarang nama tim, kontak, hash game, video, screenshot, atau tanda penerimaan. Simpan di `docs/SUBMISSION-DRAFT.md`.
+- Belum mengirim form: tautan form panitia belum ada di repo dan panduan meminta pengguna memberi link yang benar. Submission juga belum didukung receipt ronde dua wallet.
+- Aksi transaksi testnet dan konfirmasi wallet dilakukan pengguna. Setelah bukti gameplay tersedia dan link form dipastikan, cocokkan persyaratan, minta pengguna meninjau isian akhir, lalu catat status penerimaan sesuai bukti.
+
 ## 24 Oktober 2026 WIB — gameplay live Prompt 5–6
 
 - Pilihan: pakai ABI/address yang dihasilkan dan diverifikasi terhadap record deployment chain 10143; seluruh room state dibaca dari `getRoomSnapshot`/timestamp pada satu blok dan polling 2 detik. Create/join/start/pass/settle masuk melalui helper wallet yang menjaga hash/nonce pending sebelum broadcast dan menunggu receipt.

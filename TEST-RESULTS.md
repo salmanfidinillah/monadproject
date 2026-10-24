@@ -1,5 +1,9 @@
 # Hasil pengujian
 
+## Prompt 9 — persiapan, belum submission — 24 Oktober 2026 WIB
+
+Draft pitch dan daftar isian ada di `docs/SUBMISSION-DRAFT.md`. Tidak ada formulir dibuka/dikirim dan belum ada bukti penerimaan. Belum ada video/screenshot ronde live; jangan gunakan simulasi `/prototype` sebagai pengganti bukti gameplay.
+
 ## Route gameplay on-chain lokal — 24 Oktober 2026 WIB
 
 | Pemeriksaan aktual | Hasil |

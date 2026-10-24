@@ -29,6 +29,7 @@ Saat latihan boleh mulai sekarang. Saat lomba ikuti ketentuan panitia tentang wa
 | [Desain](docs/design/README.md) | Brief dan catatan Figma |
 | [Keputusan](docs/DECISIONS.md) | Alasan pilihan/fallback |
 | [Panduan lengkap](docs/BUILD-GUIDE.md) | Semua prompt pembangunan dan pemulihan |
+| [Draft submission](docs/SUBMISSION-DRAFT.md) | Naskah pitch dan checklist; belum dikirim, bukti gameplay masih diperlukan |
 
 ## Jika pindah chat atau komputer
 

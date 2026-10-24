@@ -2,13 +2,15 @@
 
 ## Kondisi terbaru — 24 Oktober 2026 WIB
 
+Pengguna kini meminta kelanjutan sampai submission. Draft pitch Indonesia/Inggris dan checklist isian dibuat di `docs/SUBMISSION-DRAFT.md`. Belum ada ronde dengan dua wallet, receipt game, video/screenshot gameplay, form panitia, atau bukti penerimaan; proyek belum disubmit dan belum bisa disebut MVP teruji. Permintaan terbaru menggantikan catatan lama yang berhenti di Prompt 8.
+
 Prompt 5 dan implementasi layar Prompt 6 kini tersedia lokal di `/play`. Kontrak publik 10143 terverifikasi di `0x18097A160477E49d52A5A637d51D6B831144aDDd`; transaksi game belum pernah dikirim. Route membaca snapshot pada blok yang konsisten, dan UI hanya mengubah holder/hasil resmi setelah receipt dan baca ulang. Wallet sementara tetap per-session/tab, 10 menit, dan tidak boleh diganti selama room aktif/pending.
 
 Pemeriksaan lokal terbaru: `npm run build` lulus; `npm run contracts:test` 23 passing; `npm run deployment:test` 15 passing; Wrangler dry-run lulus; `npm run deployment:verify -- 0x2ea47703572772f2f32ccb65421b921ebf728b62008fc41c0340d8deb879ed82` memverifikasi ulang deployment publik. Tidak ada transaksi gameplay/receipt operan atau finalisasi.
 
 Prompt 8: frontend berhasil dideploy ke Worker `bom-oper`, version `dc4678cf-4b64-4904-bd43-aa6bb4540acf`. HTTP GET `/`, `/play`, `/play?room=1`, dan bundle `LiveGame-CdtcwdXg.js` memberi status 200. Ini membuktikan aset terpublikasi/SPA fallback, bukan ronde game.
 
-Masih terbuka: dua konteks/wallet berbeda sampai Finished; receipt operan dan finalisasi; kasus error Prompt 7; QA perangkat HP; bukti demo. Pemain perlu mengisi wallet bermain testnet dan melakukan aksi yang meminta konfirmasi wallet sendiri. Prompt 9 tidak dijalankan.
+Masih terbuka: dua konteks/wallet berbeda sampai Finished; receipt operan dan finalisasi; kasus error Prompt 7; QA perangkat HP; bukti demo; tautan form resmi dan data tim yang diminta. Pemain perlu mengisi wallet bermain testnet dan melakukan aksi yang meminta konfirmasi wallet sendiri. Submission belum dilakukan.
 
 ## Kelanjutan terbaru — 24 Oktober 2026 WIB
 

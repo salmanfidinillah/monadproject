@@ -2,13 +2,15 @@
 
 ## Kelanjutan terbaru sampai Prompt 8 — 24 Oktober 2026 WIB
 
+Instruksi pengguna terbaru sekarang mengotorisasi Prompt 9. Catatan historis yang meminta berhenti di Prompt 8 telah digantikan; submission masih menunggu bukti ronde live dan tautan form resmi.
+
 - [x] Prompt 5 implementasi lokal: sesi EOA 10 menit, biaya/gas diperiksa saat aksi, transaksi ditandatangani lokal dan hash disimpan sebelum broadcast, receipt/pemulihan, room aktif mengikat identitas.
 - [x] Prompt 6 implementasi lokal: route `/play` membuka Opening/Lobby/Arena/Hasil dari snapshot Monad, create/join/start/pass/finalisasi, tautan room, poll dan refresh, error yang dapat dipahami, gerak oper setelah receipt/snapshot, reduced motion.
 - [x] Build, 23 tes Hardhat, 15 tes recovery, Wrangler dry-run, dan verifikasi ulang kontrak publik lulus. Bukti rinci di `TEST-RESULTS.md`.
 - [ ] Prompt 5–7 belum lulus acceptance: belum ada dua wallet berbeda yang memainkan ronde sampai `Finished`; kasus gagal dan receipt oper/settle belum diuji publik.
 - [x] Prompt 8 build/deploy frontend ke Worker yang sama; versi `dc4678cf-4b64-4904-bd43-aa6bb4540acf`. URL `/`, `/play`, `/play?room=1`, dan bundle gameplay merespons HTTP 200.
 - [ ] Prompt 8 ronde final dua pemain, operan dan finalisasi masih belum terbukti. Jangan menyatakan MVP selesai sebelum receipt nyata.
-- [ ] Fallback 60 detik, pemeriksaan browser HP terpisah, dan bukti video belum dilakukan. Jangan jalankan Prompt 9.
+- [ ] Fallback 60 detik, pemeriksaan browser HP terpisah, dan bukti video belum dilakukan. Prompt 9 hanya disiapkan sampai bukti dan tujuan resmi tersedia.
 
 ## Kelanjutan hardening wallet dan inspeksi Figma — 24 Oktober 2026 WIB
 
@@ -38,7 +40,7 @@
 - [x] Build produksi, 22 tes Hardhat, 4 tes jurnal, Wrangler dry-run, deploy helper dan HTTP/bundle publik lulus; detail di TEST-RESULTS.md.
 - [ ] Pengguna menyetujui deploy sekali melalui `/setup` atau memberikan hash yang sudah dikirim. Sudah diminta hash publik, bukan rahasia.
 - [x] Gerbang publik Prompt 4 selesai dengan receipt/code/view nyata; lanjut Prompt 5, 6, 7, 8 berurutan. Simulasi bukan bukti gameplay publik selesai.
-- [ ] Berhenti setelah Prompt 8; jangan menjalankan Prompt 9/submission.
+- [x] Catatan lama berhenti setelah Prompt 8 berlaku saat itu; digantikan oleh permintaan terbaru untuk lanjut sampai submission.
 
 Prompt Induk dan Prompt 0 selesai dengan checkpoint GitHub terverifikasi. Tahap 1 masih menunggu verifikasi HP; scaffold sudah dibuild dan URL publik merespons. Tahap 2 dan Tahap 3 selesai lokal. Kontrak Tahap 4 sudah terbit dan receipt/code/view terverifikasi; konfigurasi alamat bersumber dari record tersebut. Wallet Tahap 5 dan gameplay nyata belum diuji. Tahap 6 masih menunggu implementasi/QA; plugin Figma tidak tersedia di sesi ini. Centang hanya setelah kriterianya terbukti. Jadwal relatif; contoh waktu 12.00-18.00 bukan konfirmasi panitia.
 
