@@ -1,82 +1,100 @@
 # BOM OPER
 
-Game oper bom satu ronde untuk 2–4 pemain, dengan aturan di kontrak Monad Testnet. Repository: [salmanfidinillah/monadproject](https://github.com/salmanfidinillah/monadproject).
+### Oper bom bareng teman. Giliran, timer, dan hasil ronde dicatat di Monad Testnet.
 
-**Status 24 Oktober 2026 WIB:** kontrak BomOper sudah dideploy di Monad Testnet dan receipt, bytecode, serta pembacaan view-nya diverifikasi. Alamat `0x18097A160477E49d52A5A637d51D6B831144aDDd`. Gameplay live berada di [URL publik](https://bom-oper.salmansegaf52.workers.dev/play); room, giliran, timer chain, dan hasil dibaca dari kontrak. Aplikasi tidak menyediakan mode simulasi. Ronde dua pemain dengan receipt operan dan finalisasi masih perlu dibuktikan sebelum MVP disebut teruji. Lihat [STATUS.md](STATUS.md), [record deployment](deployments/10143.json), dan [hasil pemeriksaan](TEST-RESULTS.md).
+<p align="center">
+  <a href="https://bom-oper.salmansegaf52.workers.dev/play"><img alt="Mainkan BOM OPER" src="https://img.shields.io/badge/MAIN-BOM%20OPER-ff9f35?style=for-the-badge"></a>
+  <a href="https://docs.monad.xyz/"><img alt="Monad Testnet, chain 10143" src="https://img.shields.io/badge/MONAD-TESTNET%2010143-7865f2?style=for-the-badge"></a>
+  <a href="https://www.figma.com/design/T8zhiDboW04KOC9sDJrlz6/BOM-OPER?node-id=11-60"><img alt="Desain Figma" src="https://img.shields.io/badge/DESAIN-FIGMA-f24e1e?style=for-the-badge"></a>
+</p>
 
-Konfirmasi deploy memakai wallet pengguna. Helper menyimpan metadata publik transaksi untuk pemeriksaan setelah refresh, memblokir deploy ulang yang belum jelas, dan mencocokkan init/runtime bytecode dengan artifact lokal. [Ringkasan PDF workshop dan langkah deploy](docs/references/MONAD-BLITZ.md) menjelaskan langkah berikutnya; tidak memerlukan private key di chat atau berkas.
+<p align="center">
+  <a href="https://github.com/salmanfidinillah/monadproject">Repo GitHub</a> ·
+  <a href="https://github.com/salmanfidinillah">Profil GitHub</a> ·
+  <a href="https://www.linkedin.com/in/salman-fidinillah">LinkedIn</a> ·
+  <a href="https://www.figma.com/design/T8zhiDboW04KOC9sDJrlz6/BOM-OPER?node-id=11-60">Figma</a> ·
+  <a href="https://bom-oper.salmansegaf52.workers.dev/play">Game live</a>
+</p>
 
-## Cara memakai
+<p align="center">
+  <img src="docs/design/preview/BOM-OPER-Arcade-Opening.png" alt="Konsep visual arcade BOM OPER dari desain Figma; gambar ini bukan tangkapan ronde live" width="760">
+</p>
 
-1. Ekstrak seluruh ZIP. Buka folder yang langsung berisi AGENTS.md memakai File → Open Folder di VS Code.
-2. Untuk proyek yang sudah berjalan, gabungkan berkas yang relevan; jangan menimpa AGENTS.md, spesifikasi, atau progres yang sudah ada. Sesuaikan petunjuk jika ada aturan proyek lain.
-3. Mulai sesi Codex dari akar folder ini setelah dokumen tersedia. Jika sesi sudah terbuka, minta baca ulang atau mulai sesi baru. AGENTS.md dikenali sebagai arahan; dokumen lainnya tidak otomatis dibaca seluruhnya. [Sumber resmi OpenAI](https://learn.chatgpt.com/docs/agent-configuration/agents-md).
-4. Buka [panduan enam jam](docs/BUILD-GUIDE.md). Acuan Figma terbaru adalah [BOM OPER Arcade](https://www.figma.com/design/T8zhiDboW04KOC9sDJrlz6/BOM-OPER?node-id=11-60). Lihat [acuan desain dan preview](docs/design/README.md), lalu ikuti tahap berikutnya sesuai STATUS.md.
-5. Repository proyek ini sudah ditetapkan ke salmanfidinillah/monadproject. Gunakan origin dan branch main yang sama untuk tahap berikutnya. Setiap prompt yang mengubah proyek harus menghasilkan commit/push bermakna dan bukti verifikasi remote.
+> **Status:** aplikasi sudah dipublikasikan dan alur `/play` menggunakan kontrak Monad Testnet. Ronde dua pemain dengan receipt operan dan finalisasi belum dibuktikan, jadi MVP belum dinyatakan lulus uji multiplayer.
 
-Saat latihan boleh mulai sekarang. Saat lomba ikuti ketentuan panitia tentang waktu pembangunan dan penggunaan dokumen/template; paket ini bukan bukti bahwa proyek sudah memenuhi aturan acara.
+## Tentang game
 
-## Peta dokumen
+BOM OPER adalah party game satu ronde untuk 2–4 pemain. Pemegang bom mengoper ke pemain lain sebelum waktu habis. Oper panas memangkas 3 detik dan tiap pemain dapat memakainya sekali. Saat deadline tercapai, siapa pun dapat meminta kontrak menyelesaikan ronde; pemegang terakhir kalah.
 
-| Berkas | Isi |
+Room, giliran, deadline, dan hasil resminya mengikuti kontrak. Tidak ada taruhan atau hadiah uang. Semua pemain perlu wallet bermain dan MON Testnet untuk membayar gas.
+
+## Mulai bermain
+
+1. Buka [BOM OPER](https://bom-oper.salmansegaf52.workers.dev/play) di perangkat atau profil browser masing-masing.
+2. Buka `/wallet`, baca persetujuan, lalu buat wallet bermain sementara. Setiap pemain harus memakai alamat berbeda.
+3. Danai wallet bermain dengan MON Testnet untuk gas menggunakan wallet ekstensi atau transfer manual.
+4. Pemain pertama buat room 2, 3, atau 4 orang dengan durasi 30 atau 60 detik, lalu bagikan tautannya.
+5. Pemain lain buka tautan dan gabung. Setelah kursi penuh, anggota room dapat memulai ronde.
+6. Pemegang bom oper ke pemain lain. Setelah waktu chain habis, tekan **Finalisasi room** dan tunggu receipt serta pembacaan hasil kontrak.
+
+Jika transaksi masih pending atau receipt belum diketahui, gunakan **Periksa receipt**. Jangan membuat wallet baru untuk mengganti identitas di room aktif.
+
+### Wallet dan biaya
+
+Wallet bermain adalah EOA sementara khusus testnet. Kunci disimpan di `sessionStorage` pada tab yang sama hingga 10 menit. Transaksi ditandatangani wallet bermain di browser dan memerlukan MON Testnet untuk gas; funding melalui wallet ekstensi meminta persetujuan pengguna. Ini bukan gasless atau session key. Jangan gunakan wallet tersebut untuk aset bernilai dan jangan bagikan seed/private key.
+
+## Jaringan dan kontrak
+
+| Detail | Nilai |
 |---|---|
-| [AGENTS.md](AGENTS.md) | Aturan kerja AI dan kapan membaca dokumen lain |
-| [SPEC.md](SPEC.md) | Aturan BOM OPER dan syarat MVP |
-| [TASKS.md](TASKS.md) | Rundown dan checklist |
-| [STATUS.md](STATUS.md) | Kondisi aktual dan pekerjaan berikutnya |
-| [TEST-RESULTS.md](TEST-RESULTS.md) | Catatan pengujian, bukan hasil perkiraan |
-| [Arsitektur](docs/ARCHITECTURE.md) | Struktur aplikasi dan alur transaksi |
-| [Desain](docs/design/README.md) | Brief dan catatan Figma |
-| [Keputusan](docs/DECISIONS.md) | Alasan pilihan/fallback |
-| [Panduan lengkap](docs/BUILD-GUIDE.md) | Semua prompt pembangunan dan pemulihan |
-| [Draft submission](docs/SUBMISSION-DRAFT.md) | Naskah pitch dan checklist; belum dikirim, bukti gameplay masih diperlukan |
+| Jaringan | Monad Testnet |
+| Chain ID | `10143` |
+| Kontrak | [`0x18097A160477E49d52A5A637d51D6B831144aDDd`](https://testnet.monadvision.com/address/0x18097A160477E49d52A5A637d51D6B831144aDDd) |
+| Receipt deploy | [Lihat transaksi](https://testnet.monadvision.com/tx/0x2ea47703572772f2f32ccb65421b921ebf728b62008fc41c0340d8deb879ed82) |
+| Game | [bom-oper.salmansegaf52.workers.dev/play](https://bom-oper.salmansegaf52.workers.dev/play) |
 
-## Jika pindah chat atau komputer
+Receipt deploy berhasil dan bytecode kontrak cocok dengan artifact proyek. Belum ada receipt publik untuk room, operan, atau finalisasi. Detail dan status pemeriksaan ada di [record deployment](deployments/10143.json), [STATUS.md](STATUS.md), dan [TEST-RESULTS.md](TEST-RESULTS.md).
 
-Bawa folder proyek lengkap atau clone repository yang sudah di-push, termasuk dokumennya. Buka akar proyek di VS Code, lalu kirim prompt pemulihan di panduan. Codex perlu membaca kondisi berkas, status Git, dan bukti aktual; riwayat chat lama tidak otomatis ikut.
+## Desain dan teknologi
 
-Jika ingin kalimat pembuka singkat sebelum menempelkan Prompt Induk: “Baca AGENTS.md dan dokumen yang dirujuk. Laporkan tujuan, aturan inti, serta kondisi nyata proyek, kemudian laksanakan Prompt Induk di docs/BUILD-GUIDE.md saja. Jangan mulai tahap berikutnya sebelum aku kirim.”
+- [Desain Figma yang bisa diedit](https://www.figma.com/design/T8zhiDboW04KOC9sDJrlz6/BOM-OPER?node-id=11-60) — opening, lobby, arena, hasil, dan tampilan mobile.
+- Frontend: React, Vite, TypeScript, ethers v6.
+- Kontrak dan tool pengembangan: Solidity, Hardhat.
+- Hosting: Cloudflare Workers Static Assets.
 
-## Menjaga konteks tetap akurat
+## Jalankan lokal
 
-Perbarui TASKS dan STATUS pada tiap tahap; catat tes saat dijalankan; isi URL/alamat/hash hanya setelah terverifikasi. Sebelum menutup prompt, commit/push dokumen bersama perubahan terkait. Jangan memasukkan password, token akses, private key, seed phrase, data sessionStorage, atau .env rahasia ke dokumentasi.
-
-## Menjalankan lokal
-
-Gunakan Node.js 22.13 atau lebih baru dan npm. Dari root repository:
+> Prasyarat dan versi mengikuti `package-lock.json`. Perintah berikut tersedia di konfigurasi proyek; deployment publik memerlukan sesi Cloudflare yang sudah terautentikasi.
 
 ```powershell
 npm install
 npm run dev
-npm run build
 ```
 
-`npm run deploy` membuild `app/` lalu menjalankan Wrangler dengan `wrangler.jsonc`. Deployment publik memerlukan login Cloudflare. `npm run contracts:compile` dan `npm run contracts:test` menjalankan kompilasi/tes Hardhat. `npm run deployment:test` menguji pemulihan jurnal deployment. Hasil aktual tiap perintah ada di TEST-RESULTS.md.
+Pemeriksaan build dan kontrak:
 
-Setelah deploy dikonfirmasi pengguna, `npm run deployment:verify -- <hash-transaksi-deploy>` memverifikasi receipt, chain 10143, init/runtime bytecode, blok dan view melalui RPC publik. Record `deployments/10143.json` hanya ditulis bila seluruh pemeriksaan lulus; record kontrak saat ini tersedia di repo.
+```powershell
+npm run build
+npm run contracts:test
+npm run deployment:test
+```
 
-## Cara mulai bermain
+Hasil terakhir yang benar-benar dijalankan dicatat di [TEST-RESULTS.md](TEST-RESULTS.md). Tes kontrak berjalan lokal dan bukan bukti ronde multiplayer publik.
 
-1. Setiap pemain membuka `/wallet`, membaca persetujuan, lalu membuat wallet bermain tersendiri.
-2. Isi wallet itu dengan MON Testnet melalui wallet ekstensi atau transfer manual. Saldo ini membayar gas transaksi; setiap pemain perlu wallet dan saldo sendiri.
-3. Buka `/play`. Pemain pertama membuat room untuk 2â€“4 pemain dengan durasi 30 atau 60 detik, lalu membagikan tautan room.
-4. Pemain lain membuka tautan dan menekan **Gabung dengan wallet ini**. Setelah semua kursi terisi, anggota room dapat memulai ronde.
-5. Pemegang bom memilih pemain lain lalu melakukan oper biasa atau oper panas. Setiap aksi adalah transaksi nyata; perubahan resmi muncul setelah receipt dan pembacaan snapshot kontrak.
-6. Saat waktu chain habis, pemain yang masih punya sesi menekan **Finalisasi room**. Hasil muncul setelah kontrak berstatus `Finished`.
+## Dokumen proyek
 
-Jangan membuat sesi wallet baru untuk menggantikan identitas di room aktif. Jika receipt belum diketahui, gunakan **Periksa receipt** sebelum mencoba aksi lagi.
+| Dokumen | Isi |
+|---|---|
+| [SPEC.md](SPEC.md) | Aturan game dan syarat MVP |
+| [STATUS.md](STATUS.md) | Status implementasi dan pekerjaan tersisa |
+| [TASKS.md](TASKS.md) | Tahap kerja dan checklist |
+| [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) | Struktur aplikasi dan alur transaksi |
+| [docs/DECISIONS.md](docs/DECISIONS.md) | Keputusan teknis dan batasan |
 
-## Aturan dan alur main
+## Tautan
 
-- Buat room kapasitas 2–4 pemain dengan durasi 30 atau 60 detik; pembuat room memegang bom pertama. Gabung memakai ID atau tautan `/play?room=<ID>`.
-- Pemegang bom memilih pemain lain. Oper biasa meneruskan giliran; tiap pemain dapat memakai oper panas satu kali untuk memangkas 3 detik. Kontrak memeriksa pemegang, giliran, penerima, jatah panas, dan deadline.
-- Setelah deadline, pemegang terakhir dapat difinalisasi melalui transaksi settle; layar hasil hanya menganggap ronde selesai setelah snapshot kontrak berstatus `Finished`.
-- `/play` adalah satu-satunya alur permainan. Animasi berjalan di browser; state resmi tetap berasal dari kontrak Monad Testnet.
-
-## Wallet, gas, dan bukti
-
-Setiap pemain membuat EOA sementara setelah persetujuan. Private key tersimpan di `sessionStorage` tab itu paling lama 10 menit. Transaksi game ditandatangani wallet bermain di browser; ekstensi hanya dipakai bila pemain memilih funding lewat wallet sumber. Isi wallet bermain dengan MON Testnet untuk gas; saldo dan perkiraan biaya diperiksa lagi sebelum aksi. Jangan gunakan wallet ini untuk aset bernilai atau membagikan seed/private key. Biaya aktual bergantung pada `gasLimit` dan fee RPC saat transaksi. Jangan mengirim ulang transaksi yang hash/receipt-nya belum jelas; gunakan **Periksa receipt**.
-
-Alamat kontrak: `0x18097A160477E49d52A5A637d51D6B831144aDDd` di chain 10143. [Receipt deploy](https://testnet.monadvision.com/tx/0x2ea47703572772f2f32ccb65421b921ebf728b62008fc41c0340d8deb879ed82). Receipt operan dan finalisasi belum tersedia. Untuk main: buka `/play`, pilih Mulai main, buat room, salin tautan/ID, lalu pemain lain membuka link dan memilih Gabung. Pastikan masing-masing memakai wallet berbeda, Monad Testnet, dan saldo testnet.
-
-Aturan dan keadaan permainan ditujukan on-chain; UI dan animasi berjalan di browser. Kontribusi AI: Codex membantu implementasi, dokumentasi dan pengujian; tindakan wallet serta pengujian manusia tetap dibedakan pada catatan bukti.
+- 🎮 [Mainkan game](https://bom-oper.salmansegaf52.workers.dev/play)
+- 🎨 [Buka desain Figma](https://www.figma.com/design/T8zhiDboW04KOC9sDJrlz6/BOM-OPER?node-id=11-60)
+- 💻 [Repository GitHub](https://github.com/salmanfidinillah/monadproject)
+- 👤 [Profil GitHub](https://github.com/salmanfidinillah)
+- 🔗 [LinkedIn](https://www.linkedin.com/in/salman-fidinillah)

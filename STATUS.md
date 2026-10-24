@@ -9,6 +9,9 @@
 - Build, 23 tes kontrak, 15 tes recovery, Wrangler dry-run, dan deploy frontend sudah lulus. Worker versi `f8fd2923-5e65-44f7-9c1c-ecfc066fd6e4`; `/`, `/play`, `/play?room=1`, dan `/wallet` publik HTTP 200. Bundle mencantumkan game live dan tidak memuat chunk/rute simulasi.
 - Masih perlu uji dua wallet berbeda sampai status `Finished`. Belum boleh mengklaim MVP teruji sebelum receipt operan/finalisasi dan pembacaan hasil publik tersedia.
 - Jalur singkat: setiap pemain siapkan sesi di `/wallet`, isi MON Testnet untuk gas, buka `/play`; pemain pertama membuat room dan membagikan tautan, pemain kedua bergabung dengan wallet berbeda.
+- Permintaan terbaru merapikan tampilan repo GitHub. README kini menjadi panduan ringkas berbahasa Indonesia dengan tautan Figma, game, GitHub, LinkedIn, informasi kontrak/status, serta gambar konsep yang diberi label. GitHub About Website mengarah ke game dan topic `monad` sudah tercatat.
+
+Perubahan README/metadata repo tidak mengubah aplikasi, kontrak, atau status penerimaan multiplayer. Ronde dua wallet dan receipt pass/finalisasi tetap menjadi tahap berikutnya.
 
 ## Kondisi terbaru — 24 Oktober 2026 WIB
 

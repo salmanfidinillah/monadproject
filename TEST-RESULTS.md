@@ -365,3 +365,12 @@ Status explorer source: **belum diverifikasi**. `verified:false` pada record men
 | Dua wallet, receipt operan/finalisasi, QA browser HP | BELUM DIUJI; memerlukan dua pemain/wallet terpisah, saldo MON testnet, dan persetujuan transaksi. |
 
 Perubahan produk: `/play` satu-satunya alur permainan. Landing/README mengarahkan pemain ke live gameplay; README memberi langkah wallet, funding, room, oper, dan finalisasi. Penghapusan mode simulasi tidak membuktikan readiness multiplayer: deployment kontrak saat ini belum memiliki room, dan belum ada receipt gameplay.
+
+## README dan metadata repository - 24 Oktober 2026
+
+| Pemeriksaan | Hasil aktual |
+|---|---|
+| Tinjau tautan dan klaim di README terhadap `docs/design/README.md`, `deployments/10143.json`, `STATUS.md`, dan `TEST-RESULTS.md` | Selesai; tautan Figma, GitHub, LinkedIn, game, kontrak dan receipt deploy dicantumkan. Preview diberi label sebagai konsep desain, bukan gambar gameplay. Status ronde dua pemain tetap dinyatakan belum terbukti. |
+| GitHub About metadata | Tersimpan melalui halaman repo: Website menunjuk URL game, topic `monad` terpilih. |
+| Build/tes aplikasi | Tidak dijalankan; perubahan ini hanya dokumentasi dan metadata repo. |
+| `git diff --check` | LULUS (exit 0); tidak ditemukan whitespace error. Git menampilkan peringatan konversi LF ke CRLF yang mengikuti konfigurasi lokal. |

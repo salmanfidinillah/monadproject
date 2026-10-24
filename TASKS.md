@@ -5,10 +5,17 @@
 - [x] `/play` terhubung ke kontrak Monad Testnet untuk baca room dan transaksi create/join/start/pass/settle.
 - [x] Mode permainan simulasi `/prototype` dan tautan menuju simulasi dihapus dari aplikasi. Artwork kartun yang dipakai arena live tetap tersedia.
 - [x] Build akhir, publikasi perubahan tanpa mode simulasi, dan cek URL publik. Worker versi `f8fd2923-5e65-44f7-9c1c-ecfc066fd6e4`; bundle live tersedia, chunk/rute simulasi tidak.
+- [x] Rapikan halaman depan repo: README baru dengan aturan, cara main, stack, status bukti, gambar konsep berlabel, tautan Figma/LinkedIn/GitHub/game; topik GitHub `monad` dan tautan Website game disimpan.
 - [ ] Dua wallet terpisah memainkan satu ronde sampai `Finished`; simpan receipt pass dan finalisasi.
 - [ ] QA perangkat/browser terpisah dan pastikan refresh link room berfungsi.
 
 MVP belum boleh disebut teruji sebelum ronde live dua pemain punya receipt dan hasil kontrak `Finished`. Riwayat di bawah ini mencatat checkpoint sebelumnya; status di atas adalah ringkasan terkini.
+
+## Checkpoint tampilan repository - 24 Oktober 2026 WIB
+
+- [x] README disusun ulang sebagai halaman pengenalan proyek dengan tautan game live, Figma editable, profil/repository GitHub, LinkedIn, Monad Testnet, kontrak dan panduan main.
+- [x] GitHub About Website diarahkan ke game publik dan repository topic `monad` ditambahkan melalui halaman repo.
+- [ ] Acceptance MVP multiplayer tetap terbuka; dokumentasi ini tidak menambah bukti receipt gameplay.
 
 ## Kelanjutan terbaru sampai Prompt 8 — 24 Oktober 2026 WIB
 
