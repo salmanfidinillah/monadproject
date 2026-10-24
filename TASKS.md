@@ -11,6 +11,12 @@
 
 MVP belum boleh disebut teruji sebelum ronde live dua pemain punya receipt dan hasil kontrak `Finished`. Riwayat di bawah ini mencatat checkpoint sebelumnya; status di atas adalah ringkasan terkini.
 
+## Checkpoint panduan menjalankan project - 24 Oktober 2026 WIB
+
+- [x] README kini menjelaskan prasyarat, clone, `npm ci`, menjalankan Vite, rute lokal `/play` dan `/wallet`, serta perbedaan server lokal dengan chain Monad Testnet publik.
+- [x] Perintah disesuaikan dengan `package.json`, workspace app, konfigurasi Vite, dan lockfile; tidak mewajibkan `.env` yang tidak dipakai frontend.
+- [ ] Build dan tes lokal tidak dijalankan ulang pada checkpoint dokumentasi ini.
+
 ## Checkpoint tag preview dan video X - 24 Oktober 2026 WIB
 
 - [x] Tag anotasi `v0.1.0-testnet-preview` dibuat pada commit `12808a1` dan dipush; labelnya jelas sebagai preview testnet, bukan rilis MVP multiplayer yang lulus uji.

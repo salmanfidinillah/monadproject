@@ -66,14 +66,37 @@ Receipt deploy berhasil dan bytecode kontrak cocok dengan artifact proyek. Belum
 
 ## Jalankan lokal
 
-> Prasyarat dan versi mengikuti `package-lock.json`. Perintah berikut tersedia di konfigurasi proyek; deployment publik memerlukan sesi Cloudflare yang sudah terautentikasi.
+### Prasyarat
+
+- Git.
+- Node.js `22.13.0` atau lebih baru.
+- npm `11.8.0`, sesuai deklarasi `package.json` dan lockfile repository.
+
+### Instalasi dan development server
+
+Clone repository, masuk ke folder proyek, lalu pasang dependency dari lockfile:
 
 ```powershell
-npm install
+git clone https://github.com/salmanfidinillah/monadproject.git
+cd monadproject
+npm ci
+```
+
+Jalankan frontend:
+
+```powershell
 npm run dev
 ```
 
-Pemeriksaan build dan kontrak:
+Vite akan mencetak alamat server lokal di terminal (biasanya `http://localhost:5173`). Buka alamat itu dan masuk ke `/play` untuk alur game atau `/wallet` untuk menyiapkan wallet testnet.
+
+> **Penting:** server lokal menjalankan frontend yang terhubung ke Monad Testnet dan kontrak publik, bukan blockchain lokal atau mode simulasi. Jika kamu mengirim transaksi, transaksi testnet sungguhan akan diminta melalui alur wallet. Gunakan wallet khusus testnet, dana MON Testnet untuk gas, dan setujui setiap tindakan secara sadar. Jangan gunakan atau membagikan seed/private key wallet utama.
+
+Konfigurasi RPC testnet dan alamat kontrak sudah disediakan oleh proyek; file `.env` tidak diperlukan untuk menjalankan frontend lokal. Jangan masukkan private key atau seed phrase ke file konfigurasi.
+
+### Pemeriksaan opsional
+
+Perintah berikut tersedia untuk memeriksa build dan tes lokal:
 
 ```powershell
 npm run build
@@ -81,7 +104,9 @@ npm run contracts:test
 npm run deployment:test
 ```
 
-Hasil terakhir yang benar-benar dijalankan dicatat di [TEST-RESULTS.md](TEST-RESULTS.md). Tes kontrak berjalan lokal dan bukan bukti ronde multiplayer publik.
+Perintah build mengompilasi kontrak dan frontend. Tes kontrak dan recovery berjalan lokal; hasilnya bukan bukti ronde multiplayer publik. Lihat [TEST-RESULTS.md](TEST-RESULTS.md) untuk hasil yang benar-benar sudah dijalankan.
+
+Untuk membuka versi yang sudah dipublikasikan, gunakan [game live](https://bom-oper.salmansegaf52.workers.dev/play). Deployment dari komputer sendiri memerlukan login Cloudflare dan hanya dilakukan oleh pengelola proyek.
 
 ## Dokumen proyek
 

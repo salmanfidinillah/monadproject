@@ -2,6 +2,7 @@
 
 ## Ringkasan terbaru - 24 Oktober 2026 WIB
 
+- README sudah memiliki panduan developer setup dari clone sampai server lokal (`npm ci`, `npm run dev`), link rute `/play` dan `/wallet`, prasyarat Node/npm, dan peringatan bahwa transaksi lokal tetap berinteraksi dengan Monad Testnet publik.
 - Tag GitHub `v0.1.0-testnet-preview` sudah dipush ke commit `12808a1`; penamaan ini menandai preview testnet saja, sementara bukti ronde multiplayer masih pending.
 - Video explainer Inggris sekitar 30 detik tersedia di `docs/video/BOM-OPER-Monad-Explainer.webm`; video memakai konsep desain berlabel dan menyebut bukti ronde multiplayer masih pending.
 - File video saat ini WebM. Panduan X mencantumkan MP4/MOV; ekspor/konversi MP4 dan unggah ke X belum dilakukan.

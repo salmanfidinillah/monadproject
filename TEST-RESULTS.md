@@ -1,5 +1,14 @@
 # Hasil pengujian
 
+## Panduan menjalankan project di README - 24 Oktober 2026
+
+| Pemeriksaan aktual | Hasil |
+|---|---|
+| Cocokkan langkah instalasi dan versi runtime | LULUS inspeksi: root `package.json` menetapkan Node `>=22.13.0`, `npm@11.8.0`, dan workspace `app`; dependency install menggunakan `npm ci`. |
+| Cocokkan perintah dev dan URL | LULUS inspeksi: root script `dev` menjalankan `vite --host 0.0.0.0`; tidak ada port khusus di `app/vite.config.ts`, jadi README mengarahkan pembaca ke URL yang dicetak Vite (umumnya `localhost:5173`). |
+| Perilaku chain dan environment | LULUS inspeksi: app mengarah ke deployment Monad Testnet; file `.env` tidak diwajibkan oleh kode frontend. README memperingatkan transaksi testnet sungguhan. |
+| Menjalankan install/build/tes | Tidak dilakukan pada perubahan dokumentasi ini. `git diff --check` diperiksa sebelum commit. |
+
 ## Tag GitHub dan kesiapan upload X - 24 Oktober 2026
 
 | Pemeriksaan aktual | Hasil |
