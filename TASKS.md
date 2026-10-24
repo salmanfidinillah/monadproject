@@ -2,6 +2,9 @@
 
 ## Kelanjutan terbaru sampai Prompt 8 — 24 Oktober 2026 WIB
 
+- [x] Investigasi awal peringatan domain MetaMask dari screenshot pengguna; siapkan draf review di `docs/references/METAMASK-REVIEW.md`. Pemeriksaan awal tidak membuktikan false positive.
+- [ ] Peninjauan/remediasi domain dan konfirmasi peringatan sudah selesai sebelum koneksi/deploy dilanjutkan. Laporan belum dikirim; proteksi tetap aktif.
+
 - [x] Baca panduan enam jam, cocokkan progres/Git dan Prompt 4; tahap terbukti tidak dibuat ulang. Verifikasi HP Tahap 1 tetap pending.
 - [x] Baca PDF workshop integrasi Monad; simpan ringkasan aman di `docs/references/MONAD-BLITZ.md`.
 - [x] Perbaiki pemulihan deploy saat refresh/timeout, blokir deploy ulang yang belum jelas, cocokkan receipt/init/runtime bytecode/blok/view, dan tambahkan CLI verifikasi read-only.

@@ -1,5 +1,12 @@
 # Keputusan dan perubahan
 
+## 24 Oktober 2026 WIB — hentikan koneksi saat domain ditandai
+
+- Screenshot MetaMask memperlihatkan domain BOM OPER ditandai berbahaya. Ini bukti nyata hambatan baru sebelum deploy, bukan alasan mengubah aturan/wallet/chain.
+- Pilihan: arahkan kembali ke keamanan, lakukan pemeriksaan read-only, siapkan permintaan review resmi dengan bukti terbatas. Tidak melanjutkan dengan mengabaikan warning, mematikan proteksi, atau mengganti domain untuk menghindarinya.
+- Pemeriksaan list publik tidak menemukan exact/parent match dan aset publik cocok build; klasifikasi masih belum dijelaskan. Tidak menyimpulkan false positive atau situs pasti aman.
+- Draf di `docs/references/METAMASK-REVIEW.md` belum dikirim karena belum ada instruksi eksplisit untuk mengirim pesan ke pihak lain. Tidak meminta rahasia. Prompt 4 tertahan pada review/remediasi domain sebelum koneksi/deploy; target tetap sampai Prompt 8.
+
 ## 24 Oktober 2026 WIB — lanjut sampai Prompt 8 dan pemulihan deploy
 
 - Pengguna mengotorisasi kelanjutan berurutan sampai Prompt 8 dengan PDF sebagai referensi Monad. Arahan baru menggantikan catatan lama menunggu prompt satu per satu; Prompt 9 tetap tidak dikerjakan.

@@ -1,5 +1,11 @@
 # Status aktual BOM OPER
 
+## Hambatan terbaru — peringatan domain MetaMask
+
+24 Oktober 2026 WIB: screenshot pengguna saat menghubungkan wallet ke `bom-oper.salmansegaf52.workers.dev` memperlihatkan **Berbahaya—ditandai sebagai tidak aman**. Pengguna diarahkan memilih **Kembali ke keamanan** dan menghentikan koneksi/deploy. Penyebab belum diketahui; belum dinyatakan false positive. Belum ada hash/receipt deployment kontrak.
+
+Pemeriksaan read-only: domain dan parent tidak cocok persis dengan entri config publik MetaMask yang diunduh; 12 aset publik identik dengan build lokal setelah mengikuti redirect kanonis. Ini bukan audit keamanan lengkap atau bukti klasifikasi salah. Tidak mengubah source/hosting atau menonaktifkan proteksi. Draf dan langkah support resmi disiapkan di `docs/references/METAMASK-REVIEW.md`; belum dikirim. Prompt 4 tetap terbuka. Langkah berikutnya: peninjauan klasifikasi/remediasi domain, baru koneksi/pra-deploy; batas pekerjaan tetap Prompt 8.
+
 ## Kelanjutan Prompt 4 — 24 Oktober 2026 WIB
 
 Arahan terbaru: lanjutkan panduan secara berurutan sampai Prompt 8 lalu berhenti; Prompt 9 tidak diotorisasi. Titik lanjut tetap Prompt 4 yang belum memiliki kontrak publik. Tidak membuat ulang tahap yang sudah terbukti. Sumber yang dibaca: AGENTS/SPEC/TASKS/STATUS, panduan pengguna dan BUILD-GUIDE, ARCHITECTURE, DECISIONS, TEST-RESULTS, desain README/MOTION, serta PDF workshop bagian integrasi. Ringkasan aman: `docs/references/MONAD-BLITZ.md`.

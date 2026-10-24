@@ -1,5 +1,19 @@
 # Hasil pengujian
 
+## Peringatan domain MetaMask — 24 Oktober 2026 WIB
+
+| Pemeriksaan aktual | Hasil |
+|---|---|
+| Screenshot koneksi dari pengguna | GAGAL melanjutkan koneksi aman: domain ditandai berbahaya oleh MetaMask. Belum ada bukti transaksi deploy dikirim |
+| Baca panduan resmi security alerts/deceptive site + README eth-phishing-detect | Selesai; hentikan koneksi pada klasifikasi ini, minta manual review untuk peringatan URL. Penyebab spesifik belum diketahui |
+| Unduh config publik MetaMask dari raw GitHub, cek hostname dan parent terhadap daftar | Tidak ada exact/parent match di blacklist, whitelist, fuzzylist. Version 2. Tidak menguji algoritme fuzzy, cache client, hotlist/live API atau provider lain; bukan bukti false positive |
+| Bandingkan semua asset app/dist dengan unduhan publik via SHA-256 | LULUS: 12 file identik byte-for-byte. Percobaan pertama tidak mengikuti redirect /index.html sehingga mismatch; HEAD membuktikan HTTP 307 ke /, pengulangan dengan curl -L lulus |
+| `git diff --exit-code HEAD -- app/src app/public contracts scripts wrangler.jsonc` | Exit 0: source/config sesuai checkpoint c24500b; tidak ada deploy/perubahan dependency pada investigasi ini |
+| Pencarian source untuk endpoint, request wallet dan pola signature | Diperiksa sebagai triase terbatas; tidak menggantikan audit atau klasifikasi provider |
+| Review provider, warning hilang, koneksi aman, deploy | BELUM ADA / BELUM DIUJI; draf laporan disiapkan, belum dikirim |
+
+Tidak menjalankan ulang tes kontrak/build karena source tidak berubah. Perubahan hanya dokumentasi investigasi dan draf bantuan; checkpoint Git diverifikasi setelah penulisan catatan ini.
+
 ## Kelanjutan Prompt 4 — 24 Oktober 2026 WIB
 
 Seluruh receipt pada tes Hardhat di bawah adalah simulasi lokal chain 10143, bukan Monad Testnet publik. Kontrak Solidity dan 16 tes aturan lama tidak dihapus/diubah.
