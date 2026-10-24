@@ -1,5 +1,12 @@
 # Keputusan dan perubahan
 
+## 24 Oktober 2026 WIB - tag preview testnet
+
+- Pilihan: beri tag anotasi `v0.1.0-testnet-preview` pada checkpoint dokumentasi yang sudah dipush.
+- Alasan: pengguna mengklarifikasi bahwa yang dimaksud adalah GitHub Tags, bukan GitHub Topics.
+- Batas: nama preview menghindari klaim rilis MVP; tag mencatat bahwa bukti ronde multiplayer publik belum ada.
+- Distribusi video: beri tahu pengguna bahwa file WebM perlu diekspor ke MP4/MOV sebelum upload X sesuai spesifikasi X; belum ada post yang dibuat.
+
 ## 24 Oktober 2026 WIB - topik repository GitHub
 
 - Pilihan: tambahkan topik yang mewakili Monad, testnet, Web3, game multiplayer dan stack yang benar-benar dipakai (`Solidity`, `TypeScript`, `React`).

@@ -1,5 +1,13 @@
 # Hasil pengujian
 
+## Tag GitHub dan kesiapan upload X - 24 Oktober 2026
+
+| Pemeriksaan aktual | Hasil |
+|---|---|
+| Tag anotasi lokal | `v0.1.0-testnet-preview` menunjuk ke `12808a1bd3a39951b5bd2d2134457a5b3bf99d3b`; pesan menyebut receipt ronde multiplayer belum terverifikasi. |
+| Push tag | LULUS; `git ls-remote --tags origin refs/tags/v0.1.0-testnet-preview` mengembalikan objek tag `36525cc35a65cdaf24919bbbdc6a686bedaa636d`. Halaman GitHub menampilkan `1 Tag`. |
+| Video untuk X | File saat ini WebM. [Panduan video X](https://help.x.com/en/using-x/x-videos) mencantumkan batas upload untuk akun biasa; dokumentasi [Media Studio](https://help.x.com/en/using-x/media-studio-faqs) mencantumkan MP4/MOV dan rekomendasi ekspor MP4. Konversi/unggah tidak dilakukan. |
+
 ## Metadata repository GitHub - 24 Oktober 2026
 
 | Pemeriksaan aktual | Hasil |

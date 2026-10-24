@@ -2,7 +2,9 @@
 
 ## Ringkasan terbaru - 24 Oktober 2026 WIB
 
+- Tag GitHub `v0.1.0-testnet-preview` sudah dipush ke commit `12808a1`; penamaan ini menandai preview testnet saja, sementara bukti ronde multiplayer masih pending.
 - Video explainer Inggris sekitar 30 detik tersedia di `docs/video/BOM-OPER-Monad-Explainer.webm`; video memakai konsep desain berlabel dan menyebut bukti ronde multiplayer masih pending.
+- File video saat ini WebM. Panduan X mencantumkan MP4/MOV; ekspor/konversi MP4 dan unggah ke X belum dilakukan.
 - Permintaan terbaru: jadikan aplikasi alur MVP sungguhan tanpa mode permainan simulasi.
 - Metadata GitHub dirapikan: About berisi deskripsi dan URL game; 10 topik relevan sudah ditetapkan (`monad`, `monad-testnet`, `web3`, `blockchain`, `smart-contracts`, `web3-gaming`, `multiplayer-game`, `solidity`, `typescript`, `react`).
 - Implementasi live sudah ada pada `/play`: RPC Monad Testnet chain 10143, alamat kontrak dari record deployment, pembacaan snapshot, dan transaksi create/join/start/pass/settle memakai wallet bermain.

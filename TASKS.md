@@ -11,6 +11,12 @@
 
 MVP belum boleh disebut teruji sebelum ronde live dua pemain punya receipt dan hasil kontrak `Finished`. Riwayat di bawah ini mencatat checkpoint sebelumnya; status di atas adalah ringkasan terkini.
 
+## Checkpoint tag preview dan video X - 24 Oktober 2026 WIB
+
+- [x] Tag anotasi `v0.1.0-testnet-preview` dibuat pada commit `12808a1` dan dipush; labelnya jelas sebagai preview testnet, bukan rilis MVP multiplayer yang lulus uji.
+- [x] Halaman repository menampilkan 1 Tag dan video tersimpan di `docs/video/BOM-OPER-Monad-Explainer.webm`.
+- [ ] Konversi video ke MP4/H.264 + AAC untuk unggah X belum dilakukan. Jangan mengklaim posting X sudah terbit.
+
 ## Checkpoint metadata repository GitHub - 24 Oktober 2026 WIB
 
 - [x] About repo tetap memuat deskripsi ringkas BOM OPER dan URL game publik.
