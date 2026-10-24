@@ -1,5 +1,11 @@
 # Keputusan dan perubahan
 
+## 24 Oktober 2026 WIB - topik repository GitHub
+
+- Pilihan: tambahkan topik yang mewakili Monad, testnet, Web3, game multiplayer dan stack yang benar-benar dipakai (`Solidity`, `TypeScript`, `React`).
+- Hasil: About repository menampilkan 10 topik terpilih, bersama deskripsi proyek dan homepage game publik.
+- Batas: metadata meningkatkan ketercarian dan presentasi; bukan endorsement Monad atau bukti bahwa ronde multiplayer telah lulus uji.
+
 ## 24 Oktober 2026 WIB - video explainer
 
 - Pilihan: buat explainer berbahasa Inggris sekitar 30 detik dengan voiceover, pakai artwork/storyboard Figma yang sudah ada dan beri label bahwa arena/hasil adalah konsep desain.

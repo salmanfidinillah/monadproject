@@ -11,6 +11,12 @@
 
 MVP belum boleh disebut teruji sebelum ronde live dua pemain punya receipt dan hasil kontrak `Finished`. Riwayat di bawah ini mencatat checkpoint sebelumnya; status di atas adalah ringkasan terkini.
 
+## Checkpoint metadata repository GitHub - 24 Oktober 2026 WIB
+
+- [x] About repo tetap memuat deskripsi ringkas BOM OPER dan URL game publik.
+- [x] Topik repo diverifikasi di halaman publik: `monad`, `monad-testnet`, `web3`, `blockchain`, `smart-contracts`, `web3-gaming`, `multiplayer-game`, `solidity`, `typescript`, `react`.
+- [x] README menyediakan tautan game, desain Figma, profil/repository GitHub, LinkedIn, dan video explainer; status receipt multiplayer tetap dijelaskan.
+
 ## Checkpoint video explainer - 24 Oktober 2026 WIB
 
 - [x] Dibuat video explainer berbahasa Inggris, sekitar 30 detik, 1280×720, dengan voiceover dan tautan unduh dari README.
