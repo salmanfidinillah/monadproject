@@ -283,3 +283,19 @@ Perubahan UI: CTA hero langsung ke pratinjau dan sticky CTA hanya pada layar kec
 | Visual QA melalui browser | BELUM DIUJI; executable browser tidak tersedia di lingkungan lokal |
 
 Mark menggunakan monogram B geometris dengan fuse/spark ringkas, warna ink/oranye, tanpa gaya sapuan kuas atau efek gradient/shadow. Diterapkan pada semua header aplikasi dan favicon. Komposisi ini adalah logo vektor implementasi, belum disalin menjadi komponen editable di file Figma.
+
+## Pemeriksaan kelanjutan repo — 24 Oktober 2026
+
+Pemeriksaan dilakukan pada branch `main` dengan Node v24.13.1/npm 11.8.0. Tidak ada wallet yang dihubungkan, storage browser yang diubah, transaksi yang dikirim, atau deployment publik baru.
+
+| Perintah | Hasil aktual |
+|---|---|
+| `npm run build` | LULUS; ekspor artifact memvalidasi 7 fungsi ABI, TypeScript lolos, Vite 8.3.5 membangun 175 modul. Hardhat tidak perlu kompilasi ulang karena artifact tersedia. |
+| `npm run contracts:test` | LULUS: 23 tes Mocha; mencakup aturan kontrak, verifier lokal, serta guard retry nonce. Ini simulasi lokal, bukan bukti testnet. |
+| `npm run deployment:test` | LULUS: 15 tes Node; jurnal, pemulihan dua-RPC, nonce yang sama, fail-closed, dan sanitasi error. |
+| `npx wrangler deploy --dry-run --config wrangler.jsonc` | LULUS; membaca 13 asset dari `app/dist`; dry-run tidak mengirim deployment. |
+| `npm audit --omit=dev --audit-level=moderate` | LULUS: 0 advisori dependency produksi. |
+| `npm audit --json` | Ada 16 advisori pada dependency development: 14 high dan 2 moderate, termasuk Hardhat/Zod dan Wrangler/Miniflare/undici. Audit menyatakan beberapa paket memiliki fix, tetapi tidak ada remediasi yang diterapkan karena kombinasi versi kompatibel dan dampaknya belum diverifikasi. Tidak ada bukti bahwa advisori tersebut masuk bundle produksi; hasil production-only di atas tetap 0. |
+| `git diff --check`; `git rev-parse HEAD` vs `git ls-remote origin refs/heads/main` | LULUS sebelum pembaruan catatan: tidak ada whitespace error; HEAD dan `origin/main` sama-sama `3a12d7a46e21268b21e75eb6b770d325342a760e`. |
+
+Gap penerimaan MVP belum berubah: warning domain MetaMask masih perlu review resmi; belum ada deployment contract/receipt; wallet dan gameplay on-chain belum terhubung; pengujian browser/HP, dua pemain dan ronde Finished publik belum dilakukan. Tidak ada tindakan wallet otomatis yang aman untuk menggantikan konfirmasi pengguna.

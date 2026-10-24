@@ -1,5 +1,13 @@
 # Rundown enam jam dan checklist
 
+## Hasil pemeriksaan repo — 24 Oktober 2026
+
+- [x] Cocokkan dokumen status, berkas proyek, branch dan origin; tiga berkas lokal belum terlacak dijaga tetap di luar checkpoint.
+- [x] Verifikasi lokal ulang: build, 23 tes Hardhat, 15 tes pemulihan, dan Wrangler dry-run lulus; catatan di `TEST-RESULTS.md`.
+- [x] Periksa advisori dependency: production audit 0; full audit 16 advisori dev tooling (14 high, 2 moderate). Upgrade belum dilakukan karena kompatibilitas/fix belum ditetapkan.
+- [ ] Tetap selesaikan review warning MetaMask dan deploy kontrak secara eksplisit; belum ada hash/receipt.
+- [ ] Sesudah kontrak terverifikasi, integrasikan wallet/gameplay, lakukan QA browser/Figma dan HP, uji minimal dua pemain sampai Finished, lalu Prompt 8. Jangan masuk Prompt 9.
+
 ## Kelanjutan terbaru sampai Prompt 8 — 24 Oktober 2026 WIB
 
 - [x] Investigasi awal peringatan domain MetaMask dari screenshot pengguna; siapkan draf review di `docs/references/METAMASK-REVIEW.md`. Pemeriksaan awal tidak membuktikan false positive.

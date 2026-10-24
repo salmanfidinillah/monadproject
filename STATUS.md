@@ -1,5 +1,15 @@
 # Status aktual BOM OPER
 
+## Pemeriksaan repo terbaru — 24 Oktober 2026
+
+Working tree awal: perubahan belum terlacak `.agents/`, `BOM-OPER-Panduan-6-Jam.md`, dan `skills-lock.json` dipertahankan tanpa diubah. `main` semula sama dengan `origin/main` pada `3a12d7a46e21268b21e75eb6b770d325342a760e`.
+
+- Build produksi, 23 tes Hardhat, 15 tes pemulihan, dan Wrangler dry-run lulus pada pemeriksaan ini; detail ada di `TEST-RESULTS.md`.
+- Audit npm terbaru: 0 advisori dependency produksi; full dependency tree masih melaporkan 16 advisori pada tooling development (14 high, 2 moderate). Belum ada upgrade dependency karena fix aman/kompatibel belum diverifikasi.
+- Tidak ada transaksi dikirim, wallet/browser pengguna tidak diakses, dan tidak ada klaim kontrak testnet berhasil.
+- Kekurangan penghalang MVP tetap: peringatan reputasi MetaMask belum ditinjau resmi; deployment kontrak menunggu tindakan/hash pengguna; `/wallet` dan gameplay kontrak belum terintegrasi/diuji; tidak ada uji dua pemain, HP, atau ronde Finished publik. `/prototype` tetap simulasi.
+- Lanjut paling aman: pengguna menuntaskan peninjauan warning sesuai `docs/references/METAMASK-REVIEW.md`; sesudah aman, periksa receipt/hash yang sama atau ulangi hanya melalui langkah terkonfirmasi di `docs/DEPLOY-RECOVERY.md`. Setelah alamat/receipt diverifikasi, lanjutkan Prompt 5–8 secara berurutan. Prompt 9 tetap di luar lingkup.
+
 ## Hambatan berjalan — pengiriman deploy dibatasi RPC
 
 Pengguna secara eksplisit memilih melanjutkan koneksi wallet sendiri meskipun warning domain belum terjelaskan; tidak ada bukti klasifikasi sudah diperbaiki. Screenshot berikutnya menunjukkan pra-deploy lulus, chain 10143 dan saldo 5 MON. Setelah menekan deploy, pengguna memberi error RPC rate limited dan melaporkan Aktivitas MetaMask **Gagal**.
