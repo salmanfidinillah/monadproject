@@ -1,6 +1,6 @@
 # Rundown enam jam dan checklist
 
-Prompt Induk dan Prompt 0 selesai dengan checkpoint GitHub terverifikasi. Scaffold Tahap 1 sudah dibuild dan dideploy ke URL publik; verifikasi melalui HP masih menunggu. Tahap 1 belum lulus penuh; Tahap 2 sampai 9 belum dijalankan. Centang hanya setelah kriteria tahap terbukti. Jadwal relatif; contoh waktu 12.00-18.00 bukan konfirmasi panitia. Checkpoint GitHub 1-2 menit termasuk dalam slot yang sama.
+Prompt Induk dan Prompt 0 selesai dengan checkpoint GitHub terverifikasi. Tahap 1 masih menunggu verifikasi HP; scaffold sudah dibuild dan URL publik merespons. Tahap 2 selesai lokal; Tahap 3 sampai 9 belum dijalankan. Centang hanya setelah kriteria tahap terbukti. Jadwal relatif; contoh waktu 12.00-18.00 bukan konfirmasi panitia. Checkpoint GitHub 1-2 menit termasuk dalam slot yang sama.
 
 | Tahap | Slot | Syarat lulus |
 |---|---|---|
@@ -18,7 +18,7 @@ Prompt Induk dan Prompt 0 selesai dengan checkpoint GitHub terverifikasi. Scaffo
 - [x] Induk: baca/periksa dokumen, Git/remote tujuan, commit/push fondasi; SHA checkpoint cocok dengan origin/main (bukti di STATUS.md).
 - [x] 0: Figma Opening/Lobby/Arena/Hasil desktop + Arena mobile, anotasi opening mobile/loading, URL/frame/tokens/preview; push desain dan SHA remote terverifikasi.
 - [ ] 1: app scaffold, lockfile, .gitignore, .env.example, SPA hosting dan URL publik sudah tersedia; verifikasi buka dari HP masih pending.
-- [ ] 2: kontrak state machine/event/snapshot, expectedTurn, panas, deadline.
+- [x] 2: `BomOper.sol`, state machine/event/snapshot, expectedTurn, panas, deadline, compiler/EVM target dan guard chain 10143; compile, ABI, serta tes chain guard lulus. Full rule tests ada di Tahap 3.
 - [ ] 3: tes aturan dan batas (lihat TEST-RESULTS.md); bukan sleep dunia nyata.
 - [ ] 4: deploy 10143 lewat wallet pengguna, receipt/code/ABI/record deploy.
 - [ ] 5: persetujuan wallet bermain, funding gas, pending/recovery; fallback bila perlu.
@@ -61,3 +61,11 @@ Revisi arcade lima layar dan storyboard motion sudah dibuat/diperiksa di Figma. 
 - [x] Build lokal dan Wrangler dry-run lulus; deployment publik berhasil ke https://bom-oper.salmansegaf52.workers.dev; GET / dan /room/example merespons 200.
 - [x] Login Cloudflare, pastikan Worker bom-oper belum ada pada akun terautentikasi, lalu deploy.
 - [ ] Minta pengguna membuka URL publik melalui koneksi HP; Tahap 1 tetap belum lulus sampai verifikasi ini.
+
+## Progres Tahap 2 - 24 Oktober 2026 WIB
+
+- [x] Membuat `contracts/BomOper.sol` sesuai aturan SPEC; tidak ada pembayaran, saldo game, admin, atau randomisasi.
+- [x] Mematok solc 0.8.30/EVM Cancun; simulated Monad test menggunakan chain ID 10143, network 31337 hanya untuk tes guard.
+- [x] Compile, inspeksi ABI functions/events/snapshot, dan tes deploy di chain yang benar serta ditolak di chain yang salah.
+- [x] Abaikan output TypeChain `types/` agar generated code tidak masuk checkpoint.
+- [ ] Tes seluruh aturan batas/gas sesuai Tahap 3; belum deploy kontrak ke Monad Testnet.

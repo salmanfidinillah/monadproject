@@ -1,6 +1,6 @@
 # BOM OPER — spesifikasi MVP
 
-Status: spesifikasi rencana, belum diimplementasikan. Jadwal dan prompt: docs/BUILD-GUIDE.md. Kondisi aktual: STATUS.md.
+Status: aturan MVP tetap menjadi spesifikasi kanonis; kontrak BomOper telah diimplementasikan lokal pada Tahap 2. Hasil build/tes aktual: STATUS.md dan TEST-RESULTS.md.
 
 ## Pengguna dan permainan
 

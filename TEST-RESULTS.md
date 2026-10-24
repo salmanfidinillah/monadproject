@@ -1,6 +1,6 @@
 # Hasil pengujian
 
-**BELUM ADA TES GAME YANG DIJALANKAN.** Tabel di bawah adalah rencana kasus, bukan daftar lulus. Tambahkan tanggal/lingkungan, perintah aktual, hasil, dan bukti ketika dijalankan.
+**Tes Tahap 2 terbatas sudah dijalankan; tes aturan game lengkap belum.** Tabel di bawah adalah rencana kasus kecuali hasil yang secara eksplisit dicatat lulus. Tambahkan tanggal/lingkungan, perintah aktual, hasil, dan bukti ketika dijalankan.
 
 | Kelompok | Kasus minimum | Hasil awal |
 |---|---|---|
@@ -12,7 +12,7 @@
 | Deadline | Biasa tanpa reset, tepat deadline oper ditolak dan settle diizinkan | BELUM DIUJI |
 | Hasil | Settle dini/ganda gagal; siapa pun boleh settle; loser/event sesuai | BELUM DIUJI |
 | Isolasi | Dua room tidak mengubah satu sama lain; dua oper bersaing | BELUM DIUJI |
-| Jaringan/gas | Salah jaringan ditolak; gas terukur untuk setiap fungsi utama | BELUM DIUJI |
+| Jaringan/gas | Deploy chain 10143 diterima; chain 31337 ditolak; gas seluruh fungsi belum diukur | TES GUARD LULUS; GAS BELUM DIUJI |
 | Wallet | Consent, fund, kurang gas, expiry/hilang, wrong chain, reject | BELUM DIUJI |
 | Pending | Klik ganda, refresh pending, receipt gagal/tertunda, tanpa retry buta | BELUM DIUJI |
 | Multiplayer | 2–4 konteks terpisah, holder/turn/deadline/loser konsisten | BELUM DIUJI |
@@ -105,3 +105,21 @@ Lingkungan: Windows PowerShell, root repository pada branch `main`. Tidak ada ap
 | Tes kontrak/game/multiplayer | BELUM DIJALANKAN; belum ada kontrak/game |
 
 Auditor npm saat instalasi melaporkan 16 advisori (2 moderate, 14 high) pada dependency tree penuh; audit production-only bersih. Hardhat/Hardhat toolbox masih ditandai audit sebagai dev-tool advisories tanpa fix aman dalam major terpilih, jadi tidak dipaksakan berubah pada scaffold. Periksa kembali sebelum Tahap 2.
+
+
+## Pelaksanaan Tahap 2 - 24 Oktober 2026 WIB
+
+Lingkungan: Windows PowerShell, Node v24.13.1/npm 11.8.0, Hardhat 3.21.0, branch `main`. Pengujian sepenuhnya lokal; tidak ada wallet atau transaksi testnet.
+
+| Pemeriksaan/perintah aktual | Hasil |
+|---|---|
+| Baca `SPEC.md`, `TASKS.md`, `STATUS.md`, `docs/BUILD-GUIDE.md` bagian Prompt 2, `docs/ARCHITECTURE.md`, `docs/DECISIONS.md`, `TEST-RESULTS.md`, dan PDF referensi Monad | LULUS; aturan kanonis SPEC dipakai. Slide halaman jaringan dipakai sebagai referensi chain ID/RPC/wallet burner; isi venue/akses tidak disalin |
+| `npm view solc@0.8.30 version` | LULUS; versi compiler tersedia di registry. Monad docs menyatakan opcode EVM hingga Fusaka didukung; target Cancun kompatibel dan tersedia di Hardhat EDR |
+| POST `eth_chainId` ke `https://testnet-rpc.monad.xyz` | LULUS: RPC mengembalikan 10143 (nilai hex dikonversi ke desimal) |
+| `npm run contracts:compile` | LULUS: compiled 1 Solidity file with solc 0.8.30 (WASM), EVM target Cancun |
+| `npm run contracts:test` | LULUS: 2 passing (2 mocha). Simulasi chain ID 10143 berhasil deploy; chain ID 31337 gagal dengan error `UnsupportedChain(31337,10143)` |
+| Inspeksi `artifacts/hardhat/contracts/BomOper.sol/BomOper.json` | LULUS: enam fungsi MVP (`createRoom`, `joinRoom`, `startRoom`, `passBomb`, `settleRoom`, `getRoomSnapshot`), konstanta/ID, lima event dan `UnsupportedChain`; snapshot berisi status, batas room, holder, turn, waktu, loser, pemain, jatah panas |
+| Tes aturan penuh dan pengukuran gas | BELUM DIJALANKAN; dijadwalkan Tahap 3 |
+| Deploy kontrak Monad Testnet / receipt / alamat | BELUM DILAKUKAN; Tahap 4 |
+
+Compiler settings aktual: optimizer enabled (200 runs), EVM `cancun`. Simulated Monad test memakai chain ID 10143; jaringan lokal 31337 sengaja hanya untuk memastikan guard chain salah benar-benar menolak. ABI bytecode lokal berukuran 4,227 bytes (bukan ukuran deployment receipt).

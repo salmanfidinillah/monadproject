@@ -2,27 +2,28 @@
 
 ## Keadaan aktual
 
-**TAHAP 1 BERJALAN; BELUM LULUS PENUH.** Scaffold React/Vite dan landing page berhasil dibuild serta dideploy ke Cloudflare Workers Static Assets. URL publik dan SPA fallback merespons 200 dari pemeriksaan HTTP; verifikasi buka melalui koneksi HP masih menunggu. Gameplay dan kontrak belum dibuat.
+**TAHAP 2 SELESAI LOKAL; VERIFIKASI HP TAHAP 1 MASIH MENUNGGU.** Landing page publik dan SPA fallback merespons HTTP 200. `BomOper.sol` telah dikompilasi dengan solc 0.8.30/EVM Cancun; dua tes jaringan (10143 benar, 31337 ditolak) lulus. Tes aturan inti lengkap dan deployment kontrak Monad belum dilakukan.
 
 | Hal | Status/nilai aktual |
 |---|---|
-| Tahap terakhir selesai | Prompt 0; scaffold dan deployment publik Tahap 1 berhasil, uji HP masih pending |
-| Tahap berikutnya | Verifikasi URL dari HP, lalu lanjut Tahap 2 |
+| Tahap terakhir selesai | Tahap 2 lokal: kontrak, konfigurasi jaringan, ABI, compile dan chain-guard test lulus |
+| Tahap berikutnya | Tahap 3: tes seluruh aturan dan gas; verifikasi URL landing lewat HP masih pending |
 | Repository GitHub tujuan | https://github.com/salmanfidinillah/monadproject |
 | Branch pembangunan | main; Git lokal diinisialisasi dan branch diperiksa |
 | Akun GitHub terhubung | salmanfidinillah; profil berhasil dibaca melalui plugin GitHub |
 | Remote origin / izin push | origin = https://github.com/salmanfidinillah/monadproject.git; Git push aktual berhasil |
-| Push fondasi/game | Fondasi BERHASIL di-push dan SHA diverifikasi; kode game belum ada |
+| Push fondasi/game | Checkpoint Tahap 2 mencakup kontrak dan catatan progres; SHA dilaporkan setelah verifikasi push |
 | Checkpoint fondasi terverifikasi | fddf27fcf121c0cc8cca9b26526f1c65137a1c25; lihat bukti di bawah. SHA commit pembaruan catatan ini dilaporkan di chat setelah commit/push |
 | Checkpoint desain terverifikasi | f826af720c7ca88232bdd859d09df05a525e3076; commit desain sudah di-push. SHA commit catatan sesudahnya dilaporkan di chat |
-| Kode frontend/kontrak | Scaffold React/Vite untuk landing tersedia; gameplay dan kontrak belum dibuat |
+| Kode frontend/kontrak | Landing scaffold tersedia; `contracts/BomOper.sol` tersedia lokal; gameplay UI/wallet belum diimplementasikan |
 | Desain Figma URL dan frame | https://www.figma.com/design/T8zhiDboW04KOC9sDJrlz6/BOM-OPER?node-id=11-60; detail node/frame di docs/design/README.md |
-| Build / tes lokal | `npm run build` LULUS; Wrangler dry-run dan cek HTTP lokal LULUS; tes game BELUM ADA |
+| Build / tes lokal | Build app LULUS; `npm run contracts:compile` LULUS; `npm run contracts:test` LULUS 2 tes chain guard; full rule tests belum dijalankan |
 | URL publik landing | https://bom-oper.salmansegaf52.workers.dev; Worker `bom-oper`, versi `0b0c8d8a-350d-442f-a44f-1246795488a5` |
-| Chain target rencana | Monad Testnet 10143; verifikasi jaringan saat pelaksanaan |
-| Alamat kontrak aktual | BELUM ADA |
+| Chain target | RPC Monad Testnet `eth_chainId` = 10143; simulasi lokal 10143; constructor menolak deployment pada ID lain |
+| Compiler/EVM target | solc 0.8.30; Cancun; optimizer 200 runs; dikompilasi lokal |
+| Alamat kontrak aktual | BELUM ADA; belum deploy Monad Testnet |
 | Tx deploy / blok / receipt | BELUM ADA |
-| ABI/artifact yang dipakai | BELUM ADA |
+| ABI/artifact yang dipakai | Lokal: `artifacts/hardhat/contracts/BomOper.sol/BomOper.json`; ABI memuat enam fungsi MVP, snapshot tuple dan lima event |
 | Receipt oper / finalisasi | BELUM ADA |
 | Uji perangkat / jumlah pemain | BELUM DIUJI |
 | Mode wallet / durasi aktual | BELUM DIIMPLEMENTASIKAN; target EOA sementara / default 30 detik |
@@ -31,8 +32,8 @@
 ## Saat mulai
 
 - Pastikan waktu/rules panitia dan ketersediaan alat, Figma/GitHub/Cloudflare serta wallet testnet.
-- Lanjutkan dari progres Tahap 1 di bawah ini. Jalankan hanya langkah yang belum selesai; jangan membuat ulang proyek.
-- Langkah manual yang masih dibutuhkan: pengguna membuka URL publik lewat koneksi HP dan melaporkan hasil; jangan kirim kredensial ke chat.
+- Lanjutkan dari progres tahap terakhir di bawah ini. Jalankan hanya langkah yang belum selesai; jangan membuat ulang proyek.
+- Langkah manual yang masih dibutuhkan: pengguna membuka URL publik lewat koneksi HP; tahap tersebut tidak menghalangi tes kontrak. Jangan kirim kredensial ke chat.
 
 ## Catatan tiap checkpoint
 
@@ -91,4 +92,13 @@ Desain arcade dibuat pada file Figma pengguna tanpa menghapus halaman lama. Open
 - Build lokal lulus. Hardhat memuat konfigurasi, tetapi belum ada kontrak untuk dikompilasi. Wrangler dry-run membaca hasil build. Pemeriksaan HTTP publik untuk `/` dan `/room/example` merespons 200; uji melalui HP masih pending.
 - Wrangler `whoami` terautentikasi. Daftar deployment memastikan Worker `bom-oper` belum ada di akun aktif; `npm run deploy` berhasil dan URL aktual dicatat di atas. Tidak memakai deployment temporary.
 - Dependensi production lulus `npm audit --omit=dev` (0 advisori). Audit penuh melaporkan advisori pada tooling development Hardhat/Wrangler; belum ada fix aman tanpa perubahan major, dicatat untuk tinjauan sebelum Tahap 2.
-- Berikutnya: minta pengguna membuka URL publik lewat koneksi HP. Tahap 1 tetap berjalan sampai pemeriksaan itu dikonfirmasi.
+- Berikutnya: tes aturan dan gas pada Tahap 3; pengujian URL via HP Tahap 1 masih menunggu konfirmasi pengguna.
+
+
+### Progres Tahap 2 - 24 Oktober 2026 WIB
+
+- `contracts/BomOper.sol` menerapkan Waiting -> Active -> Finished, create auto-join creator, validasi kapasitas/durasi, start penuh oleh anggota, oper holder dengan expectedTurn, hot-pass tiga detik satu kali/pemain/room, deadline tanpa reset, siapa pun boleh settle, loser holder terakhir, snapshot terbatas empat pemain dan event untuk tiap perubahan.
+- Constructor memeriksa `block.chainid == 10143`; RPC resmi `https://testnet-rpc.monad.xyz` mengembalikan `eth_chainId` 10143. Tidak ada fungsi payable, pengelolaan dana, admin, atau randomisasi.
+- `hardhat.config.ts`: solc 0.8.30, optimizer 200 runs, Cancun; `monadTestnetLocal` chain ID 10143, `wrongChainLocal` 31337, dan endpoint Monad Testnet publik dibatasi dengan chain ID 10143.
+- `npm run contracts:compile` lulus: satu file, solc 0.8.30 (WASM), EVM target Cancun. `npm run contracts:test` lulus: 2 tes Mocha; local simulation ber-chain 10143 menerima deployment, chain 31337 menolak dengan `UnsupportedChain(31337,10143)`. ABI diperiksa manual; detail di TEST-RESULTS.md.
+- Belum dilakukan: tes aturan penuh/gas Tahap 3, deploy/receipt Monad Testnet, UI kontrak, atau uji HP atas landing page.

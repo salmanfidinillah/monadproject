@@ -1,11 +1,11 @@
 # Keputusan dan perubahan
 
-Tabel ini memuat keputusan rencana dari pengguna/panduan dan status aktual fondasi. Implementasi game dan fallback belum dijalankan.
+Tabel ini memuat keputusan rencana dari pengguna/panduan dan status aktual proyek. Kontrak BomOper sudah ada di lokal; tes aturan lengkap, integrasi wallet, dan deployment kontrak belum dijalankan.
 
 | Keputusan rencana | Alasan | Status |
 |---|---|---|
-| Satu ronde 2–4 pemain, creator holder pertama | Lingkup enam jam, tanpa kebutuhan randomness | Direncanakan |
-| Aturan/hasil di kontrak Monad | Semua pemain memakai state bersama yang dapat diperiksa | Direncanakan |
+| Satu ronde 2-4 pemain, creator holder pertama | Lingkup enam jam, tanpa kebutuhan randomness | Diimplementasikan lokal; tes aturan lengkap di Tahap 3 |
+| Aturan/hasil di kontrak Monad | Semua pemain memakai state bersama yang dapat diperiksa | Kontrak ditulis lokal pada Tahap 2; full rule tests menyusul Tahap 3 |
 | Frontend statis tanpa backend | Mengurangi komponen yang perlu dibangun/deploy | Direncanakan |
 | Figma sebelum UI, sekitar20menit | Acuan visual konkret dan editable | Lima frame editable dibuat dan diperiksa pada Prompt 0 |
 | Opening + loading nyata sebelum lobby | Sambutan game dan status persiapan yang mudah dipahami; tanpa menambah waktu buatan | Diminta pengguna, belum diimplementasikan |
@@ -16,6 +16,14 @@ Tabel ini memuat keputusan rencana dari pengguna/panduan dan status aktual fonda
 | Minimum demo dua pemain nyata | Jika empat konteks belum stabil | Belum diaktifkan |
 
 Setiap perubahan berikutnya mencatat waktu aktual, pemicu, pilihan, alasan, dampak pada SPEC/UI/tes/jadwal, dan bukti. Jika pengguna mengubah lingkup, sinkronkan dokumen terkait. Jangan diam-diam mengganti aturan/durasi/identitas atau menyebut fallback sebagai target asli yang sudah selesai.
+
+## 24 Oktober 2026 WIB - compiler dan guard jaringan Tahap 2
+
+- Pilihan: solc 0.8.30, optimizer 200 runs, EVM target Cancun; Hardhat 3.21.0 membangun artefak dan tes pada EDR simulated network ber-chain ID 10143. Network lokal 31337 terpisah hanya untuk membuktikan constructor menolak chain yang salah.
+- Verifikasi RPC publik Monad Testnet: POST `eth_chainId` ke `https://testnet-rpc.monad.xyz` mengembalikan decimal 10143; Hardhat remote config mengharapkan chain ID yang sama.
+- Dasar: [Monad Deployment Summary](https://docs.monad.xyz/developer-essentials/summary) menyatakan opcode EVM hingga Fusaka didukung; compiler Cancun adalah target konservatif yang kompatibel, dan tersedia sebagai target di [Solidity 0.8.30 compiler docs](https://docs.soliditylang.org/en/v0.8.30/using-the-compiler.html). [Hardhat Configuration](https://hardhat.org/docs/reference/configuration) mendokumentasikan `evmVersion`, `chainId`, serta Cancun pada jaringan simulasi. Keduanya diverifikasi dengan kompilasi dan tes aktual.
+- Referensi pengguna: slide workshop Monad Blitz mencantumkan Monad Testnet chain ID 10143, MON, dan RPC `testnet-rpc.monad.xyz`; deployment tidak dilakukan di tahap ini. Instruksi slide tentang deployment tidak menggantikan tahap 4/persetujuan pengguna. Informasi akses venue pada dokumen tidak disalin ke repo.
+- Dampak: constructor menolak deployment selain chain 10143. Belum ada kontrak di testnet; acceptance rules penuh tetap diuji pada Tahap 3.
 
 ## 24 Oktober 2026 WIB — fondasi Prompt Induk
 

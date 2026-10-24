@@ -1,11 +1,11 @@
 # Arsitektur rencana
 
-Belum diimplementasikan. Aturan kanonis: SPEC.md. Versi dependency, perintah, jaringan dan deployment aktual harus diverifikasi saat pembangunan; jangan mengisi bukti dari perkiraan.
+Kontrak BomOper telah dibuat lokal pada Tahap 2; frontend game dan deployment kontrak belum ada. Aturan kanonis: SPEC.md. Versi dependency, perintah, jaringan dan deployment aktual harus diverifikasi saat pembangunan; jangan mengisi bukti dari perkiraan.
 
 ## Komponen dan struktur
 
 - app/: React/Vite/TypeScript, ethers v6, UI Opening/Lobby/Arena/Hasil, loading/error sesuai operasi nyata, snapshot/polling dan pengelolaan wallet.
-- contracts/: satu BomOper.sol; test/: tes perilaku Hardhat.
+- contracts/: satu BomOper.sol dengan guard constructor chain ID 10143; test/: tes perilaku Hardhat. Compiler lokal dipatok solc 0.8.30 dengan EVM target Cancun; detail aktual dicatat di STATUS.md.
 - deployments/: catatan deployment publik per chain; rencana deployments/10143.json.
 - docs/: panduan, arsitektur, keputusan dan acuan desain.
 - Root scripts mengarah ke folder yang benar; app build terpisah dari artifact kontrak, dependency kompatibel disimpan dalam lockfile.

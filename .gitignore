@@ -18,6 +18,7 @@ artifacts/
 cache/
 coverage/
 typechain-types/
+/types/
 *.tsbuildinfo
 .wrangler/
 
