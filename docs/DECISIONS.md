@@ -15,6 +15,14 @@ Tabel ini memuat keputusan rencana dari pengguna/panduan dan status aktual proye
 | Fallback ekstensi+60detik | Jika wallet bermain belum stabil jam ketiga | Belum diaktifkan |
 | Minimum demo dua pemain nyata | Jika empat konteks belum stabil | Belum diaktifkan |
 
+## 24 Oktober 2026 WIB — persiapan UI wallet Tahap 5
+
+- Pemicu: pengguna meminta melanjutkan Tahap 5, lalu Tahap 6 setelah wallet siap.
+- Pilihan: tambahkan route lokal `/wallet` yang membuat EOA hanya dari aksi + persetujuan eksplisit, menyimpan private key di sessionStorage tab dengan batas 10 menit, dan menyediakan funding via ekstensi atau alamat salin.
+- Gas baseline dihitung dari receipt simulasi Tahap 3 dengan fee RPC yang dibaca saat pengguna meminta estimasi. Model contoh dan batasnya ditampilkan; bukan janji saldo cukup.
+- Aksi game memerlukan RPC chain 10143 dan alamat kontrak publik konfigurasi build; saat alamat belum tersedia, transaksi harus diblokir. Jangan menganggap route lokal sebagai uji wallet atau Tahap 5 selesai.
+- Dampak: route `/wallet` belum dideploy dan belum diuji dengan dua wallet karena belum ada receipt/alamat deployment kontrak. Tahap 6 menunggu plugin Figma yang benar-benar tersambung agar screenshot/context dari frame tepat dapat diambil sebelum implementasi visual.
+
 Setiap perubahan berikutnya mencatat waktu aktual, pemicu, pilihan, alasan, dampak pada SPEC/UI/tes/jadwal, dan bukti. Jika pengguna mengubah lingkup, sinkronkan dokumen terkait. Jangan diam-diam mengganti aturan/durasi/identitas atau menyebut fallback sebagai target asli yang sudah selesai.
 
 ## 24 Oktober 2026 WIB - compiler dan guard jaringan Tahap 2

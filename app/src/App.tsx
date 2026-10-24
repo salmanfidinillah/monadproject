@@ -1,6 +1,7 @@
 import { lazy, Suspense } from "react";
 
 const DeploySetup = lazy(() => import("./DeploySetup"));
+const PlayWalletSetup = lazy(() => import("./PlayWalletSetup"));
 
 const rules = [
   {
@@ -23,6 +24,9 @@ const rules = [
 function App() {
   if (window.location.pathname === "/setup") {
     return <Suspense fallback={<main className="page-shell"><p>Memuat helper deployment…</p></main>}><DeploySetup /></Suspense>;
+  }
+  if (window.location.pathname === "/wallet") {
+    return <Suspense fallback={<main className="page-shell"><p>Memuat setup wallet…</p></main>}><PlayWalletSetup /></Suspense>;
   }
 
   return (
@@ -95,6 +99,7 @@ function App() {
 
       <footer className="footer">
         <span>BOM OPER</span>
+        <a href="/wallet">Setup wallet pemain</a>
         <a href="/setup">Setup kontrak · developer</a>
         <span>Target jaringan: Monad Testnet · Chain ID 10143</span>
       </footer>

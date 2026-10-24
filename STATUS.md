@@ -2,13 +2,13 @@
 
 ## Keadaan aktual
 
-**TAHAP 3 SELESAI; HELPER TAHAP 4 SUDAH PUBLIK DAN MENUNGGU PERSETUJUAN WALLET.** URL `/setup` tersedia di Worker BOM OPER. Pemeriksaan lokal dan RPC publik lulus; belum ada transaksi deploy kontrak, receipt, alamat, atau runtime code game.
+**TAHAP 3 SELESAI; TAHAP 4 MASIH MENUNGGU DEPLOY KONTRAK. PERSIAPAN UI TAHAP 5 ADA DI LOKAL.** URL `/setup` tersedia di Worker BOM OPER, tetapi belum ada bukti receipt/alamat deploy dari pengguna. Route `/wallet` baru dibangun lokal dan belum dideploy; alur transaksi game belum dapat diuji tanpa kontrak publik.
 
 | Hal | Status/nilai aktual |
 |---|---|
 | Tahap terakhir selesai penuh | Tahap 3 lokal: seluruh tes aturan dan gas simulasi lulus |
-| Status tahap berjalan | Tahap 4 persiapan helper selesai; menunggu pengguna menyetujui transaksi deploy di wallet |
-| Tahap berikutnya | Setelah receipt: verifikasi runtime code/view, simpan record dan ABI/address bersama; verifikasi URL landing lewat HP masih pending |
+| Status tahap berjalan | Persiapan Tahap 5 lokal; menunggu bukti deploy Tahap 4 sebelum transaksi game dan uji dua pemain |
+| Tahap berikutnya | Deploy lewat `/setup`, kirim alamat/hash atau `deployments/10143.json`; lanjutkan integrasi dua wallet, lalu Figma Tahap 6 setelah koneksi Figma aktif |
 | Repository GitHub tujuan | https://github.com/salmanfidinillah/monadproject |
 | Branch pembangunan | main; Git lokal diinisialisasi dan branch diperiksa |
 | Akun GitHub terhubung | salmanfidinillah; profil berhasil dibaca melalui plugin GitHub |
@@ -16,7 +16,7 @@
 | Push fondasi/game | Checkpoint Tahap 2 mencakup kontrak dan catatan progres; SHA dilaporkan setelah verifikasi push |
 | Checkpoint fondasi terverifikasi | fddf27fcf121c0cc8cca9b26526f1c65137a1c25; lihat bukti di bawah. SHA commit pembaruan catatan ini dilaporkan di chat setelah commit/push |
 | Checkpoint desain terverifikasi | f826af720c7ca88232bdd859d09df05a525e3076; commit desain sudah di-push. SHA commit catatan sesudahnya dilaporkan di chat |
-| Kode frontend/kontrak | Landing scaffold dan helper deploy `/setup` tersedia; gameplay UI/wallet permainan belum diimplementasikan |
+| Kode frontend/kontrak | Landing dan helper deploy `/setup` tersedia publik; wallet bermain/funding `/wallet` baru lokal; gameplay create/join/pass belum diaktifkan |
 | Desain Figma URL dan frame | https://www.figma.com/design/T8zhiDboW04KOC9sDJrlz6/BOM-OPER?node-id=11-60; detail node/frame di docs/design/README.md |
 | Build / tes lokal | Root `npm run build` LULUS: export artifact ABI/bytecode dan Vite build; `npm run contracts:test` LULUS 16 tes Tahap 3 |
 | URL publik landing | https://bom-oper.salmansegaf52.workers.dev; Worker `bom-oper`, versi `0b0c8d8a-350d-442f-a44f-1246795488a5` |
@@ -28,7 +28,8 @@
 | ABI/artifact yang dipakai | Hardhat: `artifacts/hardhat/contracts/BomOper.sol/BomOper.json`; app: `app/src/contract/BomOper.artifact.json`; bytecode 4,227 byte, 32 item ABI |
 | Receipt oper / finalisasi | BELUM ADA |
 | Uji perangkat / jumlah pemain | BELUM DIUJI |
-| Mode wallet / durasi aktual | BELUM DIIMPLEMENTASIKAN; target EOA sementara / default 30 detik |
+| Mode wallet / durasi aktual | UI EOA sementara lokal; belum dideploy atau diuji tanda tangan/dua pemain; target default 30 detik |
+| Plugin Figma untuk Tahap 6 | Belum terhubung pada sesi ini; tool Figma/design-to-code belum tersedia |
 | Submission | BELUM DILAKUKAN |
 
 ## Saat mulai

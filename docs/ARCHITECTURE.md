@@ -4,7 +4,7 @@ Kontrak BomOper telah dibuat lokal pada Tahap 2; frontend game dan deployment ko
 
 ## Komponen dan struktur
 
-- app/: React/Vite/TypeScript, ethers v6, UI Opening/Lobby/Arena/Hasil, loading/error sesuai operasi nyata, snapshot/polling dan pengelolaan wallet.
+- app/: React/Vite/TypeScript, ethers v6, UI Opening/Lobby/Arena/Hasil, loading/error sesuai operasi nyata, snapshot/polling dan pengelolaan wallet. `/setup` adalah helper deploy; `/wallet` adalah persiapan wallet bermain lokal sampai kontrak terbit.
 - contracts/: satu BomOper.sol dengan guard constructor chain ID 10143; test/: tes perilaku Hardhat. Compiler lokal dipatok solc 0.8.30 dengan EVM target Cancun; detail aktual dicatat di STATUS.md.
 - deployments/: catatan deployment publik per chain; rencana deployments/10143.json.
 - docs/: panduan, arsitektur, keputusan dan acuan desain.

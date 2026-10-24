@@ -1,6 +1,6 @@
 # Rundown enam jam dan checklist
 
-Prompt Induk dan Prompt 0 selesai dengan checkpoint GitHub terverifikasi. Tahap 1 masih menunggu verifikasi HP; scaffold sudah dibuild dan URL publik merespons. Tahap 2 dan Tahap 3 selesai lokal; helper Tahap 4 sudah publik, tetapi deployment kontrak menunggu persetujuan wallet pengguna. Tahap 5 sampai 9 belum dijalankan. Centang hanya setelah kriteria tahap terbukti. Jadwal relatif; contoh waktu 12.00-18.00 bukan konfirmasi panitia. Checkpoint GitHub 1-2 menit termasuk dalam slot yang sama.
+Prompt Induk dan Prompt 0 selesai dengan checkpoint GitHub terverifikasi. Tahap 1 masih menunggu verifikasi HP; scaffold sudah dibuild dan URL publik merespons. Tahap 2 dan Tahap 3 selesai lokal; helper Tahap 4 sudah publik, tetapi deployment kontrak menunggu transaksi wallet pengguna. Persiapan UI Tahap 5 sekarang ada di lokal, belum diuji dengan dua wallet atau dideploy. Tahap 6 menunggu koneksi plugin Figma dan alamat kontrak terverifikasi. Centang hanya setelah kriteria tahap terbukti. Jadwal relatif; contoh waktu 12.00-18.00 bukan konfirmasi panitia. Checkpoint GitHub 1-2 menit termasuk dalam slot yang sama.
 
 | Tahap | Slot | Syarat lulus |
 |---|---|---|
@@ -21,8 +21,8 @@ Prompt Induk dan Prompt 0 selesai dengan checkpoint GitHub terverifikasi. Tahap 
 - [x] 2: `BomOper.sol`, state machine/event/snapshot, expectedTurn, panas, deadline, compiler/EVM target dan guard chain 10143; compile, ABI, serta tes chain guard lulus. Full rule tests ada di Tahap 3.
 - [x] 3: tes aturan dan batas lulus di simulasi chain ID 10143 dengan pengaturan timestamp jaringan; gas enam aksi dicatat di TEST-RESULTS.md. Bukan sleep dunia nyata.
 - [ ] 4: helper `/setup` publik dan pra-pemeriksaan siap; menunggu pengguna menyetujui deploy 10143, lalu verifikasi receipt/code/view dan simpan record.
-- [ ] 5: persetujuan wallet bermain, funding gas, pending/recovery; fallback bila perlu.
-- [ ] 6: Opening/Mulai Main, loading/error nyata, link room langsung, UI sesuai Figma, polling konsisten, settle, ronde publik.
+- [ ] 5: UI persetujuan EOA/sessionStorage 10 menit, saldo/funding ekstensi, budget gas dan guard aksi tersedia lokal di `/wallet`; belum ada deployment kontrak, receipt game, atau uji dua alamat. Fallback belum diaktifkan.
+- [ ] 6: Belum dikerjakan; wajib mengambil design context/screenshot frame lewat plugin Figma yang tersambung. Opening/Lobby/Arena/Hasil, polling, settle dan ronde publik belum ada.
 - [ ] 7: dua sampai empat konteks nyata, kasus gagal, hasil sama, perbaikan terbukti.
 - [ ] 8: build/deploy final, cek HP/room link, ronde final, dokumentasi/video.
 - [ ] 9: pitch dua menit, form resmi, bukti submission.

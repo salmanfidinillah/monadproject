@@ -153,6 +153,20 @@ Gas dari receipt lokal (basis pembanding, bukan estimasi biaya MON testnet):
 
 Deployment kontrak testnet dan verifikasi URL landing lewat HP tetap BELUM DILAKUKAN.
 
+## Persiapan Tahap 5 wallet UI — 24 Oktober 2026 WIB
+
+| Pemeriksaan aktual | Hasil |
+|---|---|
+| `npm run build` setelah menambah route `/wallet` | LULUS: export artifact dan TypeScript/Vite production build |
+| `git diff --check` | LULUS: tidak ada whitespace error |
+| Pemeriksaan pembuatan wallet | Baru ditinjau lewat kode: hanya event klik dengan checkbox persetujuan; belum diuji pada browser/wallet nyata |
+| Pemulihan sessionStorage, expiry, funding wallet ekstensi, receipt, dua pemain | BELUM DIUJI secara browser/testnet; belum ada kontrak deployment/address |
+| Figma design context/frame screenshot | BELUM DIAMBIL; plugin Figma belum terhubung pada sesi Codex ini |
+
+Implementasi lokal menyimpan private key hanya pada `sessionStorage` tab dengan expiry 10 menit; halaman hanya menampilkan alamat, saldo, dan waktu sesi. Funding meminta chain ID 10143 dan memicu transfer ekstensi hanya sesudah klik pengguna; transfer manual lewat alamat salin juga tersedia. Budget indikatif memakai receipt gas dari tes Tahap 3 serta `maxFeePerGas`/`gasPrice` RPC ketika pengguna menekan periksa. Asumsi contoh: 1 create + 1 join + 1 start + 4 pass biasa + 1 pass panas + 1 settle; bukan jaminan kecukupan saldo.
+
+Alamat kontrak belum diberikan sehingga transaksi permainan belum bisa digunakan. Tombol/action belum boleh dianggap lulus; Tahap 5 tetap terbuka sampai dua wallet berbeda menjalankan create/join/start/pass sungguhan dan receipt/state diverifikasi.
+
 ## Pelaksanaan Tahap 4 - helper deployment, 24 Oktober 2026 WIB
 
 | Pemeriksaan/perintah aktual | Hasil |
