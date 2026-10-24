@@ -97,8 +97,11 @@ Lingkungan: Windows PowerShell, root repository pada branch `main`. Tidak ada ap
 | `npm run contracts:compile` | LULUS konfigurasi; `No contracts to compile` (belum ada Solidity, bukan bukti kompilasi kontrak game) |
 | `npx wrangler deploy --dry-run --config wrangler.jsonc` | LULUS; static assets dibaca dari `app/dist`; tidak mengirim deployment |
 | Wrangler lokal, GET `/` dan `/room/example` | Keduanya 200; fallback SPA melayani index pada rute navigasi yang tidak punya asset |
-| `npx wrangler whoami` | TERHALANG: `You are not authenticated. Please run wrangler login.` |
-| Deployment produksi, URL publik, buka melalui HP | BELUM DILAKUKAN; menunggu pengguna memilih/login ke akun Cloudflare |
+| `npx wrangler whoami` | LULUS setelah OAuth Cloudflare; akun terautentikasi pada saat deploy |
+| `npx wrangler deployments list --name bom-oper` | LULUS pemeriksaan collision: Cloudflare menyatakan Worker tersebut belum ada di akun aktif |
+| `npm run deploy` | LULUS; build Vite lalu deploy Workers Static Assets; URL yang dikembalikan: https://bom-oper.salmansegaf52.workers.dev; Version ID `0b0c8d8a-350d-442f-a44f-1246795488a5` |
+| GET publik `/` dan `/room/example` | Keduanya HTTP 200; halaman memuat judul BOM OPER dan rute SPA fallback merespons |
+| Buka URL melalui koneksi HP | MENUNGGU konfirmasi pengguna; belum diklaim lulus |
 | Tes kontrak/game/multiplayer | BELUM DIJALANKAN; belum ada kontrak/game |
 
 Auditor npm saat instalasi melaporkan 16 advisori (2 moderate, 14 high) pada dependency tree penuh; audit production-only bersih. Hardhat/Hardhat toolbox masih ditandai audit sebagai dev-tool advisories tanpa fix aman dalam major terpilih, jadi tidak dipaksakan berubah pada scaffold. Periksa kembali sebelum Tahap 2.

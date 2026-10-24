@@ -2,12 +2,12 @@
 
 ## Keadaan aktual
 
-**TAHAP 1 BERJALAN; BELUM LULUS PENUH.** Scaffold React/Vite dan landing page berhasil dibuild lokal. Wrangler dry-run serta fallback SPA lokal merespons. Deployment publik dan uji HP menunggu login Cloudflare. Gameplay dan kontrak belum dibuat.
+**TAHAP 1 BERJALAN; BELUM LULUS PENUH.** Scaffold React/Vite dan landing page berhasil dibuild serta dideploy ke Cloudflare Workers Static Assets. URL publik dan SPA fallback merespons 200 dari pemeriksaan HTTP; verifikasi buka melalui koneksi HP masih menunggu. Gameplay dan kontrak belum dibuat.
 
 | Hal | Status/nilai aktual |
 |---|---|
-| Tahap terakhir selesai | Tahap 1 lokal: scaffold, landing page, lockfile, konfigurasi hosting dan build lulus; belum ada deployment publik |
-| Tahap berikutnya | Autentikasi Cloudflare, periksa target Worker, deploy landing page, lalu uji dari HP |
+| Tahap terakhir selesai | Prompt 0; scaffold dan deployment publik Tahap 1 berhasil, uji HP masih pending |
+| Tahap berikutnya | Verifikasi URL dari HP, lalu lanjut Tahap 2 |
 | Repository GitHub tujuan | https://github.com/salmanfidinillah/monadproject |
 | Branch pembangunan | main; Git lokal diinisialisasi dan branch diperiksa |
 | Akun GitHub terhubung | salmanfidinillah; profil berhasil dibaca melalui plugin GitHub |
@@ -18,7 +18,7 @@
 | Kode frontend/kontrak | Scaffold React/Vite untuk landing tersedia; gameplay dan kontrak belum dibuat |
 | Desain Figma URL dan frame | https://www.figma.com/design/T8zhiDboW04KOC9sDJrlz6/BOM-OPER?node-id=11-60; detail node/frame di docs/design/README.md |
 | Build / tes lokal | `npm run build` LULUS; Wrangler dry-run dan cek HTTP lokal LULUS; tes game BELUM ADA |
-| URL publik game | BELUM ADA; belum deploy |
+| URL publik landing | https://bom-oper.salmansegaf52.workers.dev; Worker `bom-oper`, versi `0b0c8d8a-350d-442f-a44f-1246795488a5` |
 | Chain target rencana | Monad Testnet 10143; verifikasi jaringan saat pelaksanaan |
 | Alamat kontrak aktual | BELUM ADA |
 | Tx deploy / blok / receipt | BELUM ADA |
@@ -32,7 +32,7 @@
 
 - Pastikan waktu/rules panitia dan ketersediaan alat, Figma/GitHub/Cloudflare serta wallet testnet.
 - Lanjutkan dari progres Tahap 1 di bawah ini. Jalankan hanya langkah yang belum selesai; jangan membuat ulang proyek.
-- Langkah manual yang masih dibutuhkan: login Cloudflare melalui terminal dan memilih akun yang benar; jangan kirim kredensial ke chat.
+- Langkah manual yang masih dibutuhkan: pengguna membuka URL publik lewat koneksi HP dan melaporkan hasil; jangan kirim kredensial ke chat.
 
 ## Catatan tiap checkpoint
 
@@ -88,7 +88,7 @@ Desain arcade dibuat pada file Figma pengguna tanpa menghapus halaman lama. Open
 - Lingkungan: Node v24.13.1, npm 11.8.0, Git 2.54.0.windows.1. Vite 8.3.5, plugin React 6.1.2, React 19.3.1, TypeScript 5.9.3, Hardhat 3.21.0, toolbox ethers 4.0.0, Wrangler 4.152.0 dikunci di lockfile; Node 24 memenuhi syarat dokumentasi Vite/Hardhat.
 - Dibuat landing page responsif dengan nama BOM OPER, ringkasan aturan, label target Monad Testnet dan Chain ID 10143. Tidak ada wallet, transaksi, animasi, atau klaim gameplay aktif.
 - Hosting dipilih: Cloudflare Workers Static Assets, `app/dist`, fallback `single-page-application`; konfigurasi tunggal `wrangler.jsonc`. Build app tidak berbagi folder dengan artifact/cache Hardhat.
-- Build lokal lulus. Hardhat memuat konfigurasi, tetapi belum ada kontrak untuk dikompilasi. Wrangler dry-run membaca hasil build. Cek Wrangler lokal pada `/` dan `/room/example` merespons 200; belum ada uji HP/public.
-- Wrangler `whoami` menyatakan belum terautentikasi. Tidak menjalankan `wrangler login` atau deploy tanpa pengguna memilih/mengonfirmasi akun Cloudflare. Tidak memakai deployment temporary.
+- Build lokal lulus. Hardhat memuat konfigurasi, tetapi belum ada kontrak untuk dikompilasi. Wrangler dry-run membaca hasil build. Pemeriksaan HTTP publik untuk `/` dan `/room/example` merespons 200; uji melalui HP masih pending.
+- Wrangler `whoami` terautentikasi. Daftar deployment memastikan Worker `bom-oper` belum ada di akun aktif; `npm run deploy` berhasil dan URL aktual dicatat di atas. Tidak memakai deployment temporary.
 - Dependensi production lulus `npm audit --omit=dev` (0 advisori). Audit penuh melaporkan advisori pada tooling development Hardhat/Wrangler; belum ada fix aman tanpa perubahan major, dicatat untuk tinjauan sebelum Tahap 2.
-- Berikutnya: pengguna login Cloudflare di terminal, pilih akun yang benar, lalu daftar Worker untuk memastikan nama `bom-oper` tidak menimpa layanan lain. Sesudahnya deploy dan minta pengujian URL dari HP.
+- Berikutnya: minta pengguna membuka URL publik lewat koneksi HP. Tahap 1 tetap berjalan sampai pemeriksaan itu dikonfirmasi.

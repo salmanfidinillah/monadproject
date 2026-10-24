@@ -1,6 +1,6 @@
 # Rundown enam jam dan checklist
 
-Prompt Induk dan Prompt 0 selesai dengan checkpoint GitHub terverifikasi. Scaffold Tahap 1 dan build lokal sudah dibuat, tetapi URL publik dan uji HP belum ada karena Wrangler belum login. Tahap 1 belum lulus penuh; Tahap 2?9 belum dijalankan. Centang hanya setelah kriteria tahap terbukti. Jadwal relatif; contoh waktu 12.00?18.00 bukan konfirmasi panitia. Checkpoint GitHub 1?2 menit termasuk dalam slot yang sama.
+Prompt Induk dan Prompt 0 selesai dengan checkpoint GitHub terverifikasi. Scaffold Tahap 1 sudah dibuild dan dideploy ke URL publik; verifikasi melalui HP masih menunggu. Tahap 1 belum lulus penuh; Tahap 2 sampai 9 belum dijalankan. Centang hanya setelah kriteria tahap terbukti. Jadwal relatif; contoh waktu 12.00-18.00 bukan konfirmasi panitia. Checkpoint GitHub 1-2 menit termasuk dalam slot yang sama.
 
 | Tahap | Slot | Syarat lulus |
 |---|---|---|
@@ -17,7 +17,7 @@ Prompt Induk dan Prompt 0 selesai dengan checkpoint GitHub terverifikasi. Scaffo
 
 - [x] Induk: baca/periksa dokumen, Git/remote tujuan, commit/push fondasi; SHA checkpoint cocok dengan origin/main (bukti di STATUS.md).
 - [x] 0: Figma Opening/Lobby/Arena/Hasil desktop + Arena mobile, anotasi opening mobile/loading, URL/frame/tokens/preview; push desain dan SHA remote terverifikasi.
-- [ ] 1: app scaffold, lockfile, .gitignore, .env.example, SPA hosting, URL awal.
+- [ ] 1: app scaffold, lockfile, .gitignore, .env.example, SPA hosting dan URL publik sudah tersedia; verifikasi buka dari HP masih pending.
 - [ ] 2: kontrak state machine/event/snapshot, expectedTurn, panas, deadline.
 - [ ] 3: tes aturan dan batas (lihat TEST-RESULTS.md); bukan sleep dunia nyata.
 - [ ] 4: deploy 10143 lewat wallet pengguna, receipt/code/ABI/record deploy.
@@ -58,5 +58,6 @@ Revisi arcade lima layar dan storyboard motion sudah dibuat/diperiksa di Figma. 
 - [x] Membuat `app/` React/Vite/TypeScript; root workspace scripts; Hardhat config dengan `contracts/` dan `test/`; `deployments/` untuk bukti publik.
 - [x] Membuat landing BOM OPER dengan aturan ringkas dan label target Monad Testnet, mengikuti palet arcade terbaru di `docs/design/README.md`.
 - [x] Menyiapkan `wrangler.jsonc` untuk `app/dist` + SPA fallback, `.env.example`, dan lockfile.
-- [x] Build lokal dan Wrangler dry-run lulus; URL HP/public belum diverifikasi.
-- [ ] Login Cloudflare, periksa akun/worker tujuan agar deployment tidak menimpa project lain, deploy, lalu uji URL dari HP.
+- [x] Build lokal dan Wrangler dry-run lulus; deployment publik berhasil ke https://bom-oper.salmansegaf52.workers.dev; GET / dan /room/example merespons 200.
+- [x] Login Cloudflare, pastikan Worker bom-oper belum ada pada akun terautentikasi, lalu deploy.
+- [ ] Minta pengguna membuka URL publik melalui koneksi HP; Tahap 1 tetap belum lulus sampai verifikasi ini.
