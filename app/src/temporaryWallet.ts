@@ -1,4 +1,4 @@
-import { JsonRpcProvider, Wallet, getAddress, isAddress, resolveAddress, type TransactionRequest } from "ethers";
+import { JsonRpcProvider, Wallet, getAddress, isAddress, keccak256, resolveAddress, type TransactionRequest } from "ethers";
 import deploymentConfig from "./contract/deploymentConfig.json";
 
 export const MONAD_CHAIN_ID = 10143n;
@@ -10,7 +10,7 @@ type StoredSession = {
   privateKey: string;
   createdAt: number;
   expiresAt: number;
-  pending?: { hash: string; purpose: string; startedAt: number };
+  pending?: { hash: string; purpose: string; startedAt: number; nonce: number };
   activeRoomId?: string;
 };
 
@@ -134,19 +134,24 @@ export async function sendAllowedContractTransaction(
     const maximumFee = gasLimit * feePerGas;
     if (balance < maximumFee) throw new Error("Saldo MON testnet tidak cukup untuk estimasi aksi ini.");
 
-    const response = await signer.sendTransaction({ ...tx, nonce, gasLimit });
-    stored.pending = { hash: response.hash, purpose, startedAt: Date.now() };
+    // Persist a deterministic hash before broadcast. If the RPC drops its response
+    // after accepting the raw transaction, the UI still has the hash to reconcile.
+    const prepared = await signer.populateTransaction({ ...tx, nonce, gasLimit });
+    const rawTransaction = await signer.signTransaction(prepared);
+    const hash = keccak256(rawTransaction);
+    stored.pending = { hash, purpose, startedAt: Date.now(), nonce };
     saveStoredSession(stored);
-    onHash(response.hash);
-    const receipt = await response.wait();
-    if (!receipt) throw new Error(`Receipt belum tersedia. Periksa transaksi ${response.hash}; jangan kirim ulang.`);
+    onHash(hash);
+    await provider.broadcastTransaction(rawTransaction);
+    const receipt = await provider.waitForTransaction(hash);
+    if (!receipt) throw new Error(`Receipt belum tersedia. Periksa transaksi ${hash}; jangan kirim ulang.`);
     await refreshSnapshotAfterReceipt();
     const latest = readStoredSession();
-    if (latest?.pending?.hash === response.hash) {
+    if (latest?.pending?.hash === hash) {
       delete latest.pending;
       saveStoredSession(latest);
     }
-    if (receipt.status !== 1) throw new Error(`Transaksi gagal pada chain. State dibaca ulang. Hash: ${response.hash}`);
+    if (receipt.status !== 1) throw new Error(`Transaksi gagal pada chain. State dibaca ulang. Hash: ${hash}`);
     return receipt;
   } finally {
     writeInFlight = false;

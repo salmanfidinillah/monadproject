@@ -1,5 +1,12 @@
 # Rundown enam jam dan checklist
 
+## Kelanjutan hardening wallet dan inspeksi Figma — 24 Oktober 2026 WIB
+
+- [x] Inspeksi visual frame Opening, Lobby, Arena desktop, Hasil, dan Arena mobile pada file Figma yang disambungkan pengguna. Tidak mengedit file desain.
+- [x] Perbaiki urutan kirim transaksi wallet bermain: sign lokal, simpan hash/nonce pending sebelum broadcast, lalu tunggu receipt.
+- [x] Build TypeScript/Vite dan ekspor artifact kontrak lulus setelah perubahan.
+- [ ] API design-context Figma belum tersedia di daftar tool Codex, dan gameplay belum memanggil kontrak. Lanjutkan integrasi room/snapshot/transaksi; jangan menandai Prompt 5–6 selesai sebelum bukti on-chain.
+
 ## Hasil pemeriksaan repo — 24 Oktober 2026
 
 - [x] Cocokkan dokumen status, berkas proyek, branch dan origin; tiga berkas lokal belum terlacak dijaga tetap di luar checkpoint.

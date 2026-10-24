@@ -1,5 +1,15 @@
 # Hasil pengujian
 
+## Hardening pending wallet bermain — 24 Oktober 2026 WIB
+
+| Pemeriksaan aktual | Hasil |
+|---|---|
+| `npm run build` | LULUS; exporter cocokkan deployment record dengan artifact, TypeScript lulus, Vite membangun 176 modul. |
+| Alur hash transaksi | Pemeriksaan kode: hash dihitung dari raw transaksi signed dan metadata hash/nonce disimpan sebelum broadcast. Tidak ada transaksi wallet yang dikirim saat pemeriksaan ini. |
+| Figma | Frame Opening, Lobby, Arena desktop, Hasil, dan Arena mobile diperiksa secara visual lewat tab Figma pengguna. API design-context MCP tidak tersedia di tool sesi, jadi inspeksi ini bukan bukti ekstraksi context/assets plugin. |
+
+Belum diuji: gameplay mengirim transaksi, pending dipulihkan setelah refresh, dua wallet, dan hasil Finished dari chain. Build bukan bukti integrasi wallet.
+
 ## Perbaikan RPC rate limit dan percobaan manual — 24 Oktober 2026 WIB
 
 | Pemeriksaan aktual | Hasil |

@@ -1,5 +1,12 @@
 # Status aktual BOM OPER
 
+## Kelanjutan terbaru — 24 Oktober 2026 WIB
+
+- Kontrak Monad Testnet terverifikasi: chain ID 10143, alamat `0x18097A160477E49d52A5A637d51D6B831144aDDd`; catatan lengkap dan receipt di `deployments/10143.json`.
+- Figma terlihat melalui tab browser yang tersambung; frame Opening, Lobby, Arena desktop/mobile, dan Hasil sudah diperiksa. Tool design-context Figma tidak muncul pada sesi Codex, jadi tidak ada klaim bahwa MCP context/assets berhasil diambil.
+- `app/src/temporaryWallet.ts` kini menghitung hash dari raw tx yang ditandatangani dan menyimpan hash/nonce pending sebelum broadcast. Build lulus. Guard pengiriman ini masih belum dipanggil dari UI game; gameplay tetap simulasi lokal.
+- Tahap berikutnya: integrasikan pembacaan snapshot dan aksi room memakai wallet sesi, sambil mempertahankan pemulihan pending dan batas expiry. Prompt 5–8 masih terbuka; jangan lanjut Prompt 9.
+
 ## Deployment kontrak terverifikasi — 24 Oktober 2026
 
 Pengguna memberikan `10143.json` di folder Downloads. Hash transaksi diverifikasi ulang secara read-only dengan `npm run deployment:verify -- 0x2ea47703572772f2f32ccb65421b921ebf728b62008fc41c0340d8deb879ed82`.

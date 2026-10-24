@@ -1,5 +1,12 @@
 # Keputusan dan perubahan
 
+## 24 Oktober 2026 WIB — simpan hash sebelum broadcast
+
+- Risiko: jika RPC menerima raw transaksi tetapi koneksi putus sebelum respons kembali, aplikasi lama belum menyimpan hash dan pemulihan sulit dilakukan.
+- Keputusan: wallet bermain menyiapkan dan menandatangani transaksi lokal, menyimpan hash terhitung dan nonce sebagai pending sebelum broadcast, lalu menunggu receipt dengan hash itu. Error broadcast meninggalkan pending untuk diperiksa; tidak ada retry otomatis.
+- Batas: helper belum dipanggil oleh alur gameplay; ini baru hardening fondasi transaksi. Build berhasil, belum ada transaksi testnet dari perubahan ini.
+- Figma: file terlihat melalui tab pengguna, tetapi API MCP design-context tidak tersedia pada sesi ini. Pemeriksaan visual tidak dianggap sebagai ekstraksi layer/aset.
+
 ## 24 Oktober 2026 WIB — receipt deploy terverifikasi dan alamat bersama
 
 - Pengguna memberikan record `10143.json`; hash diverifikasi ulang lewat RPC Monad Testnet. Receipt sukses, transaksi creation tanpa value, init/runtime bytecode, alamat berdasarkan deployer/nonce, blok kanonis, serta `TARGET_CHAIN_ID` dan `nextRoomId` cocok dengan artifact lokal.
