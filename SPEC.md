@@ -45,3 +45,7 @@ Backend API, database, WebSocket, taruhan/hadiah, NFT, token buatan, email login
 - Semua pemain membaca holder/turn/deadline/loser yang konsisten; hasil berstatus Finished on-chain, bukan state lokal.
 - Ada alamat kontrak, deployment receipt, receipt operan/finalisasi, ABI yang sesuai, serta dokumentasi tes/build yang aktual.
 - Desain Figma dan batas implementasinya dicatat; commit/push setiap prompt yang mengubah proyek terverifikasi; keterbatasan tersisa dilaporkan.
+
+## Revisi visual yang disepakati
+
+Tetap BOM OPER. Gunakan halaman Figma Arcade yang dicatat di docs/design/README.md: karakter kartun di arena melayang, outline tegas, tombol arcade dan animasi oper/tangkap/ledakan. Arah visual ini menggantikan konsep navy/dashboard lama. Gerak bebas/physics/3D engine tidak ditambahkan. Semua aturan, identitas, wallet, deadline dan finalisasi di atas tetap berlaku.

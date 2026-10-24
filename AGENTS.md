@@ -4,7 +4,7 @@
 
 - Pada awal sesi atau saat melanjutkan pekerjaan, baca SPEC.md, TASKS.md, dan STATUS.md. Cocokkan dengan berkas proyek dan status Git. Paket awal hanya dokumen; jangan menganggap aplikasi sudah dibuat.
 - Kerjakan tahap yang diminta pengguna. Baca bagian tahap tersebut di docs/BUILD-GUIDE.md; jangan menjalankan semua prompt sekaligus.
-- Baca docs/ARCHITECTURE.md sebelum kontrak/wallet/integrasi/deploy, docs/design/README.md sebelum desain/UI, TEST-RESULTS.md sebelum tes/perbaikan/rilis, dan docs/DECISIONS.md saat melanjutkan atau mengubah pendekatan.
+- Baca docs/ARCHITECTURE.md sebelum kontrak/wallet/integrasi/deploy, docs/design/README.md dan docs/design/MOTION.md sebelum desain/UI/animasi, TEST-RESULTS.md sebelum tes/perbaikan/rilis, dan docs/DECISIONS.md saat melanjutkan atau mengubah pendekatan.
 - Sebutkan singkat sumber yang benar-benar dibaca dan tahap berikutnya; jangan mengaku membaca dokumen yang hilang. Lengkapi berkas yang belum ada dari spesifikasi tanpa menghapus catatan nyata.
 - Instruksi pengguna terbaru berlaku; jika mengubah spesifikasi, sinkronkan dokumen yang terdampak dan jelaskan dampaknya. Jangan memperluas fitur sendiri.
 

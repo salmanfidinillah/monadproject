@@ -40,3 +40,15 @@ Hasil: pada 24 Oktober 2026 pukul 09.19 WIB, push fondasi berhasil dan SHA lokal
 - Bukti URL/node/preview di docs/design/README.md; audit JSON tersimpan. Checkpoint Git desain dicatat setelah commit/push dan pencocokan SHA dijalankan.
 
 Checkpoint desain berhasil di-push pada 24 Oktober 2026 pukul 09.41 WIB, SHA lokal cocok dengan remote. Prompt 0 selesai; tahap berikutnya Prompt 1 sesuai instruksi pengguna. Belum ada perubahan stack, aturan, implementasi game atau deployment.
+
+## Revisi terbaru pengguna
+
+Pengguna tetap memilih BOM OPER dan meminta visual terasa seperti game. Arah navy/kartu dashboard diganti arcade kartun; file Figma yang sama ditambah halaman revisi, halaman lama dipertahankan. Dibuat karakter, arena, opening/lobby/hasil/mobile dan storyboard gerak. Implementasi game menyusul tanpa perubahan aturan.
+
+## 24 Oktober 2026 WIB ? Tahap 1
+
+- Pilihan: satu repository npm dengan Vite di `app/`; Hardhat berkonfigurasi dari root ke `contracts/`, `test/`, `cache/hardhat/`, dan `artifacts/hardhat/`; catatan deployment publik di `deployments/`.
+- Hosting: Cloudflare Workers Static Assets langsung dari `app/dist`, fallback SPA. Belum membuat Worker deployment karena CLI belum login dan akun tujuan perlu dipilih pengguna.
+- Versi dipin setelah cek dokumentasi resmi dan registry npm: Node minimal 22.13; Vite 8.3.5, React 19.3.1, TypeScript 5.9.3, Hardhat 3.21.0, ethers toolbox 4.0.0, Wrangler 4.152.0.
+- Arahan warna mengikuti deskripsi terbaru di `docs/design/README.md` (ink/cream/teal/oranye arcade), bukan nilai lama di `docs/design/tokens.json`; token JSON belum disinkronkan dan perlu diperiksa sebelum implementasi UI penuh.
+- Dampak: hanya scaffold/landing; kontrak, tes aturan, wallet, animasi runtime, dan URL publik tetap belum ada.

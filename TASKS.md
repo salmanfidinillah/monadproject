@@ -1,6 +1,6 @@
 # Rundown enam jam dan checklist
 
-Prompt Induk dan Prompt 0 selesai dengan checkpoint GitHub terverifikasi. Desain editable, token, anotasi dan preview tersedia. Tahap 1–9 belum dijalankan; belum ada kode atau pengujian game. Centang hanya setelah kriteria tahap terbukti. Jadwal relatif; contoh waktu 12.00–18.00 bukan konfirmasi panitia. Checkpoint GitHub 1–2 menit termasuk dalam slot yang sama.
+Prompt Induk dan Prompt 0 selesai dengan checkpoint GitHub terverifikasi. Scaffold Tahap 1 dan build lokal sudah dibuat, tetapi URL publik dan uji HP belum ada karena Wrangler belum login. Tahap 1 belum lulus penuh; Tahap 2?9 belum dijalankan. Centang hanya setelah kriteria tahap terbukti. Jadwal relatif; contoh waktu 12.00?18.00 bukan konfirmasi panitia. Checkpoint GitHub 1?2 menit termasuk dalam slot yang sama.
 
 | Tahap | Slot | Syarat lulus |
 |---|---|---|
@@ -47,3 +47,16 @@ Pada tiap tahap: perbarui STATUS/tes, cek diff/rahasia, commit/push, verifikasi 
 - [x] Periksa visual dan struktur; perbaiki clipping; simpan 6 PNG, token, ID dan audit di docs/design/.
 - [x] Commit/push acuan desain; SHA f826af720c7ca88232bdd859d09df05a525e3076 cocok dengan origin/main, 24 Oktober 2026 pukul 09.41 WIB.
 - [x] Checkpoint selesai; menunggu Prompt 1.
+
+## Catatan desain yang sudah tersedia
+
+Revisi arcade lima layar dan storyboard motion sudah dibuat/diperiksa di Figma. Checklist tahap 0 belum dicentang penuh karena bukti commit/push dan kelengkapan flow setup belum tersedia di sini. Gunakan docs/design/MOTION.md sebagai acuan frontend berikutnya.
+
+## Progres Tahap 1 ? 24 Oktober 2026 WIB
+
+- [x] Memeriksa root/branch/remote, Node v24.13.1, npm 11.8.0 dan Git 2.54.0.
+- [x] Membuat `app/` React/Vite/TypeScript; root workspace scripts; Hardhat config dengan `contracts/` dan `test/`; `deployments/` untuk bukti publik.
+- [x] Membuat landing BOM OPER dengan aturan ringkas dan label target Monad Testnet, mengikuti palet arcade terbaru di `docs/design/README.md`.
+- [x] Menyiapkan `wrangler.jsonc` untuk `app/dist` + SPA fallback, `.env.example`, dan lockfile.
+- [x] Build lokal dan Wrangler dry-run lulus; URL HP/public belum diverifikasi.
+- [ ] Login Cloudflare, periksa akun/worker tujuan agar deployment tidak menimpa project lain, deploy, lalu uji URL dari HP.

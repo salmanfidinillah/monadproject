@@ -1,0 +1,25 @@
+{
+  "name": "bom-oper",
+  "private": true,
+  "type": "module",
+  "packageManager": "npm@11.8.0",
+  "engines": {
+    "node": ">=22.13.0"
+  },
+  "workspaces": [
+    "app"
+  ],
+  "scripts": {
+    "dev": "npm run dev --workspace @bom-oper/app",
+    "build": "npm run build --workspace @bom-oper/app",
+    "preview": "npm run preview --workspace @bom-oper/app",
+    "deploy": "npm run build && wrangler deploy --config wrangler.jsonc",
+    "contracts:compile": "hardhat compile",
+    "contracts:test": "hardhat test"
+  },
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox-mocha-ethers": "4.0.0",
+    "hardhat": "3.21.0",
+    "wrangler": "4.152.0"
+  }
+}

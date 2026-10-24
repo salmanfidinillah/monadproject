@@ -79,3 +79,26 @@ Token visual tidak mengubah SPEC. Data room/saldo/hasil ditandai contoh; bukti e
 Pemeriksaan lokal setelah ekspor: ConvertFrom-Json untuk dua JSON, kecocokan inventory audit, dan System.Drawing.Image.FromFile untuk dimensi enam PNG lulus (desktop 1440 × 1000, mobile 390 × 1240, anotasi 1440 × 1050). Pemeriksaan inline pertama berhenti karena cara menghitung PSObject.Properties keliru; setelah memakai array count eksplisit, seluruh inventory lulus tanpa mengubah token/desain. Pemeriksaan ulang 10 Markdown, 22 tautan lokal dan code fence lulus; git diff --check bersih. Pemindaian pola kredensial, URL screenshot sementara dan session ID tidak menemukan kecocokan di berkas yang akan disimpan (pemeriksaan heuristik).
 
 Checkpoint desain 24 Oktober 2026, 09.41 WIB: git diff --cached --check lulus; diff staged ditinjau dan pemindaian git grep --cached -I -l -E tidak menemukan pola kredensial/link sementara. git diff --exit-code HEAD -- SPEC.md AGENTS.md docs/BUILD-GUIDE.md docs/ARCHITECTURE.md exit 0, sehingga aturan/arsitektur tidak berubah. Commit design: add Figma screens and visual tokens menghasilkan f826af720c7ca88232bdd859d09df05a525e3076. git push origin main berhasil; git rev-parse HEAD cocok dengan git ls-remote origin refs/heads/main. git status --short --branch bersih. Bukti ini ditulis setelah checkpoint tersebut terbit; SHA pembaruan catatan dilaporkan sesudah commit/push final di chat.
+
+## Pemeriksaan desain, terpisah dari tes game
+
+Screenshot opening/lobby/arena/hasil/mobile diperiksa dan diperbaiki pada revisi arcade. Struktur UI editable, font Lilita One/Nunito terverifikasi. Ekspor motion 5,4 detik (34 frame, 6 fps) dibaca dan enam fase diperiksa. Ini pemeriksaan desain; semua tes kontrak, wallet, multiplayer dan hosting tetap belum dijalankan di workspace ini.
+
+## Pelaksanaan Tahap 1 ? 24 Oktober 2026 WIB
+
+Lingkungan: Windows PowerShell, root repository pada branch `main`. Tidak ada app/proyek latihan lama di folder ini; scaffold dibuat di `app/` dalam repository BOM OPER yang sudah ada.
+
+| Pemeriksaan/perintah aktual | Hasil |
+|---|---|
+| `git status`, root/branch/remote, `node --version`, `npm --version`, `git --version` | Root sesuai proyek; `main`, origin monadproject; Node v24.13.1, npm 11.8.0, Git 2.54.0.windows.1 |
+| Baca docs Vite/Hardhat/Cloudflare dan cek versi npm registry | Node 24 sesuai syarat Vite dan Hardhat 3; versi langsung dikunci dalam `package-lock.json` |
+| `npm install` | Selesai; npm melaporkan advisori pada dependency development. `npm audit --omit=dev --audit-level=moderate`: 0 advisori production |
+| `npm run build` | LULUS; TypeScript check dan Vite 8.3.5 build menghasilkan `app/dist` |
+| `npm run contracts:compile` | LULUS konfigurasi; `No contracts to compile` (belum ada Solidity, bukan bukti kompilasi kontrak game) |
+| `npx wrangler deploy --dry-run --config wrangler.jsonc` | LULUS; static assets dibaca dari `app/dist`; tidak mengirim deployment |
+| Wrangler lokal, GET `/` dan `/room/example` | Keduanya 200; fallback SPA melayani index pada rute navigasi yang tidak punya asset |
+| `npx wrangler whoami` | TERHALANG: `You are not authenticated. Please run wrangler login.` |
+| Deployment produksi, URL publik, buka melalui HP | BELUM DILAKUKAN; menunggu pengguna memilih/login ke akun Cloudflare |
+| Tes kontrak/game/multiplayer | BELUM DIJALANKAN; belum ada kontrak/game |
+
+Auditor npm saat instalasi melaporkan 16 advisori (2 moderate, 14 high) pada dependency tree penuh; audit production-only bersih. Hardhat/Hardhat toolbox masih ditandai audit sebagai dev-tool advisories tanpa fix aman dalam major terpilih, jadi tidak dipaksakan berubah pada scaffold. Periksa kembali sebelum Tahap 2.

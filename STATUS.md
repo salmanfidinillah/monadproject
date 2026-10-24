@@ -2,12 +2,12 @@
 
 ## Keadaan aktual
 
-**PROMPT 0 SELESAI; GAME BELUM DIBANGUN.** Lima frame Figma editable dan anotasi dibuat serta diperiksa. Acuan desain berhasil di-push dan SHA lokal cocok dengan remote pada 24 Oktober 2026 pukul 09.41 WIB. Kode game dan deployment belum dikerjakan.
+**TAHAP 1 BERJALAN; BELUM LULUS PENUH.** Scaffold React/Vite dan landing page berhasil dibuild lokal. Wrangler dry-run serta fallback SPA lokal merespons. Deployment publik dan uji HP menunggu login Cloudflare. Gameplay dan kontrak belum dibuat.
 
 | Hal | Status/nilai aktual |
 |---|---|
-| Tahap terakhir selesai | Prompt 0: lima frame Figma editable, anotasi, token, preview, audit serta checkpoint GitHub terverifikasi |
-| Tahap berikutnya | Tunggu Prompt 1: scaffold React/Vite/TypeScript dan URL awal Cloudflare |
+| Tahap terakhir selesai | Tahap 1 lokal: scaffold, landing page, lockfile, konfigurasi hosting dan build lulus; belum ada deployment publik |
+| Tahap berikutnya | Autentikasi Cloudflare, periksa target Worker, deploy landing page, lalu uji dari HP |
 | Repository GitHub tujuan | https://github.com/salmanfidinillah/monadproject |
 | Branch pembangunan | main; Git lokal diinisialisasi dan branch diperiksa |
 | Akun GitHub terhubung | salmanfidinillah; profil berhasil dibaca melalui plugin GitHub |
@@ -15,10 +15,10 @@
 | Push fondasi/game | Fondasi BERHASIL di-push dan SHA diverifikasi; kode game belum ada |
 | Checkpoint fondasi terverifikasi | fddf27fcf121c0cc8cca9b26526f1c65137a1c25; lihat bukti di bawah. SHA commit pembaruan catatan ini dilaporkan di chat setelah commit/push |
 | Checkpoint desain terverifikasi | f826af720c7ca88232bdd859d09df05a525e3076; commit desain sudah di-push. SHA commit catatan sesudahnya dilaporkan di chat |
-| Kode frontend/kontrak | BELUM ADA dalam paket ini |
-| Desain Figma URL dan frame | https://www.figma.com/design/T8zhiDboW04KOC9sDJrlz6; frame 2:59–2:63, anotasi 2:64; detail docs/design/README.md |
-| Build / tes lokal | Audit Figma, preview/JSON, dokumen/Git lulus; build dan tes game BELUM DIJALANKAN |
-| URL publik game | BELUM ADA |
+| Kode frontend/kontrak | Scaffold React/Vite untuk landing tersedia; gameplay dan kontrak belum dibuat |
+| Desain Figma URL dan frame | https://www.figma.com/design/T8zhiDboW04KOC9sDJrlz6/BOM-OPER?node-id=11-60; detail node/frame di docs/design/README.md |
+| Build / tes lokal | `npm run build` LULUS; Wrangler dry-run dan cek HTTP lokal LULUS; tes game BELUM ADA |
+| URL publik game | BELUM ADA; belum deploy |
 | Chain target rencana | Monad Testnet 10143; verifikasi jaringan saat pelaksanaan |
 | Alamat kontrak aktual | BELUM ADA |
 | Tx deploy / blok / receipt | BELUM ADA |
@@ -31,8 +31,8 @@
 ## Saat mulai
 
 - Pastikan waktu/rules panitia dan ketersediaan alat, Figma/GitHub/Cloudflare serta wallet testnet.
-- Baca panduan bagian Prompt Induk. Jangan membuat ulang proyek/deploy yang ternyata sudah ada; cocokkan berkas, Git dan receipt terlebih dahulu.
-- Input manusia pertama jika belum tersedia: repository GitHub tujuan. Login dan tanda tangan wallet dipandu ketika diperlukan, tanpa membagikan rahasia.
+- Lanjutkan dari progres Tahap 1 di bawah ini. Jalankan hanya langkah yang belum selesai; jangan membuat ulang proyek.
+- Langkah manual yang masih dibutuhkan: login Cloudflare melalui terminal dan memilih akun yang benar; jangan kirim kredensial ke chat.
 
 ## Catatan tiap checkpoint
 
@@ -77,3 +77,18 @@ Pembaruan pada tahap yang sama: pengguna memberikan https://github.com/salmanfid
 - git push origin main berhasil. git rev-parse HEAD sama dengan git ls-remote origin refs/heads/main: f826af720c7ca88232bdd859d09df05a525e3076. Working tree bersih setelah checkpoint tersebut.
 - Bukti hasil disimpan sesudah eksekusi dalam pembaruan catatan ini; SHA commit catatan dan verifikasi remote final dilaporkan di chat, bukan ditulis ke commit yang sama.
 - Tidak ada hambatan desain/API. Edit manual pengguna, prototype dan runtime frontend belum diuji; bukan syarat klaim transaksi pada tahap ini. Prompt 1 menunggu instruksi pengguna.
+
+## Checkpoint revisi visual
+
+Desain arcade dibuat pada file Figma pengguna tanpa menghapus halaman lama. Opening, lobby, arena, hasil dan mobile diperiksa; motion diekspor dan enam fase diperiksa. Fokus berikutnya: implementasi desain ke frontend proyek yang benar-benar digunakan. Belum ada bukti remote GitHub/push, kode game atau deploy dari checkpoint desain ini. Jangan menjalankan ulang generator template yang akan mengosongkan catatan ini.
+
+### Progres Tahap 1 ? 24 Oktober 2026 WIB
+
+- Kondisi awal: branch `main`, origin `salmanfidinillah/monadproject`, belum ada `app/`, `contracts/`, `test/` atau lockfile. Perubahan dokumentasi desain lokal yang sudah ada dipertahankan.
+- Lingkungan: Node v24.13.1, npm 11.8.0, Git 2.54.0.windows.1. Vite 8.3.5, plugin React 6.1.2, React 19.3.1, TypeScript 5.9.3, Hardhat 3.21.0, toolbox ethers 4.0.0, Wrangler 4.152.0 dikunci di lockfile; Node 24 memenuhi syarat dokumentasi Vite/Hardhat.
+- Dibuat landing page responsif dengan nama BOM OPER, ringkasan aturan, label target Monad Testnet dan Chain ID 10143. Tidak ada wallet, transaksi, animasi, atau klaim gameplay aktif.
+- Hosting dipilih: Cloudflare Workers Static Assets, `app/dist`, fallback `single-page-application`; konfigurasi tunggal `wrangler.jsonc`. Build app tidak berbagi folder dengan artifact/cache Hardhat.
+- Build lokal lulus. Hardhat memuat konfigurasi, tetapi belum ada kontrak untuk dikompilasi. Wrangler dry-run membaca hasil build. Cek Wrangler lokal pada `/` dan `/room/example` merespons 200; belum ada uji HP/public.
+- Wrangler `whoami` menyatakan belum terautentikasi. Tidak menjalankan `wrangler login` atau deploy tanpa pengguna memilih/mengonfirmasi akun Cloudflare. Tidak memakai deployment temporary.
+- Dependensi production lulus `npm audit --omit=dev` (0 advisori). Audit penuh melaporkan advisori pada tooling development Hardhat/Wrangler; belum ada fix aman tanpa perubahan major, dicatat untuk tinjauan sebelum Tahap 2.
+- Berikutnya: pengguna login Cloudflare di terminal, pilih akun yang benar, lalu daftar Worker untuk memastikan nama `bom-oper` tidak menimpa layanan lain. Sesudahnya deploy dan minta pengujian URL dari HP.
