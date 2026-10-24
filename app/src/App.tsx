@@ -37,7 +37,7 @@ function App() {
     <main className="page-shell">
       <header className="topbar">
         <a className="brand" href="#top" aria-label="BOM OPER, beranda">
-          <span className="brand-mark" aria-hidden="true">B</span>
+          <img className="brand-symbol" src="/bom-oper-mark.svg" alt="" aria-hidden="true" />
           <span>BOM OPER</span>
         </a>
         <span className="network-pill">

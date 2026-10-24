@@ -150,7 +150,7 @@ export default function GamePreview() {
 
   return <main className="game-preview">
     <header className="preview-header">
-      <a className="preview-brand" href="/" aria-label="Kembali ke BOM OPER"><span className="brand-mark">B</span>BOM OPER</a>
+      <a className="preview-brand" href="/" aria-label="Kembali ke BOM OPER"><img className="brand-symbol" src="/bom-oper-mark.svg" alt="" aria-hidden="true" /><span>BOM OPER</span></a>
       <span className="preview-network"><i />MONAD TESTNET</span>
       <span className="preview-stamp">PRATINJAU LOKAL · SIMULASI</span>
     </header>

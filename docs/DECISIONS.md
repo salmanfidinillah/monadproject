@@ -98,3 +98,9 @@ Pengguna tetap memilih BOM OPER dan meminta visual terasa seperti game. Arah nav
 - Status wallet/transaksi/ronde dijelaskan sebagai panduan visual untuk alur game nyata, disertai peringatan bahwa route masih simulasi. UI tidak memalsukan popup wallet, transaksi pending, countdown atau hasil on-chain.
 - Kontrol utama dibuat setidaknya 48px untuk nyaman disentuh; ini pilihan desain di atas target minimum WCAG 2.2. Rujukan: W3C WCAG 2.2, Digital.gov accessibility visual design, Apple HIG Feedback (detail aktual dicatat di `TEST-RESULTS.md`).
 - Belum ada QA interaktif di perangkat HP karena browser tidak tersedia di sesi lokal; minta review manual pada URL publik. Tahap 6 tetap belum selesai tanpa kontrak/ronde nyata.
+
+## 24 Oktober 2026 WIB — tanda logo minimal
+
+- Pengguna meminta logo profesional yang minimal, tanpa brush atau tekstur bergaya generatif.
+- Buat mark SVG geometris: monogram B dengan sumbu/percikan kecil, stroke warna ink dan aksen oranye. Tanpa gradient, tekstur, bayangan atau ilustrasi raster. Gunakan wordmark HTML “BOM OPER” agar konsisten dan tajam pada berbagai ukuran.
+- Terapkan di semua header dan favicon supaya landing, wallet, setup, dan preview memakai identitas sama. Tidak memerlukan perubahan Figma untuk implementasi ini; bila pengguna ingin logo ikut menjadi aset desain editable, jadwalkan setelah koneksi Figma tersedia.

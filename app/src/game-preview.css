@@ -5,8 +5,8 @@
   color: var(--ink); background: var(--sky); font-family: "Nunito", "Trebuchet MS", sans-serif;
 }
 .preview-header { width: min(100%, 1360px); min-height: 72px; margin: 0 auto; display: flex; align-items: center; gap: 16px; border-bottom: 2px solid rgb(33 35 70 / 12%); }
-.preview-brand { display: inline-flex; align-items: center; gap: 11px; margin-right: auto; text-decoration: none; font-family: "Lilita One", "Arial Rounded MT Bold", sans-serif; font-size: 23px; }
-.preview-header .brand-mark { width: 35px; height: 35px; }
+.preview-brand { display: inline-flex; align-items: center; gap: 8px; margin-right: auto; text-decoration: none; font: 1000 18px/1 "Nunito", sans-serif; letter-spacing: .075em; }
+.preview-brand .brand-symbol { width: 38px; height: 38px; }
 .preview-network { display: inline-flex; align-items: center; gap: 8px; padding: 8px 13px; border: 2px solid var(--ink); border-radius: 99px; background: #fffaf0; font-size: 11px; font-weight: 1000; }
 .preview-network i { width: 8px; height: 8px; border-radius: 50%; background: #46a77a; }
 .preview-stamp, .preview-kicker { display: inline-block; padding: 7px 12px; border: 2px solid var(--ink); border-radius: 999px; background: var(--cream); font-size: 11px; font-weight: 1000; letter-spacing: .07em; }
@@ -84,7 +84,7 @@
 .preview-footer { width: min(100%, 1190px); margin: 0 auto; padding: 10px 0 0; display: flex; justify-content: space-between; gap: 12px; border-top: 2px solid rgb(33 35 70 / 12%); font-size: 11px; font-weight: 900; }.preview-footer a { text-decoration: underline; }
 @media (max-width: 760px) {
   .game-preview { padding-inline: 17px; }
-  .preview-header { min-height: 62px; gap: 8px; flex-wrap: wrap; padding: 8px 0; }.preview-brand { font-size: 19px; }.preview-header .brand-mark { width: 31px; height: 31px; }.preview-network { padding: 7px 9px; font-size: 9px; }.preview-stamp { width: 100%; order: 3; padding: 4px; text-align: center; font-size: 9px; }
+  .preview-header { min-height: 62px; gap: 8px; flex-wrap: wrap; padding: 8px 0; }.preview-brand { font-size: 16px; }.preview-brand .brand-symbol { width: 32px; height: 32px; }.preview-network { padding: 7px 9px; font-size: 9px; }.preview-stamp { width: 100%; order: 3; padding: 4px; text-align: center; font-size: 9px; }
   .preview-opening { min-height: auto; grid-template-columns: 1fr; gap: 0; padding-top: 30px; }.opening-copy { padding: 12px 0 0; }.opening-copy h1 { font-size: clamp(82px, 22vw, 118px); }.opening-tagline { margin-top: 24px; font-size: 20px; }.opening-copy > p:not(.opening-tagline):not(.mock-caption) { font-size: 15px; }.opening-scene { order: -1; height: 270px; min-height: 270px; margin: -8px -17px 8px; }.opening-scene .sun-disc { width: 195px; right: 12%; }.opening-scene::before { width: 92%; height: 58%; left: -20%; }.opening-scene::after { width: 55%; height: 72%; right: -22%; }.opening-scene .arena-art { transform: scale(.73); transform-origin: center bottom; bottom: 4%; }.opening-scene .scene-word { top: 23%; right: 12%; font-size: 36px; }.opening-scene > .bomb-art { width: 58px; top: 39%; left: 44%; }
   .arcade-button { min-height: 48px; padding: 9px 14px; font-size: 14px; }.opening-actions { gap: 9px; }.opening-actions .arcade-button { flex: 1; }
   .preview-lobby, .preview-arena-screen, .preview-result { padding-top: 24px; }.lobby-heading { text-align: left; }.lobby-heading h1 { font-size: 40px; }.mobile-break { display: initial; }.lobby-heading p { font-size: 15px; }

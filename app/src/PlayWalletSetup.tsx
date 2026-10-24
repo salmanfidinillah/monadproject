@@ -157,7 +157,7 @@ export default function PlayWalletSetup() {
   return (
     <main className="wallet-shell">
       <header className="wallet-topbar">
-        <a className="brand" href="/"><span className="brand-mark" aria-hidden="true">B</span><span>BOM OPER</span></a>
+        <a className="brand" href="/"><img className="brand-symbol" src="/bom-oper-mark.svg" alt="" aria-hidden="true" /><span>BOM OPER</span></a>
         <span className="network-pill"><span className="network-dot" aria-hidden="true" />MONAD TESTNET · 10143</span>
       </header>
 

@@ -21,7 +21,7 @@
 | Build / tes lokal | Root `npm run build` LULUS: export artifact ABI/bytecode dan Vite build; `npm run contracts:test` LULUS 16 tes Tahap 3 |
 | URL publik landing | https://bom-oper.salmansegaf52.workers.dev; Worker `bom-oper`, versi `0b0c8d8a-350d-442f-a44f-1246795488a5` |
 | Helper deploy publik | https://bom-oper.salmansegaf52.workers.dev/setup; Worker `bom-oper`, versi `8d168b42-2e07-4490-b7d2-eb8decd07841`; root dan `/setup` HTTP 200 |
-| Pratinjau visual publik | https://bom-oper.salmansegaf52.workers.dev/prototype; Worker `bom-oper`, versi `2eb9f5ff-012c-40d7-85cf-a8658faabc03`; `/prototype` merespons HTTP 200; simulasi saja |
+| Pratinjau visual publik | https://bom-oper.salmansegaf52.workers.dev/prototype; Worker `bom-oper`, versi `b5c621c4-f2a7-4d53-a148-32a636988d69`; `/prototype` merespons HTTP 200; simulasi saja |
 | Chain target | RPC Monad Testnet `eth_chainId` = 10143; simulasi lokal 10143; constructor menolak deployment pada ID lain |
 | Compiler/EVM target | solc 0.8.30; Cancun; optimizer 200 runs; dikompilasi lokal |
 | Alamat kontrak aktual | BELUM ADA; helper menunggu wallet pengguna mengirim dan menyetujui deploy |
@@ -41,6 +41,13 @@
 - Tidak ada perubahan frame Figma. Acuan visual tetap preview/tokens yang disimpan; langsung mengambil design context dari plugin masih ditunda.
 - `npm run build`, Wrangler dry-run, deploy ke Worker yang sama, dan HTTP GET homepage/room serta asset bundle berhasil. Versi publik: `2eb9f5ff-012c-40d7-85cf-a8658faabc03`. Catatan pemeriksaan di `TEST-RESULTS.md`.
 - Belum dilakukan inspeksi visual interaktif di browser HP; belum ada kontrak publik/transaksi/ronde nyata. `/prototype` tetap jelas simulasi.
+
+## 24 Oktober 2026 WIB — logo BOM OPER
+
+- Membaca ulang progres serta `docs/design/README.md` dan `docs/design/MOTION.md`; memakai palet arcade yang telah disetujui. Tidak mengedit file Figma karena kebutuhan ini selesai sebagai vektor sederhana di UI.
+- Logo dibuat sebagai monogram B geometris dengan sumbu/percikan kecil sebagai ciri bom. Hanya garis solid ink dan aksen oranye; tanpa brush, gradient, tekstur, atau drop shadow. SVG mark dipakai di semua header dan sebagai favicon.
+- Build Vite, validasi XML dua SVG, Wrangler dry-run, deploy ke Worker `bom-oper`, dan HTTP GET halaman/mark/favicon lulus. URL tetap sama, version `b5c621c4-f2a7-4d53-a148-32a636988d69`.
+- Belum ada screenshot QA browser atau perangkat; kontrak dan gameplay publik belum tersedia. Tahap UI tetap terbuka.
 
 ## Saat mulai
 

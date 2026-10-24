@@ -262,7 +262,7 @@ export default function DeploySetup() {
     <main className="setup-shell">
       <header className="setup-topbar">
         <a className="brand" href="/" aria-label="Kembali ke BOM OPER">
-          <span className="brand-mark" aria-hidden="true">B</span><span>BOM OPER</span>
+          <img className="brand-symbol" src="/bom-oper-mark.svg" alt="" aria-hidden="true" /><span>BOM OPER</span>
         </a>
         <span className="network-pill"><span className="network-dot" aria-hidden="true" />MONAD TESTNET · 10143</span>
       </header>
