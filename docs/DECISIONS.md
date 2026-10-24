@@ -90,3 +90,11 @@ Pengguna tetap memilih BOM OPER dan meminta visual terasa seperti game. Arah nav
 - Deploy pratinjau ke Worker `bom-oper` yang sama, tanpa mengganti konfigurasi hosting. URL: `https://bom-oper.salmansegaf52.workers.dev/prototype`.
 - Untuk tahap ini gunakan preview/token desain yang sudah berada di repository. Pengambilan design context/screenshot langsung lewat plugin Figma, wallet, kontrak publik, polling, dan hasil on-chain ditunda. Ini prototipe review visual, bukan tahap 6 selesai atau bukti demo multiplayer.
 - Berikutnya: setelah kontrak dideploy oleh pengguna di `/setup`, sinkronkan gameplay dengan alamat publik dan receipt; sambungkan Figma bila pengguna siap dan bandingkan frame spesifik.
+
+## 24 Oktober 2026 WIB — UX demo HP
+
+- Pengguna meminta CTA yang lebih jelas, undangan room yang mudah dibagikan, dan istilah status wallet/transaksi/hasil yang mudah dipahami. Tidak perlu mengubah desain Figma; gunakan frame dan token arcade yang sudah tersimpan.
+- Landing menonjolkan aksi “Coba demo di HP” dan sticky CTA di viewport kecil. `/prototype` menyediakan share link via Web Share dengan fallback salin; parameter kapasitas/durasi ikut agar konfigurasi contoh tidak hilang saat link dibuka.
+- Status wallet/transaksi/ronde dijelaskan sebagai panduan visual untuk alur game nyata, disertai peringatan bahwa route masih simulasi. UI tidak memalsukan popup wallet, transaksi pending, countdown atau hasil on-chain.
+- Kontrol utama dibuat setidaknya 48px untuk nyaman disentuh; ini pilihan desain di atas target minimum WCAG 2.2. Rujukan: W3C WCAG 2.2, Digital.gov accessibility visual design, Apple HIG Feedback (detail aktual dicatat di `TEST-RESULTS.md`).
+- Belum ada QA interaktif di perangkat HP karena browser tidak tersedia di sesi lokal; minta review manual pada URL publik. Tahap 6 tetap belum selesai tanpa kontrak/ronde nyata.

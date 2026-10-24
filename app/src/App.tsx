@@ -60,10 +60,13 @@ function App() {
             Satu bom, satu hitung mundur, dan teman-temanmu. Oper sebelum waktu
             habis—pemegang terakhir yang kalah.
           </p>
-          <a className="primary-link" href="#aturan">
-            Lihat cara main <span aria-hidden="true">↓</span>
-          </a>
-          <p className="build-note">Arena publik sedang disiapkan.</p>
+          <div className="hero-actions">
+            <a className="primary-link" href="/prototype">
+              Coba demo di HP <span aria-hidden="true">→</span>
+            </a>
+            <a className="secondary-link" href="#aturan">Lihat cara main</a>
+          </div>
+          <p className="build-note">Demo layar bisa dicoba tanpa wallet. Room dan aksi masih simulasi.</p>
         </div>
 
         <aside className="round-card" aria-label="Ringkasan ronde">
@@ -100,6 +103,8 @@ function App() {
           ))}
         </ol>
       </section>
+
+      <a className="mobile-demo-cta" href="/prototype">Coba demo BOM OPER <span aria-hidden="true">→</span></a>
 
       <footer className="footer">
         <span>BOM OPER</span>

@@ -125,12 +125,16 @@ h1 > span:first-of-type { color: #45456f; }
   line-height: 1.65;
 }
 
+.hero-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 16px; }
+
 .primary-link {
   display: inline-flex;
-  min-height: 54px;
+  min-height: 56px;
+  min-width: 190px;
   align-items: center;
-  gap: 24px;
-  padding: 0 22px;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 0 20px;
   border: 2px solid var(--ink);
   border-radius: 15px;
   background: var(--orange);
@@ -139,7 +143,9 @@ h1 > span:first-of-type { color: #45456f; }
   font-weight: 900;
 }
 
-.primary-link:focus-visible, .brand:focus-visible {
+.secondary-link { min-height: 48px; display: inline-flex; align-items: center; font-weight: 900; text-underline-offset: 4px; }
+
+.primary-link:focus-visible, .secondary-link:focus-visible, .mobile-demo-cta:focus-visible, .brand:focus-visible {
   outline: 4px solid var(--violet);
   outline-offset: 4px;
 }
@@ -147,6 +153,7 @@ h1 > span:first-of-type { color: #45456f; }
 .primary-link:active { transform: translate(2px, 2px); box-shadow: 2px 2px 0 var(--ink); }
 
 .build-note { margin: 18px 0 0; color: #565777; font-size: 13px; font-weight: 800; }
+.mobile-demo-cta { display: none; }
 
 .round-card {
   position: relative;
@@ -210,19 +217,23 @@ h2 { margin-bottom: 0; font-family: "Lilita One", "Arial Rounded MT Bold", sans-
 .footer { display: flex; justify-content: space-between; gap: 20px; padding: 22px 0 28px; border-top: 2px solid rgb(33 35 70 / 12%); color: #555675; font-size: 12px; font-weight: 800; }
 
 @media (max-width: 760px) {
-  .page-shell { width: min(100% - 36px, 560px); }
+  .page-shell { width: min(100% - 36px, 560px); padding-bottom: calc(88px + env(safe-area-inset-bottom)); }
   .topbar { min-height: 74px; }
   .brand { font-size: 20px; }
   .network-pill { min-height: 34px; padding: 0 10px; font-size: 10px; }
   .hero { grid-template-columns: 1fr; gap: 48px; padding: 65px 0 74px; }
   h1 { font-size: clamp(58px, 13vw, 82px); }
   .intro { max-width: 440px; font-size: 16px; }
+  .hero-actions { align-items: stretch; flex-direction: column; gap: 5px; }
+  .hero-actions .primary-link { width: 100%; }
+  .secondary-link { justify-content: center; }
   .round-card { width: min(100% - 10px, 430px); justify-self: center; transform: rotate(.7deg); }
   .round-number { font-size: 90px; }
   .rules-section { padding: 56px 0 62px; }
   .rules-list { grid-template-columns: 1fr; gap: 12px; }
   .rule { min-height: 0; }
   .footer { flex-direction: column; gap: 7px; }
+  .mobile-demo-cta { position: fixed; z-index: 30; right: 14px; bottom: max(12px, env(safe-area-inset-bottom)); left: 14px; display: flex; min-height: 56px; align-items: center; justify-content: space-between; padding: 0 18px; border: 3px solid var(--ink); border-radius: 17px; background: var(--orange); box-shadow: 4px 5px 0 var(--ink); text-decoration: none; font-weight: 1000; }
 }
 
 @media (prefers-reduced-motion: reduce) {

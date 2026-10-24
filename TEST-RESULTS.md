@@ -199,3 +199,19 @@ Helper tidak auto-connect dan tidak mengirim deploy saat dibuka. Saat pengguna m
 | Browser visual QA, viewport HP, alur wallet, kontrak/receipt/hasil on-chain | BELUM DIUJI; pratinjau sengaja tidak membuat koneksi atau transaksi dan tidak menunjukkan hasil resmi |
 
 Pratinjau `/prototype` menampilkan Opening, Lobby, Arena, dan Hasil dengan state room/operasi contoh lokal. Timer contoh tidak berjalan, dan semua aksi/hasil diberi keterangan simulasi. Acuan implementasi memakai file preview desain yang sudah tersimpan serta token warna/tipografi lokal; design context dan screenshot frame langsung melalui plugin Figma ditunda sesuai arahan pengguna untuk sementara tidak melakukan koneksi. Tahap 6 tetap belum lulus.
+
+## Poles UX demo HP — 24 Oktober 2026 WIB
+
+| Pemeriksaan/perintah aktual | Hasil |
+|---|---|
+| Baca AGENTS/SPEC/TASKS/STATUS, Prompt 6, desain README/MOTION, dan DECISIONS | Selesai; tidak mengubah Figma karena preview/token lokal cukup untuk penyesuaian ini |
+| `npm run build` | LULUS; TypeScript + Vite, 172 modul |
+| `npx wrangler deploy --dry-run --config wrangler.jsonc` | LULUS; membaca 11 file dari `app/dist` |
+| `npm run deploy` | LULUS; Worker `bom-oper`, URL sama, version `2eb9f5ff-012c-40d7-85cf-a8658faabc03` |
+| HTTP GET `/` dan `/prototype?room=321&capacity=3&duration=60` | Keduanya HTTP 200; bundle JS/CSS merespons HTTP 200 |
+| Pemeriksaan teks pada chunk pratinjau | Ditemukan teks Bagikan room serta Menunggu persetujuan wallet, Transaksi diproses, dan Ronde selesai |
+| `git diff --check` | LULUS |
+| Browser interaktif/viewport HP, Native Share/clipboard fisik | BELUM DIUJI di perangkat; CLI tidak menyediakan browser terpasang pada lingkungan ini |
+| Koneksi wallet, receipt, room/hasil kontrak | BELUM ADA; seluruh status pada `/prototype` adalah panduan visual, bukan status transaksi nyata |
+
+Perubahan UI: CTA hero langsung ke pratinjau dan sticky CTA hanya pada layar kecil; kontrol diberi tinggi minimum 48px; tombol Lobby mudah dicapai; invite URL memakai Web Share API bila tersedia lalu fallback clipboard, dan menyimpan room/capacity/duration agar link preview membuka konfigurasi yang sama. Tambahan step list menjelaskan tiga status penting dengan teks tindakan. Dasar UX: WCAG 2.2 menetapkan target minimum 24×24 CSS px dan kriteria enhanced 44×44 [W3C WCAG 2.2](https://www.w3.org/TR/WCAG22/); panduan Digital.gov menyarankan target sentuh 48px [Digital.gov](https://digital.gov/guides/accessibility-for-teams/visual-design); Apple menyarankan feedback transaksi yang sesuai tingkat pentingnya [Apple HIG: Feedback](https://developer.apple.com/design/human-interface-guidelines/feedback/). Tahap 6 masih belum lulus karena browser QA dan ronde publik belum dilakukan.

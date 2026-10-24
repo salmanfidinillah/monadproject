@@ -11,6 +11,32 @@ const players: Player[] = [
   { label: "PEMAIN 4", color: "pink", address: "0x311b…903c" },
 ];
 
+async function copyText(value: string) {
+  if (navigator.clipboard?.writeText) {
+    await navigator.clipboard.writeText(value);
+    return;
+  }
+
+  const field = document.createElement("textarea");
+  field.value = value;
+  field.setAttribute("readonly", "");
+  field.style.position = "fixed";
+  field.style.opacity = "0";
+  document.body.append(field);
+  field.select();
+  const copied = document.execCommand("copy");
+  field.remove();
+  if (!copied) throw new Error("Browser tidak mengizinkan salin otomatis. Salin link yang ditampilkan.");
+}
+
+function getRoomUrl(roomId: string, capacity: number, duration: number) {
+  const url = new URL("/prototype", window.location.origin);
+  url.searchParams.set("room", roomId);
+  url.searchParams.set("capacity", String(capacity));
+  url.searchParams.set("duration", String(duration));
+  return url;
+}
+
 function Character({ color, className = "", label }: { color: Player["color"]; className?: string; label?: string }) {
   return <div className={`character character-${color} ${className}`} aria-label={label ?? "Karakter pemain"}>
     <svg viewBox="0 0 120 145" role="img" aria-hidden="true">
@@ -60,10 +86,10 @@ function ArenaArt({ holder, capacity, onSelect, selected }: { holder: number; ca
 
 export default function GamePreview() {
   const [screen, setScreen] = useState<Screen>(() => new URLSearchParams(window.location.search).has("room") ? "lobby" : "opening");
-  const [capacity, setCapacity] = useState(4);
-  const [duration, setDuration] = useState(30);
+  const [capacity, setCapacity] = useState(() => [2, 3, 4].includes(Number(new URLSearchParams(window.location.search).get("capacity"))) ? Number(new URLSearchParams(window.location.search).get("capacity")) : 4);
+  const [duration, setDuration] = useState(() => [30, 60].includes(Number(new URLSearchParams(window.location.search).get("duration"))) ? Number(new URLSearchParams(window.location.search).get("duration")) : 30);
   const [joinId, setJoinId] = useState(new URLSearchParams(window.location.search).get("room") ?? "");
-  const [roomId, setRoomId] = useState("024");
+  const [roomId, setRoomId] = useState(() => new URLSearchParams(window.location.search).get("room") ?? "024");
   const [holder, setHolder] = useState(0);
   const [selected, setSelected] = useState<number | undefined>(undefined);
   const [hotCount, setHotCount] = useState(1);
@@ -73,15 +99,39 @@ export default function GamePreview() {
   function createRoom() {
     const id = String(Number(roomId || "24") + 1).padStart(3, "0");
     setRoomId(id);
+    setJoinId(id);
     setHolder(0);
-    setNotice(`Room contoh #${id} dibuat secara lokal. Tidak ada transaksi Monad.`);
+    window.history.replaceState(null, "", getRoomUrl(id, capacity, duration));
+    setNotice(`Room contoh #${id} siap dibagikan. Room ini hanya tersimpan di pratinjau lokal.`);
   }
 
   function joinRoom() {
     const id = joinId.trim().replace(/^#/, "");
     if (!id) { setNotice("Masukkan ID room untuk melihat pratinjau."); return; }
     setRoomId(id);
+    window.history.replaceState(null, "", getRoomUrl(id, capacity, duration));
     setNotice(`Membuka contoh room #${id}. Ini bukan snapshot on-chain.`);
+  }
+
+  async function shareRoom() {
+    const url = getRoomUrl(roomId, capacity, duration);
+    const shareData = { title: `Room contoh BOM OPER #${roomId}`, text: "Ikut lihat pratinjau room BOM OPER ini.", url: url.toString() };
+    if (navigator.share) {
+      try {
+        await navigator.share(shareData);
+        setNotice("Link room contoh berhasil dibagikan.");
+        return;
+      } catch (cause) {
+        if (cause instanceof DOMException && cause.name === "AbortError") return;
+      }
+    }
+
+    try {
+      await copyText(url.toString());
+      setNotice("Link room contoh disalin. Buka di perangkat lain untuk melihat pratinjau.");
+    } catch (cause) {
+      setNotice(cause instanceof Error ? cause.message : "Link tidak berhasil disalin. Salin alamat room yang tampil di layar.");
+    }
   }
 
   function passBomb(hot: boolean) {
@@ -111,8 +161,8 @@ export default function GamePreview() {
         <h1>BOM<br />OPER</h1>
         <p className="opening-tagline">Oper cepat. Tahan panik.</p>
         <p>Satu bom. Teman-temanmu.<br />Jangan jadi pemegang terakhir.</p>
-        <div className="opening-actions"><button className="arcade-button button-orange" onClick={() => { setScreen("lobby"); setNotice(""); }}>Mulai main</button><button className="arcade-button button-cream" onClick={() => setShowRules((value) => !value)}>Cara main</button></div>
-        <p className="mock-caption">30 / 60 detik per ronde · gas memakai MON testnet</p>
+        <div className="opening-actions"><button className="arcade-button button-orange" onClick={() => { setScreen("lobby"); setNotice("Kamu sedang melihat pratinjau. Wallet tidak diminta dan tidak ada transaksi."); }}>Coba demo</button><button className="arcade-button button-cream" onClick={() => setShowRules((value) => !value)}>Cara main</button></div>
+        <p className="mock-caption">Tanpa wallet · 2–4 pemain · ronde asli memakai MON testnet</p>
         {showRules && <div className="rules-popover"><strong>Cara main</strong><ol><li>Buat room dan undang 1–3 teman.</li><li>Oper bom sebelum deadline kontrak.</li><li>Oper panas memotong 3 detik, sekali per pemain.</li></ol><small>Di pratinjau ini semua langkah hanya simulasi lokal.</small></div>}
       </div>
       <div className="opening-scene"><div className="sun-disc" /><span className="scene-word">OPER!</span><ArenaArt holder={3} capacity={4} /><span className="scene-spark spark-a">✦</span><span className="scene-spark spark-b">✧</span><Bomb /></div>
@@ -121,11 +171,13 @@ export default function GamePreview() {
     {screen === "lobby" && <section className="preview-lobby">
       <div className="lobby-heading"><span className="preview-kicker">SIAP-SIAP · PRATINJAU</span><h1>Kumpul dulu.<br className="mobile-break" /> Panik nanti.</h1><p>Room <strong>#{roomId}</strong> · contoh lokal, belum dibaca dari kontrak</p></div>
       <div className="lobby-toolbar"><label>Kapasitas <select value={capacity} onChange={(event) => setCapacity(Number(event.target.value))}><option value={2}>2 pemain</option><option value={3}>3 pemain</option><option value={4}>4 pemain</option></select></label><label>Durasi <select value={duration} onChange={(event) => setDuration(Number(event.target.value))}><option value={30}>30 detik</option><option value={60}>60 detik</option></select></label><button className="arcade-button button-orange" onClick={createRoom}>Buat room contoh</button></div>
-      <div className="lobby-toolbar lobby-join"><label>Room ID <input value={joinId} onChange={(event) => setJoinId(event.target.value)} placeholder="contoh: 024" /></label><button className="arcade-button button-cream" onClick={joinRoom}>Lihat room</button><button className="arcade-button button-cream" onClick={async () => { await navigator.clipboard?.writeText(`${window.location.origin}/prototype?room=${roomId}`); setNotice("Link pratinjau disalin."); }}>Salin link contoh</button></div>
+      <div className="invite-panel"><div><strong>Room #{roomId}</strong><span>Link pratinjau · belum menjadi room on-chain</span></div><button className="arcade-button button-cream" onClick={() => void shareRoom()}>Bagikan room</button><code>{getRoomUrl(roomId, capacity, duration).toString()}</code></div>
+      <div className="lobby-toolbar lobby-join"><label>ID room teman <input inputMode="numeric" autoComplete="off" value={joinId} onChange={(event) => setJoinId(event.target.value)} placeholder="Contoh: 024" /></label><button className="arcade-button button-cream" onClick={joinRoom}>Buka room</button></div>
       <div className="lobby-characters">{players.slice(0, capacity).map((player, index) => <div className={`lobby-seat ${index < 2 ? "seat-ready" : "seat-empty"}`} key={player.color}><Character color={player.color} /><span>{index === 0 ? "KAMU · PEMBUAT" : index === 1 ? "PEMAIN 2 · CONTOH" : "MENUNGGU…"}</span></div>)}</div>
       <div className="lobby-status"><strong>2 / {capacity} pemain</strong><span>Wallet belum diminta · saldo belum diperiksa</span></div>
-      <button className="arcade-button button-violet" onClick={() => { setHolder(0); setScreen("arena"); setNotice("Arena contoh dibuka. Timer tetap contoh, tidak berjalan dari chain."); }}>Masuk arena pratinjau</button>
+      <button className="arcade-button button-violet lobby-primary-action" onClick={() => { setHolder(0); setScreen("arena"); setNotice("Arena contoh dibuka. Timer tetap contoh, tidak berjalan dari chain."); }}>Lihat arena contoh</button>
       <p className="mock-caption">Buat/join/start sungguhan aktif setelah alamat kontrak publik tersedia.</p>
+      <section className="status-guide" aria-labelledby="status-guide-title"><div className="status-guide-title"><span className="preview-kicker">PANDUAN STATUS</span><h2 id="status-guide-title">Apa yang terjadi saat main?</h2><p>Ini contoh label untuk game terhubung; belum ada wallet/transaksi di pratinjau ini.</p></div><ol><li><span className="status-icon" aria-hidden="true">1</span><div><strong>Menunggu persetujuan wallet</strong><p>Wallet terbuka untuk kamu tinjau. Belum ada aksi sampai disetujui.</p></div></li><li><span className="status-icon status-pending" aria-hidden="true">2</span><div><strong>Transaksi diproses</strong><p>Tunggu receipt. Jangan kirim aksi yang sama lagi saat statusnya belum jelas.</p></div></li><li><span className="status-icon status-finished" aria-hidden="true">3</span><div><strong>Ronde selesai</strong><p>Hasil resmi muncul setelah kontrak memberi status Finished.</p></div></li></ol></section>
     </section>}
 
     {screen === "arena" && <section className="preview-arena-screen">
@@ -137,7 +189,7 @@ export default function GamePreview() {
 
     {screen === "result" && <section className="preview-result"><span className="preview-kicker">CONTOH LAYAR SELESAI · BUKAN HASIL CHAIN</span><h1>Kena bom!</h1><p className="result-subtitle">{players[holder].label} memegang bom pada contoh ini.</p><div className="result-scene"><div className="sun-disc" /><div className="result-platform"><Character color={players[holder].color} /></div><span className="scene-spark spark-a">✦</span><span className="scene-spark spark-b">✦</span></div><div className="result-ribbon">HASIL SIMULASI LOKAL · BELUM ADA RECEIPT</div><div className="result-actions"><button className="arcade-button button-orange" onClick={resetPreview}>Main lagi (pratinjau)</button><button className="arcade-button button-cream" onClick={() => setNotice("Bukti transaksi belum ada di pratinjau lokal.")}>Bukti transaksi</button></div><p className="mock-caption">Hasil game yang sebenarnya hanya tampil setelah kontrak berstatus Finished.</p></section>}
 
-    <div className="preview-notice" aria-live="polite"><span aria-hidden="true">ⓘ</span>{notice || "PRATINJAU DESAIN · pemain, waktu, room, dan aksi di layar ini adalah contoh."}</div>
+    <div className="preview-notice" role="status" aria-live="polite"><span aria-hidden="true">ⓘ</span>{notice || "PRATINJAU DESAIN · pemain, waktu, room, dan aksi di layar ini adalah contoh."}</div>
     <footer className="preview-footer"><span>MONAD TESTNET · 10143</span><span>Pratinjau visual lokal · belum tersambung ke kontrak</span><a href="/">Kembali</a></footer>
   </main>;
 }

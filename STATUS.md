@@ -21,7 +21,7 @@
 | Build / tes lokal | Root `npm run build` LULUS: export artifact ABI/bytecode dan Vite build; `npm run contracts:test` LULUS 16 tes Tahap 3 |
 | URL publik landing | https://bom-oper.salmansegaf52.workers.dev; Worker `bom-oper`, versi `0b0c8d8a-350d-442f-a44f-1246795488a5` |
 | Helper deploy publik | https://bom-oper.salmansegaf52.workers.dev/setup; Worker `bom-oper`, versi `8d168b42-2e07-4490-b7d2-eb8decd07841`; root dan `/setup` HTTP 200 |
-| Pratinjau visual publik | https://bom-oper.salmansegaf52.workers.dev/prototype; Worker `bom-oper`, versi `9e9ec2d5-94de-4984-88e0-d2f2cbca6c7b`; `/prototype` merespons HTTP 200; simulasi saja |
+| Pratinjau visual publik | https://bom-oper.salmansegaf52.workers.dev/prototype; Worker `bom-oper`, versi `2eb9f5ff-012c-40d7-85cf-a8658faabc03`; `/prototype` merespons HTTP 200; simulasi saja |
 | Chain target | RPC Monad Testnet `eth_chainId` = 10143; simulasi lokal 10143; constructor menolak deployment pada ID lain |
 | Compiler/EVM target | solc 0.8.30; Cancun; optimizer 200 runs; dikompilasi lokal |
 | Alamat kontrak aktual | BELUM ADA; helper menunggu wallet pengguna mengirim dan menyetujui deploy |
@@ -32,6 +32,15 @@
 | Mode wallet / durasi aktual | UI EOA sementara lokal; belum dideploy atau diuji tanda tangan/dua pemain; target default 30 detik |
 | Plugin Figma untuk Tahap 6 | Belum terhubung pada sesi ini; tool Figma/design-to-code belum tersedia |
 | Submission | BELUM DILAKUKAN |
+
+## 24 Oktober 2026 WIB — pemolesan UX demo HP
+
+- Baca `AGENTS.md`, `SPEC.md`, `TASKS.md`, `STATUS.md`, Prompt 6 pada `docs/BUILD-GUIDE.md`, `docs/design/README.md`, `docs/design/MOTION.md`, dan `docs/DECISIONS.md`.
+- Landing kini punya CTA utama menuju demo pratinjau dan CTA tetap di bawah pada HP; copy menjelaskan belum memakai wallet.
+- `/prototype` kini memberi invite URL yang dapat memakai Web Share atau fallback salin, membawa ID/capacity/duration dan masuk langsung ke Lobby bila dibuka. Pesan izin wallet, transaksi pending, dan Finished punya penjelasan teks. Lobby punya tombol arena yang sticky saat layar sempit dan target kontrol minimal 48px.
+- Tidak ada perubahan frame Figma. Acuan visual tetap preview/tokens yang disimpan; langsung mengambil design context dari plugin masih ditunda.
+- `npm run build`, Wrangler dry-run, deploy ke Worker yang sama, dan HTTP GET homepage/room serta asset bundle berhasil. Versi publik: `2eb9f5ff-012c-40d7-85cf-a8658faabc03`. Catatan pemeriksaan di `TEST-RESULTS.md`.
+- Belum dilakukan inspeksi visual interaktif di browser HP; belum ada kontrak publik/transaksi/ronde nyata. `/prototype` tetap jelas simulasi.
 
 ## Saat mulai
 
