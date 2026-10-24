@@ -2,12 +2,12 @@
 
 ## Keadaan aktual
 
-**TAHAP 2 SELESAI LOKAL; VERIFIKASI HP TAHAP 1 MASIH MENUNGGU.** Landing page publik dan SPA fallback merespons HTTP 200. `BomOper.sol` telah dikompilasi dengan solc 0.8.30/EVM Cancun; dua tes jaringan (10143 benar, 31337 ditolak) lulus. Tes aturan inti lengkap dan deployment kontrak Monad belum dilakukan.
+**TAHAP 3 SELESAI LOKAL; VERIFIKASI HP TAHAP 1 MASIH MENUNGGU.** Landing page publik dan SPA fallback merespons HTTP 200. `BomOper.sol` dikompilasi dengan solc 0.8.30/EVM Cancun; 16 tes aturan dan chain guard lulus pada simulasi chain ID 10143. Pengukuran gas receipt lokal tercatat di `TEST-RESULTS.md`. Deployment kontrak Monad belum dilakukan.
 
 | Hal | Status/nilai aktual |
 |---|---|
-| Tahap terakhir selesai | Tahap 2 lokal: kontrak, konfigurasi jaringan, ABI, compile dan chain-guard test lulus |
-| Tahap berikutnya | Tahap 3: tes seluruh aturan dan gas; verifikasi URL landing lewat HP masih pending |
+| Tahap terakhir selesai | Tahap 3 lokal: tes aturan lengkap, kasus batas receipt, kompetisi transaksi, dan gas lulus |
+| Tahap berikutnya | Tahap 4: deployment kontrak testnet; verifikasi URL landing lewat HP masih pending |
 | Repository GitHub tujuan | https://github.com/salmanfidinillah/monadproject |
 | Branch pembangunan | main; Git lokal diinisialisasi dan branch diperiksa |
 | Akun GitHub terhubung | salmanfidinillah; profil berhasil dibaca melalui plugin GitHub |
@@ -102,3 +102,13 @@ Desain arcade dibuat pada file Figma pengguna tanpa menghapus halaman lama. Open
 - `hardhat.config.ts`: solc 0.8.30, optimizer 200 runs, Cancun; `monadTestnetLocal` chain ID 10143, `wrongChainLocal` 31337, dan endpoint Monad Testnet publik dibatasi dengan chain ID 10143.
 - `npm run contracts:compile` lulus: satu file, solc 0.8.30 (WASM), EVM target Cancun. `npm run contracts:test` lulus: 2 tes Mocha; local simulation ber-chain 10143 menerima deployment, chain 31337 menolak dengan `UnsupportedChain(31337,10143)`. ABI diperiksa manual; detail di TEST-RESULTS.md.
 - Belum dilakukan: tes aturan penuh/gas Tahap 3, deploy/receipt Monad Testnet, UI kontrak, atau uji HP atas landing page.
+
+### Progres Tahap 3 - 24 Oktober 2026 WIB
+
+- Dibaca sebelum tahap ini: `SPEC.md`, `TASKS.md`, `STATUS.md`, `docs/BUILD-GUIDE.md` bagian Tahap 3, `docs/ARCHITECTURE.md`, `docs/DECISIONS.md`, dan `TEST-RESULTS.md`. Aturan SPEC dipertahankan; kontrak belum dideploy.
+- `npm run contracts:test`: LULUS, 16 tes Mocha; mencakup kapasitas/durasi, validasi join/start, turn/holder/recipient, oper panas dan deadline, hasil/event/snapshot, isolasi room, serta constructor chain guard. Waktu uji digerakkan helper Hardhat tanpa sleep.
+- Transaksi kompetitif dikirim bersamaan saat automine mati dengan nonce berurutan, lalu dimining satu blok: oper pertama receipt status 1 dan oper kedua receipt status 0. Oper pada timestamp deadline dan hot pada sisa enam detik juga menghasilkan receipt status 0; settle tepat pada deadline berhasil.
+- `npm run contracts:compile`: LULUS (`No contracts to compile` karena artefak aktual); `npx hardhat compile --force`: LULUS, 1 file dibangun ulang dengan solc 0.8.30/EVM Cancun.
+- Gas receipt simulasi lokal: create 142,383; join 75,827; start 83,139; pass biasa 60,105; pass panas 68,881; settle 87,740. Bukan biaya MON aktual.
+- Tidak ada perubahan spesifikasi atau pendekatan desain yang memerlukan keputusan baru. Belum dilakukan deployment kontrak testnet, UI/wallet, receipt permainan, atau uji URL melalui HP.
+- Tahap berikutnya: Tahap 4 deployment testnet sesuai otorisasi dan alur wallet pengguna; verifikasi HP landing page masih menunggu konfirmasi pengguna.

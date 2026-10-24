@@ -1,6 +1,6 @@
 # Rundown enam jam dan checklist
 
-Prompt Induk dan Prompt 0 selesai dengan checkpoint GitHub terverifikasi. Tahap 1 masih menunggu verifikasi HP; scaffold sudah dibuild dan URL publik merespons. Tahap 2 selesai lokal; Tahap 3 sampai 9 belum dijalankan. Centang hanya setelah kriteria tahap terbukti. Jadwal relatif; contoh waktu 12.00-18.00 bukan konfirmasi panitia. Checkpoint GitHub 1-2 menit termasuk dalam slot yang sama.
+Prompt Induk dan Prompt 0 selesai dengan checkpoint GitHub terverifikasi. Tahap 1 masih menunggu verifikasi HP; scaffold sudah dibuild dan URL publik merespons. Tahap 2 dan Tahap 3 selesai lokal; Tahap 4 sampai 9 belum dijalankan. Centang hanya setelah kriteria tahap terbukti. Jadwal relatif; contoh waktu 12.00-18.00 bukan konfirmasi panitia. Checkpoint GitHub 1-2 menit termasuk dalam slot yang sama.
 
 | Tahap | Slot | Syarat lulus |
 |---|---|---|
@@ -19,7 +19,7 @@ Prompt Induk dan Prompt 0 selesai dengan checkpoint GitHub terverifikasi. Tahap 
 - [x] 0: Figma Opening/Lobby/Arena/Hasil desktop + Arena mobile, anotasi opening mobile/loading, URL/frame/tokens/preview; push desain dan SHA remote terverifikasi.
 - [ ] 1: app scaffold, lockfile, .gitignore, .env.example, SPA hosting dan URL publik sudah tersedia; verifikasi buka dari HP masih pending.
 - [x] 2: `BomOper.sol`, state machine/event/snapshot, expectedTurn, panas, deadline, compiler/EVM target dan guard chain 10143; compile, ABI, serta tes chain guard lulus. Full rule tests ada di Tahap 3.
-- [ ] 3: tes aturan dan batas (lihat TEST-RESULTS.md); bukan sleep dunia nyata.
+- [x] 3: tes aturan dan batas lulus di simulasi chain ID 10143 dengan pengaturan timestamp jaringan; gas enam aksi dicatat di TEST-RESULTS.md. Bukan sleep dunia nyata.
 - [ ] 4: deploy 10143 lewat wallet pengguna, receipt/code/ABI/record deploy.
 - [ ] 5: persetujuan wallet bermain, funding gas, pending/recovery; fallback bila perlu.
 - [ ] 6: Opening/Mulai Main, loading/error nyata, link room langsung, UI sesuai Figma, polling konsisten, settle, ronde publik.
@@ -68,4 +68,13 @@ Revisi arcade lima layar dan storyboard motion sudah dibuat/diperiksa di Figma. 
 - [x] Mematok solc 0.8.30/EVM Cancun; simulated Monad test menggunakan chain ID 10143, network 31337 hanya untuk tes guard.
 - [x] Compile, inspeksi ABI functions/events/snapshot, dan tes deploy di chain yang benar serta ditolak di chain yang salah.
 - [x] Abaikan output TypeChain `types/` agar generated code tidak masuk checkpoint.
-- [ ] Tes seluruh aturan batas/gas sesuai Tahap 3; belum deploy kontrak ke Monad Testnet.
+- [x] Tes seluruh aturan batas/gas diselesaikan di Tahap 3; kontrak belum dideploy ke Monad Testnet.
+
+## Progres Tahap 3 - 24 Oktober 2026 WIB
+
+- [x] Menambah tes aturan room, join/start, oper, expectedTurn basi setelah round-trip, hot pass, batas waktu, finalisasi, event/snapshot, isolasi room, dan chain guard; 16 tes Mocha lulus.
+- [x] Kasus bersaing mengirim dua transaksi pending dengan nonce berurutan dalam satu blok: receipt pertama sukses, receipt kedua status 0. Kasus hot pada sisa 6 detik dan oper pada deadline juga menambang lalu memeriksa receipt status 0.
+- [x] Waktu dimajukan dengan `networkHelpers.time.setNextBlockTimestamp`; tidak menggunakan sleep dunia nyata.
+- [x] Catat gas receipt untuk create 142,383; join 75,827; start 83,139; pass normal 60,105; pass hot 68,881; settle 87,740. Nilai lokal simulasi, bukan estimasi biaya MON testnet.
+- [x] `npm run contracts:test` lulus 16 passing; `npm run contracts:compile` lulus (`No contracts to compile`, artefak sudah terbangun).
+- [ ] Tahap 4 deployment Monad Testnet masih belum dilakukan; verifikasi buka URL landing melalui HP masih menunggu pengguna.

@@ -1,6 +1,6 @@
 # Hasil pengujian
 
-**Tes Tahap 2 terbatas sudah dijalankan; tes aturan game lengkap belum.** Tabel di bawah adalah rencana kasus kecuali hasil yang secara eksplisit dicatat lulus. Tambahkan tanggal/lingkungan, perintah aktual, hasil, dan bukti ketika dijalankan.
+**Tahap 3 lokal lulus pada 24 Oktober 2026.** Tabel rencana awal di bawah diperbarui oleh hasil aktual Tahap 3 di bagian akhir. Uji melalui HP dan deployment kontrak testnet tetap belum dilakukan.
 
 | Kelompok | Kasus minimum | Hasil awal |
 |---|---|---|
@@ -123,3 +123,32 @@ Lingkungan: Windows PowerShell, Node v24.13.1/npm 11.8.0, Hardhat 3.21.0, branch
 | Deploy kontrak Monad Testnet / receipt / alamat | BELUM DILAKUKAN; Tahap 4 |
 
 Compiler settings aktual: optimizer enabled (200 runs), EVM `cancun`. Simulated Monad test memakai chain ID 10143; jaringan lokal 31337 sengaja hanya untuk memastikan guard chain salah benar-benar menolak. ABI bytecode lokal berukuran 4,227 bytes (bukan ukuran deployment receipt).
+
+## Pelaksanaan Tahap 3 - 24 Oktober 2026 WIB
+
+Lingkungan: Node v24.13.1, npm 11.8.0, Hardhat 3.21.0, simulated chain ID 10143, EVM Cancun. Tidak ada wallet atau transaksi testnet. Timestamp dimajukan dengan `networkHelpers.time.setNextBlockTimestamp`; tidak menggunakan sleep dunia nyata.
+
+| Perintah/kasus aktual | Hasil |
+|---|---|
+| `npm run contracts:test` | LULUS: 16 passing (16 mocha), 2 tes chain guard dan 14 tes aturan |
+| Capacity 2/3/4, durasi 30/60, invalid capacity/duration, creator auto-join, snapshot/event create | LULUS |
+| Duplicate/full/late join; start outsider/incomplete/restart; first holder creator | LULUS |
+| Pass biasa menjaga deadline; pass panas mengurangi 3 detik, sekali per pemain; sisa 6 detik gagal, 7 detik diterima | LULUS |
+| Self/nonmember/zero recipient, non-holder, expectedTurn salah dan stale sesudah A -> B -> A | LULUS |
+| Dua pass bersaing dengan nonce berurutan dalam pending pool dan satu blok | LULUS: satu receipt status 1, receipt kompetitor status 0 |
+| Pass pada timestamp deadline; settle tepat deadline; settle dini/ganda; loser terakhir dan event finish | LULUS: pass receipt status 0; settle receipt status 1; hasil dan event sesuai |
+| Room tidak dikenal; dua room independen untuk holder/turn/deadline/hot-used | LULUS |
+| `npm run contracts:compile` dan `npx hardhat compile --force` | LULUS: perintah biasa menyatakan artifact aktual; forced compile membangun ulang 1 file dengan solc 0.8.30/EVM Cancun |
+
+Gas dari receipt lokal (basis pembanding, bukan estimasi biaya MON testnet):
+
+| Aksi | Gas used |
+|---|---:|
+| `createRoom(2, 30)` | 142,383 |
+| `joinRoom` | 75,827 |
+| `startRoom` | 83,139 |
+| `passBomb` biasa | 60,105 |
+| `passBomb` panas | 68,881 |
+| `settleRoom` | 87,740 |
+
+Deployment kontrak testnet dan verifikasi URL landing lewat HP tetap BELUM DILAKUKAN.
