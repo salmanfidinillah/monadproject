@@ -1,0 +1,94 @@
+.game-preview {
+  --ink: #212346; --cream: #fff2c7; --sky: #91dad9; --floor: #f4d781;
+  --orange: #ffaf3e; --cyan: #54c9de; --violet: #a39cf2; --pink: #f78a9e;
+  min-height: 100vh; padding: 0 clamp(18px, 4vw, 48px) 22px; overflow: hidden;
+  color: var(--ink); background: var(--sky); font-family: "Nunito", "Trebuchet MS", sans-serif;
+}
+.preview-header { width: min(100%, 1360px); min-height: 72px; margin: 0 auto; display: flex; align-items: center; gap: 16px; border-bottom: 2px solid rgb(33 35 70 / 12%); }
+.preview-brand { display: inline-flex; align-items: center; gap: 11px; margin-right: auto; text-decoration: none; font-family: "Lilita One", "Arial Rounded MT Bold", sans-serif; font-size: 23px; }
+.preview-header .brand-mark { width: 35px; height: 35px; }
+.preview-network { display: inline-flex; align-items: center; gap: 8px; padding: 8px 13px; border: 2px solid var(--ink); border-radius: 99px; background: #fffaf0; font-size: 11px; font-weight: 1000; }
+.preview-network i { width: 8px; height: 8px; border-radius: 50%; background: #46a77a; }
+.preview-stamp, .preview-kicker { display: inline-block; padding: 7px 12px; border: 2px solid var(--ink); border-radius: 999px; background: var(--cream); font-size: 11px; font-weight: 1000; letter-spacing: .07em; }
+.preview-opening { position: relative; display: grid; grid-template-columns: .86fr 1.14fr; align-items: center; gap: 24px; width: min(100%, 1360px); min-height: min(740px, calc(100vh - 118px)); margin: 0 auto; }
+.opening-copy { position: relative; z-index: 2; padding: 42px 0 55px; }
+.opening-copy h1 { margin: 22px 0 14px; font: 400 clamp(86px, 12vw, 154px)/.76 "Lilita One", "Arial Rounded MT Bold", sans-serif; letter-spacing: -.045em; color: var(--cream); -webkit-text-stroke: 3px var(--ink); text-shadow: 7px 8px 0 var(--ink); }
+.opening-tagline { margin: 30px 0 7px; font-size: 24px; font-weight: 1000; }
+.opening-copy > p:not(.opening-tagline):not(.mock-caption) { font-size: 17px; line-height: 1.45; }
+.opening-actions, .result-actions { display: flex; flex-wrap: wrap; gap: 13px; margin-top: 23px; }
+.arcade-button { min-height: 51px; padding: 10px 20px; border: 3px solid var(--ink); border-radius: 16px; box-shadow: 4px 5px 0 var(--ink); color: var(--ink); cursor: pointer; font: 1000 16px/1.15 "Nunito", sans-serif; transition: transform .12s ease, box-shadow .12s ease; }
+.arcade-button:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 4px 7px 0 var(--ink); }
+.arcade-button:active:not(:disabled) { transform: translate(2px, 2px); box-shadow: 1px 2px 0 var(--ink); }
+.arcade-button:focus-visible, .text-button:focus-visible, .preview-brand:focus-visible { outline: 4px solid var(--cream); outline-offset: 3px; }
+.arcade-button:disabled { opacity: .55; cursor: not-allowed; }
+.button-orange { background: var(--orange); }.button-cream { background: #fffaf0; }.button-violet { background: var(--violet); }.button-pink { background: var(--pink); }
+.mock-caption { margin: 17px 0 0; font-size: 12px; font-weight: 900; line-height: 1.5; }
+.rules-popover { position: absolute; z-index: 5; width: min(100%, 390px); margin-top: 13px; padding: 18px 20px; border: 3px solid var(--ink); border-radius: 16px; background: #fffaf0; box-shadow: 5px 6px 0 var(--ink); }
+.rules-popover ol { padding-left: 21px; margin: 10px 0; line-height: 1.55; }.rules-popover small { font-weight: 800; }
+.opening-scene { position: relative; height: min(600px, 68vw); min-height: 430px; }
+.sun-disc { position: absolute; top: 2%; right: 10%; width: clamp(200px, 31vw, 390px); aspect-ratio: 1; border-radius: 50%; background: #fff0ad; }
+.opening-scene::before, .opening-scene::after { position: absolute; content: ""; pointer-events: none; border-radius: 50%; }
+.opening-scene::before { z-index: 0; width: 89%; height: 48%; bottom: -1%; left: -12%; background: #43b9b1; }
+.opening-scene::after { z-index: 0; width: 58%; height: 61%; bottom: -8%; right: -18%; background: #27888a; }
+.scene-word { position: absolute; z-index: 3; top: 23%; right: 17%; transform: rotate(-10deg); font: 400 clamp(36px, 5vw, 66px) "Lilita One", sans-serif; }
+.scene-spark { position: absolute; z-index: 5; color: var(--cream); font-size: 42px; text-shadow: 0 0 3px #fff; }.spark-a { top: 38%; left: 22%; }.spark-b { top: 28%; right: 10%; font-size: 28px; }
+.opening-scene > .arena-art { position: absolute; z-index: 2; left: 0; right: 0; bottom: 12%; }
+.opening-scene > .bomb-art { position: absolute; z-index: 4; top: 42%; left: 45%; width: 94px; transform: rotate(-14deg); }
+.bomb-art { display: inline-block; width: 64px; flex: 0 0 auto; }.bomb-art svg { display: block; width: 100%; overflow: visible; }.bomb-small { position: absolute; z-index: 4; width: 70px; right: -18px; bottom: 42px; transform: rotate(12deg); }
+.arena-art { position: relative; width: 100%; height: 410px; }
+.arena-shadow { position: absolute; left: 8%; right: 8%; bottom: 14px; height: 70px; border-radius: 50%; background: #27888a; }
+.arena-rim { position: absolute; left: 6%; right: 6%; bottom: 38px; height: 265px; border: 5px solid var(--ink); border-radius: 50%; background: #897bdd; box-shadow: 0 15px 0 #7468c4; }
+.arena-floor { position: absolute; inset: 0 0 15px; border: 5px solid var(--orange); border-radius: 50%; background: var(--floor); box-shadow: inset 0 0 0 3px #fff0ad; }
+.arena-player { position: absolute; z-index: 2; width: clamp(110px, 14vw, 170px); padding: 0; border: 0; background: transparent; cursor: default; }
+.arena-player[disabled] { cursor: default; }
+.arena-player:not(:disabled) { cursor: pointer; }
+.arena-player:not(:disabled):focus-visible { outline: 4px dashed var(--ink); outline-offset: 3px; border-radius: 50%; }
+.arena-player.is-selected .character { filter: drop-shadow(0 0 8px #fff) drop-shadow(0 0 4px var(--ink)); transform: translateY(-8px); }
+.arena-player.is-holder .character { transform: translateY(-6px); }
+.arena-player .character { transition: transform .2s ease, filter .2s ease; }
+.slot-0 { left: 4%; top: 30%; }.slot-1 { right: 4%; top: 30%; }.slot-2 { left: 50%; top: -17%; transform: translateX(-50%); }.slot-3 { left: 50%; bottom: -14%; transform: translateX(-50%); }
+.capacity-2 .slot-0 { left: 11%; top: 25%; }.capacity-2 .slot-1 { right: 11%; top: 25%; }
+.character { position: relative; width: 100%; max-width: 150px; margin: 0 auto; }.character svg { width: 100%; overflow: visible; filter: drop-shadow(0 4px 0 rgb(33 35 70 / 12%)); }
+.character-label { display: block; position: relative; width: max-content; max-width: 100%; margin: -3px auto 0; padding: 5px 12px; border: 2px solid var(--ink); border-radius: 999px; background: #fffaf0; font-size: 11px; font-weight: 1000; white-space: nowrap; }
+.character-orange .char-body, .character-orange .char-head, .character-orange .char-hand, .character-orange .char-boot, .character-orange .char-antenna { fill: var(--orange); }
+.character-cyan .char-body, .character-cyan .char-head, .character-cyan .char-hand, .character-cyan .char-boot, .character-cyan .char-antenna { fill: var(--cyan); }
+.character-violet .char-body, .character-violet .char-head, .character-violet .char-hand, .character-violet .char-boot, .character-violet .char-antenna { fill: var(--violet); }
+.character-pink .char-body, .character-pink .char-head, .character-pink .char-hand, .character-pink .char-boot, .character-pink .char-antenna { fill: var(--pink); }
+.char-body, .char-head, .char-hand, .char-boot, .char-antenna { stroke: var(--ink); stroke-width: 3; }
+.preview-lobby, .preview-arena-screen, .preview-result { width: min(100%, 1190px); margin: 0 auto; padding: 35px 0 20px; }
+.lobby-heading { text-align: center; }.lobby-heading h1 { margin: 13px 0 6px; font: 400 clamp(38px, 6vw, 68px)/1 "Lilita One", sans-serif; text-transform: uppercase; }.lobby-heading p { font-size: 18px; }
+.lobby-toolbar { display: flex; justify-content: center; align-items: end; flex-wrap: wrap; gap: 14px; margin: 22px auto; }
+.lobby-toolbar label { display: grid; gap: 6px; font-size: 12px; font-weight: 1000; text-transform: uppercase; }
+.lobby-toolbar select, .lobby-toolbar input { min-height: 48px; min-width: 145px; padding: 8px 12px; border: 2px solid var(--ink); border-radius: 12px; background: #fffaf0; color: var(--ink); font: 900 15px "Nunito", sans-serif; }
+.lobby-join { padding-top: 15px; border-top: 2px solid rgb(33 35 70 / 14%); }
+.lobby-characters { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 15px; margin: 25px auto 18px; }
+.lobby-seat { min-height: 205px; display: grid; align-content: center; justify-items: center; gap: 7px; border: 2px solid var(--ink); border-radius: 22px; background: #fff2c7; }
+.lobby-seat .character { width: 125px; }.lobby-seat > span { padding: 5px 10px; border: 2px solid var(--ink); border-radius: 99px; background: #fffaf0; font-size: 10px; font-weight: 1000; }
+.seat-empty { opacity: .5; background: #d0efdf; }.lobby-status { display: flex; justify-content: center; gap: 22px; margin: 14px 0 22px; font-size: 14px; }.lobby-status span { font-weight: 800; }
+.preview-lobby > .button-violet { display: block; margin: 0 auto; }
+.mobile-break { display: none; }
+.arena-topline { display: flex; justify-content: space-between; align-items: center; gap: 12px; }.room-chip, .holder-chip { padding: 9px 15px; border: 2px solid var(--ink); border-radius: 99px; background: #fffaf0; font-size: 12px; font-weight: 1000; }.holder-chip { background: var(--orange); }
+.timer-sample { position: relative; z-index: 4; width: max-content; margin: 5px auto -17px; padding: 4px 20px 9px; border: 3px solid var(--ink); border-radius: 19px; background: #fffaf0; box-shadow: 0 6px 0 var(--ink); text-align: center; font: 400 clamp(42px, 7vw, 76px)/.95 "Lilita One", sans-serif; }.timer-sample small { display: block; margin-top: 5px; font: 1000 10px "Nunito", sans-serif; letter-spacing: .08em; }
+.preview-arena-screen > .arena-art { max-width: 970px; margin: 0 auto; height: 440px; }.preview-arena-screen > .arena-art .arena-rim { left: 5%; right: 5%; height: 292px; }
+.arena-controls { text-align: center; }.arena-controls > p:first-child { margin: 0 0 10px; font-size: 14px; font-weight: 1000; }.pass-actions { display: flex; justify-content: center; gap: 16px; }.pass-actions .arcade-button { min-width: 230px; }.pass-actions small { display: block; font-size: 11px; }
+.arena-preview-footer { display: flex; justify-content: center; gap: 24px; }.text-button { border: 0; background: transparent; color: var(--ink); cursor: pointer; font: 900 13px "Nunito", sans-serif; text-decoration: underline; text-underline-offset: 3px; }
+.preview-result { position: relative; min-height: 690px; text-align: center; }.preview-result h1 { margin: 18px 0 0; font: 400 clamp(65px, 11vw, 128px)/.95 "Lilita One", sans-serif; color: var(--cream); -webkit-text-stroke: 2px var(--ink); text-shadow: 5px 6px 0 var(--ink); text-transform: uppercase; }.result-subtitle { margin: 10px 0; font-size: 20px; font-weight: 1000; }.result-scene { position: relative; width: min(100%, 700px); height: 360px; margin: 0 auto; overflow: hidden; }.result-scene .sun-disc { top: -5%; right: 3%; width: 280px; }.result-platform { position: absolute; bottom: 25px; left: 17%; right: 17%; height: 180px; display: grid; place-items: center; border: 5px solid var(--ink); border-radius: 50%; background: var(--floor); box-shadow: 0 16px 0 #897bdd; }.result-platform .character { width: 160px; transform: translateY(-38px); }.result-ribbon { width: min(90%, 600px); margin: -8px auto 16px; padding: 8px; border: 2px solid var(--ink); border-radius: 99px; background: var(--cream); font-weight: 1000; }.result-actions { justify-content: center; margin-top: 12px; }
+.preview-notice { width: min(100%, 1190px); margin: 15px auto; padding: 11px 14px; border: 2px solid var(--ink); border-radius: 12px; background: #fff2c7; font-size: 12px; font-weight: 900; line-height: 1.5; }.preview-notice span { margin-right: 8px; }
+.preview-footer { width: min(100%, 1190px); margin: 0 auto; padding: 10px 0 0; display: flex; justify-content: space-between; gap: 12px; border-top: 2px solid rgb(33 35 70 / 12%); font-size: 11px; font-weight: 900; }.preview-footer a { text-decoration: underline; }
+@media (max-width: 760px) {
+  .game-preview { padding-inline: 17px; }
+  .preview-header { min-height: 62px; gap: 8px; flex-wrap: wrap; padding: 8px 0; }.preview-brand { font-size: 19px; }.preview-header .brand-mark { width: 31px; height: 31px; }.preview-network { padding: 7px 9px; font-size: 9px; }.preview-stamp { width: 100%; order: 3; padding: 4px; text-align: center; font-size: 9px; }
+  .preview-opening { min-height: auto; grid-template-columns: 1fr; gap: 0; padding-top: 30px; }.opening-copy { padding: 12px 0 0; }.opening-copy h1 { font-size: clamp(82px, 22vw, 118px); }.opening-tagline { margin-top: 24px; font-size: 20px; }.opening-copy > p:not(.opening-tagline):not(.mock-caption) { font-size: 15px; }.opening-scene { order: -1; height: 270px; min-height: 270px; margin: -8px -17px 8px; }.opening-scene .sun-disc { width: 195px; right: 12%; }.opening-scene::before { width: 92%; height: 58%; left: -20%; }.opening-scene::after { width: 55%; height: 72%; right: -22%; }.opening-scene .arena-art { transform: scale(.73); transform-origin: center bottom; bottom: 4%; }.opening-scene .scene-word { top: 23%; right: 12%; font-size: 36px; }.opening-scene > .bomb-art { width: 58px; top: 39%; left: 44%; }
+  .arcade-button { min-height: 48px; padding: 9px 14px; font-size: 14px; }.opening-actions { gap: 9px; }.opening-actions .arcade-button { flex: 1; }
+  .preview-lobby, .preview-arena-screen, .preview-result { padding-top: 24px; }.lobby-heading { text-align: left; }.lobby-heading h1 { font-size: 40px; }.mobile-break { display: initial; }.lobby-heading p { font-size: 15px; }
+  .lobby-toolbar { justify-content: stretch; align-items: end; gap: 10px; margin: 16px auto; }.lobby-toolbar label { flex: 1; min-width: 42%; }.lobby-toolbar select, .lobby-toolbar input { width: 100%; min-width: 0; }.lobby-toolbar > .arcade-button { flex: 1; }.lobby-join { justify-content: start; }.lobby-join label { flex-basis: 100%; }.lobby-join .arcade-button { font-size: 12px; }
+  .lobby-characters { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px; margin: 17px auto; }.lobby-seat { min-height: 150px; border-radius: 17px; }.lobby-seat .character { width: 95px; }.lobby-seat > span { font-size: 9px; }.lobby-status { align-items: start; flex-direction: column; gap: 3px; margin: 12px 0 16px; }
+  .arena-topline { align-items: start; }.room-chip, .holder-chip { max-width: 52%; padding: 7px 9px; font-size: 9px; text-align: center; }.timer-sample { margin: 19px auto -25px; padding: 4px 16px 8px; font-size: 56px; }
+  .preview-arena-screen > .arena-art { height: 390px; margin-inline: -10px; }.preview-arena-screen > .arena-art .arena-rim { left: 2%; right: 2%; height: 220px; bottom: 78px; }.preview-arena-screen .arena-shadow { bottom: 54px; }.preview-arena-screen .arena-player { width: 102px; }.preview-arena-screen .slot-0 { left: -1%; top: 29%; }.preview-arena-screen .slot-1 { right: -1%; top: 29%; }.preview-arena-screen .slot-2 { top: -9%; }.preview-arena-screen .slot-3 { bottom: 12%; }.preview-arena-screen .character-label { font-size: 9px; padding: 4px 7px; }.preview-arena-screen .bomb-small { width: 51px; right: -7px; bottom: 28px; }
+  .pass-actions { gap: 9px; }.pass-actions .arcade-button { min-width: 0; flex: 1; }.pass-actions small { font-size: 9px; }.arena-controls > p:first-child { font-size: 12px; }.arena-preview-footer { flex-wrap: wrap; gap: 12px; }
+  .preview-result { min-height: 650px; }.preview-result h1 { font-size: 72px; }.result-subtitle { font-size: 15px; }.result-scene { height: 295px; }.result-scene .sun-disc { width: 220px; }.result-platform { left: 9%; right: 9%; height: 155px; bottom: 35px; }.result-platform .character { width: 140px; }.result-ribbon { font-size: 10px; }.result-actions .arcade-button { flex: 1; }
+  .preview-footer { flex-direction: column; gap: 5px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .game-preview *, .game-preview *::before, .game-preview *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+}

@@ -82,3 +82,11 @@ Pengguna tetap memilih BOM OPER dan meminta visual terasa seperti game. Arah nav
 - Versi dipin setelah cek dokumentasi resmi dan registry npm: Node minimal 22.13; Vite 8.3.5, React 19.3.1, TypeScript 5.9.3, Hardhat 3.21.0, ethers toolbox 4.0.0, Wrangler 4.152.0.
 - Arahan warna mengikuti deskripsi terbaru di `docs/design/README.md` (ink/cream/teal/oranye arcade), bukan nilai lama di `docs/design/tokens.json`; token JSON belum disinkronkan dan perlu diperiksa sebelum implementasi UI penuh.
 - Dampak: hanya scaffold/landing; kontrak, tes aturan, wallet, animasi runtime, dan URL publik tetap belum ada.
+
+## 24 Oktober 2026 WIB — pratinjau UI sebelum koneksi eksternal
+
+- Pengguna memilih membangun tanpa koneksi wallet/Figma dahulu untuk menghemat waktu.
+- Tambahkan route `/prototype` sebagai pratinjau responsif Opening/Lobby/Arena/Hasil. Interaksi room dan oper hanya mengubah state lokal; timer contoh tetap statis. Label simulasi ditampilkan agar tidak disangka transaksi atau hasil kontrak.
+- Deploy pratinjau ke Worker `bom-oper` yang sama, tanpa mengganti konfigurasi hosting. URL: `https://bom-oper.salmansegaf52.workers.dev/prototype`.
+- Untuk tahap ini gunakan preview/token desain yang sudah berada di repository. Pengambilan design context/screenshot langsung lewat plugin Figma, wallet, kontrak publik, polling, dan hasil on-chain ditunda. Ini prototipe review visual, bukan tahap 6 selesai atau bukti demo multiplayer.
+- Berikutnya: setelah kontrak dideploy oleh pengguna di `/setup`, sinkronkan gameplay dengan alamat publik dan receipt; sambungkan Figma bila pengguna siap dan bandingkan frame spesifik.

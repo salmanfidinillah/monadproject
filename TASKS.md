@@ -22,7 +22,7 @@ Prompt Induk dan Prompt 0 selesai dengan checkpoint GitHub terverifikasi. Tahap 
 - [x] 3: tes aturan dan batas lulus di simulasi chain ID 10143 dengan pengaturan timestamp jaringan; gas enam aksi dicatat di TEST-RESULTS.md. Bukan sleep dunia nyata.
 - [ ] 4: helper `/setup` publik dan pra-pemeriksaan siap; menunggu pengguna menyetujui deploy 10143, lalu verifikasi receipt/code/view dan simpan record.
 - [ ] 5: UI persetujuan EOA/sessionStorage 10 menit, saldo/funding ekstensi, budget gas dan guard aksi tersedia lokal di `/wallet`; belum ada deployment kontrak, receipt game, atau uji dua alamat. Fallback belum diaktifkan.
-- [ ] 6: Belum dikerjakan; wajib mengambil design context/screenshot frame lewat plugin Figma yang tersambung. Opening/Lobby/Arena/Hasil, polling, settle dan ronde publik belum ada.
+- [ ] 6: Pratinjau interaktif lokal di `/prototype` sudah dibuat dan dideploy, menggunakan preview/token Figma tersimpan. Semua room/oper/hasil di pratinjau berlabel simulasi; belum ada gameplay kontrak, polling, settle, plugin design context, atau ronde publik. Tahap 6 belum lulus.
 - [ ] 7: dua sampai empat konteks nyata, kasus gagal, hasil sama, perbaikan terbukti.
 - [ ] 8: build/deploy final, cek HP/room link, ronde final, dokumentasi/video.
 - [ ] 9: pitch dua menit, form resmi, bukti submission.

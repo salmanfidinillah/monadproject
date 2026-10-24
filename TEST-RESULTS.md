@@ -184,3 +184,18 @@ Alamat kontrak belum diberikan sehingga transaksi permainan belum bisa digunakan
 | Buka wallet/tekan deploy, receipt, runtime code, view call, file `deployments/10143.json` | MENUNGGU persetujuan dan transaksi pengguna melalui helper; tidak diklaim sukses |
 
 Helper tidak auto-connect dan tidak mengirim deploy saat dibuka. Saat pengguna menekan deploy, halaman mengulang pemeriksaan chain wallet/RPC, estimasi gas/fee, dan saldo; signer hanya wallet EIP-1193 yang terhubung. Sesudah transaksi, halaman menunggu receipt, memeriksa code runtime dan memanggil `nextRoomId()` melalui RPC. Link menggunakan MonadVision Testnet; status source verification akan ditandai belum diverifikasi sampai bukti ada.
+
+## Pratinjau layar tanpa koneksi wallet/kontrak — 24 Oktober 2026 WIB
+
+| Pemeriksaan aktual | Hasil |
+|---|---|
+| Baca `BOM-OPER-Panduan-6-Jam.md`, SPEC/TASKS/STATUS, `docs/design/README.md`, `docs/design/MOTION.md` | Selesai; tidak menjalankan ulang tahap sebelumnya |
+| `npm run build` | LULUS; TypeScript dan Vite, route `/prototype` menjadi chunk tersendiri |
+| `npx wrangler deploy --dry-run --config wrangler.jsonc` | LULUS; membaca 11 file dari `app/dist` |
+| `npm run deploy` | LULUS; Worker yang sama `bom-oper`, URL `https://bom-oper.salmansegaf52.workers.dev`, version `9e9ec2d5-94de-4984-88e0-d2f2cbca6c7b` |
+| `curl.exe` GET `/prototype` | HTTP 200, HTML aplikasi; `Invoke-WebRequest` di sesi ini gagal dengan NullReferenceException, lalu pemeriksaan diulang memakai curl |
+| `git diff --check` | LULUS |
+| Pattern scan credential pada dua file pratinjau | Tidak menemukan private key, seed phrase, atau API key |
+| Browser visual QA, viewport HP, alur wallet, kontrak/receipt/hasil on-chain | BELUM DIUJI; pratinjau sengaja tidak membuat koneksi atau transaksi dan tidak menunjukkan hasil resmi |
+
+Pratinjau `/prototype` menampilkan Opening, Lobby, Arena, dan Hasil dengan state room/operasi contoh lokal. Timer contoh tidak berjalan, dan semua aksi/hasil diberi keterangan simulasi. Acuan implementasi memakai file preview desain yang sudah tersimpan serta token warna/tipografi lokal; design context dan screenshot frame langsung melalui plugin Figma ditunda sesuai arahan pengguna untuk sementara tidak melakukan koneksi. Tahap 6 tetap belum lulus.

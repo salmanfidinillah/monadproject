@@ -2,13 +2,13 @@
 
 ## Keadaan aktual
 
-**TAHAP 3 SELESAI; TAHAP 4 MASIH MENUNGGU DEPLOY KONTRAK. PERSIAPAN UI TAHAP 5 ADA DI LOKAL.** URL `/setup` tersedia di Worker BOM OPER, tetapi belum ada bukti receipt/alamat deploy dari pengguna. Route `/wallet` baru dibangun lokal dan belum dideploy; alur transaksi game belum dapat diuji tanpa kontrak publik.
+**TAHAP 3 SELESAI; TAHAP 4 MASIH MENUNGGU DEPLOY KONTRAK. PERSIAPAN UI TAHAP 5 DAN PRATINJAU VISUAL TAHAP 6 TERSEDIA, TANPA GAMEPLAY ON-CHAIN.** URL `/setup` dan `/prototype` tersedia di Worker BOM OPER, tetapi belum ada bukti receipt/alamat deploy kontrak. Route `/wallet` belum diuji dengan dua pemain; transaksi game belum dapat diuji tanpa kontrak publik.
 
 | Hal | Status/nilai aktual |
 |---|---|
 | Tahap terakhir selesai penuh | Tahap 3 lokal: seluruh tes aturan dan gas simulasi lulus |
-| Status tahap berjalan | Persiapan Tahap 5 lokal; menunggu bukti deploy Tahap 4 sebelum transaksi game dan uji dua pemain |
-| Tahap berikutnya | Deploy lewat `/setup`, kirim alamat/hash atau `deployments/10143.json`; lanjutkan integrasi dua wallet, lalu Figma Tahap 6 setelah koneksi Figma aktif |
+| Status tahap berjalan | Pratinjau `/prototype` dipublikasikan untuk review visual; semua room, timer, oper, dan hasil adalah contoh lokal. Tahap 5 belum diuji dengan dua pemain; Tahap 6 belum lulus |
+| Tahap berikutnya | Deploy kontrak lewat `/setup` dengan persetujuan wallet, kirim alamat/hash atau `deployments/10143.json`; lalu ganti simulasi dengan snapshot/aksi kontrak dan uji dua pemain. Plugin Figma/design context masih menunggu koneksi |
 | Repository GitHub tujuan | https://github.com/salmanfidinillah/monadproject |
 | Branch pembangunan | main; Git lokal diinisialisasi dan branch diperiksa |
 | Akun GitHub terhubung | salmanfidinillah; profil berhasil dibaca melalui plugin GitHub |
@@ -21,6 +21,7 @@
 | Build / tes lokal | Root `npm run build` LULUS: export artifact ABI/bytecode dan Vite build; `npm run contracts:test` LULUS 16 tes Tahap 3 |
 | URL publik landing | https://bom-oper.salmansegaf52.workers.dev; Worker `bom-oper`, versi `0b0c8d8a-350d-442f-a44f-1246795488a5` |
 | Helper deploy publik | https://bom-oper.salmansegaf52.workers.dev/setup; Worker `bom-oper`, versi `8d168b42-2e07-4490-b7d2-eb8decd07841`; root dan `/setup` HTTP 200 |
+| Pratinjau visual publik | https://bom-oper.salmansegaf52.workers.dev/prototype; Worker `bom-oper`, versi `9e9ec2d5-94de-4984-88e0-d2f2cbca6c7b`; `/prototype` merespons HTTP 200; simulasi saja |
 | Chain target | RPC Monad Testnet `eth_chainId` = 10143; simulasi lokal 10143; constructor menolak deployment pada ID lain |
 | Compiler/EVM target | solc 0.8.30; Cancun; optimizer 200 runs; dikompilasi lokal |
 | Alamat kontrak aktual | BELUM ADA; helper menunggu wallet pengguna mengirim dan menyetujui deploy |
@@ -125,3 +126,11 @@ Desain arcade dibuat pada file Figma pengguna tanpa menghapus halaman lama. Open
 - `npm run build` lulus; asset setup dibagi menjadi chunk terpisah. `npx wrangler deploy --dry-run --config wrangler.jsonc` lulus. `npm run deploy` berhasil ke Worker terpilih `bom-oper`, URL tetap `https://bom-oper.salmansegaf52.workers.dev`, version `8d168b42-2e07-4490-b7d2-eb8decd07841`; GET `/` dan `/setup` sama-sama HTTP 200.
 - RPC publik `https://testnet-rpc.monad.xyz`: `eth_chainId` aktual 0x279f = 10143. `eth_estimateGas` untuk artifact deployment = 986,825 gas. Pada pemeriksaan ini fee cap ethers = 202,000,000,000 wei/gas; batas atas indikatif = 0.19933865 MON. Bukan saldo/biaya final wallet pengguna; halaman akan menghitung ulang dengan akun yang dipilih.
 - Belum deploy kontrak. Belum ada receipt, alamat, block, runtime code, atau panggilan view ke kontrak game. Menunggu pengguna membuka helper, memilih wallet/akun testnet, mengecek saldo/estimasi, lalu menekan tombol deploy dan mengonfirmasi transaksi di wallet.
+
+## 24 Oktober 2026 WIB — pratinjau visual tanpa koneksi
+
+- Pengguna meminta membaca panduan enam jam dan mencari pekerjaan yang bisa dibangun tanpa menghubungkan wallet/Figma dulu.
+- Dibuat route `/prototype` dengan Opening, Lobby, Arena, dan Hasil interaktif secara lokal. State room/oper dan tampilan hasil hanyalah contoh; timer statis; UI menyatakan “PRATINJAU LOKAL · SIMULASI”.
+- Build Vite dan Wrangler dry-run lulus; deployment tetap di Worker `bom-oper` dan URL `/prototype` merespons HTTP 200. Detail perintah ada di `TEST-RESULTS.md`.
+- Tidak ada kontrak publik, transaksi, receipt, sinkronisasi snapshot, dua pemain, atau uji browser/HP dalam checkpoint ini. Design context langsung via plugin Figma juga belum diambil. Tahap 6 tetap terbuka; route ini hanya mempersingkat review layout sambil menunggu koneksi/kontrak.
+- Catatan: `Invoke-WebRequest` mengalami NullReferenceException saat pengecekan GET; pengecekan ulang dengan `curl.exe` memperoleh HTTP 200.

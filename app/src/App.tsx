@@ -2,6 +2,7 @@ import { lazy, Suspense } from "react";
 
 const DeploySetup = lazy(() => import("./DeploySetup"));
 const PlayWalletSetup = lazy(() => import("./PlayWalletSetup"));
+const GamePreview = lazy(() => import("./GamePreview"));
 
 const rules = [
   {
@@ -27,6 +28,9 @@ function App() {
   }
   if (window.location.pathname === "/wallet") {
     return <Suspense fallback={<main className="page-shell"><p>Memuat setup wallet…</p></main>}><PlayWalletSetup /></Suspense>;
+  }
+  if (window.location.pathname === "/prototype") {
+    return <Suspense fallback={<main className="page-shell"><p>Memuat pratinjau…</p></main>}><GamePreview /></Suspense>;
   }
 
   return (
@@ -99,6 +103,7 @@ function App() {
 
       <footer className="footer">
         <span>BOM OPER</span>
+        <a href="/prototype">Pratinjau layar game (simulasi)</a>
         <a href="/wallet">Setup wallet pemain</a>
         <a href="/setup">Setup kontrak · developer</a>
         <span>Target jaringan: Monad Testnet · Chain ID 10143</span>
