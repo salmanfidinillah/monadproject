@@ -1,5 +1,15 @@
 # Rundown enam jam dan checklist
 
+## Kelanjutan terbaru sampai Prompt 8 — 24 Oktober 2026 WIB
+
+- [x] Baca panduan enam jam, cocokkan progres/Git dan Prompt 4; tahap terbukti tidak dibuat ulang. Verifikasi HP Tahap 1 tetap pending.
+- [x] Baca PDF workshop integrasi Monad; simpan ringkasan aman di `docs/references/MONAD-BLITZ.md`.
+- [x] Perbaiki pemulihan deploy saat refresh/timeout, blokir deploy ulang yang belum jelas, cocokkan receipt/init/runtime bytecode/blok/view, dan tambahkan CLI verifikasi read-only.
+- [x] Build produksi, 22 tes Hardhat, 4 tes jurnal, Wrangler dry-run, deploy helper dan HTTP/bundle publik lulus; detail di TEST-RESULTS.md.
+- [ ] Pengguna menyetujui deploy sekali melalui `/setup` atau memberikan hash yang sudah dikirim. Sudah diminta hash publik, bukan rahasia.
+- [ ] Selesaikan Prompt 4 setelah receipt/code/view nyata terbukti, lalu lanjut Prompt 5, 6, 7, 8 berurutan. Simulasi bukan bukti gerbang publik selesai.
+- [ ] Berhenti setelah Prompt 8; jangan menjalankan Prompt 9/submission.
+
 Prompt Induk dan Prompt 0 selesai dengan checkpoint GitHub terverifikasi. Tahap 1 masih menunggu verifikasi HP; scaffold sudah dibuild dan URL publik merespons. Tahap 2 dan Tahap 3 selesai lokal; helper Tahap 4 sudah publik, tetapi deployment kontrak menunggu transaksi wallet pengguna. Persiapan UI Tahap 5 sekarang ada di lokal, belum diuji dengan dua wallet atau dideploy. Tahap 6 menunggu koneksi plugin Figma dan alamat kontrak terverifikasi. Centang hanya setelah kriteria tahap terbukti. Jadwal relatif; contoh waktu 12.00-18.00 bukan konfirmasi panitia. Checkpoint GitHub 1-2 menit termasuk dalam slot yang sama.
 
 | Tahap | Slot | Syarat lulus |

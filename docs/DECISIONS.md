@@ -1,5 +1,14 @@
 # Keputusan dan perubahan
 
+## 24 Oktober 2026 WIB — lanjut sampai Prompt 8 dan pemulihan deploy
+
+- Pengguna mengotorisasi kelanjutan berurutan sampai Prompt 8 dengan PDF sebagai referensi Monad. Arahan baru menggantikan catatan lama menunggu prompt satu per satu; Prompt 9 tetap tidak dikerjakan.
+- Prompt 4 belum punya kontrak publik. Konfirmasi wallet pengguna tetap diperlukan oleh AGENTS/Prompt 4. Tidak mengganti bukti dengan simulasi atau membuat proyek/kontrak/Figma baru.
+- Hash helper lama hanya ada dalam state React dan hilang setelah refresh. Dipilih jurnal metadata publik di localStorage (terpisah dari secret wallet bermain), intent sebelum konfirmasi, hash setelah broadcast, dan pemulihan receipt read-only. Error transport tetap belum jelas; penolakan wallet eksplisit dan receipt gagal memiliki jalur penutupan berbeda.
+- Bukti harus mencocokkan deploy langsung, init/runtime bytecode, receipt/alamat, blok dan view dengan artifact Hardhat. Ekspor memeriksa source build info lewat `userSourceNameMap`, dengan normalisasi CRLF/LF Windows. Ini bukan source verification explorer.
+- PDF utuh tidak dimasukkan ke repo publik karena memuat informasi akses venue. Ringkasan teknis dan perbedaan explorer/jadwal dicatat. Tidak memasang skill, menggunakan mainnet, mint atau fitur tambahan dari contoh slide.
+- Aturan/SPEC tidak berubah. Prompt 5–8 belum dinyatakan lulus; kelanjutan bergantung pada hash deploy publik pengguna. Hasil aktual di TEST-RESULTS.md.
+
 Tabel ini memuat keputusan rencana dari pengguna/panduan dan status aktual proyek. Kontrak BomOper dan tes aturan Tahap 3 tersedia lokal; integrasi wallet dan deployment kontrak belum dijalankan.
 
 | Keputusan rencana | Alasan | Status |

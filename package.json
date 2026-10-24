@@ -16,7 +16,9 @@
     "deploy": "npm run build && wrangler deploy --config wrangler.jsonc",
     "contracts:compile": "hardhat compile",
     "contracts:export": "npm run contracts:compile && node scripts/export-contract-artifact.mjs",
-    "contracts:test": "hardhat test"
+    "contracts:test": "hardhat test",
+    "deployment:verify": "npm run contracts:export && node scripts/verify-deployment.mjs",
+    "deployment:test": "node --test scripts/test/*.test.mjs"
   },
   "devDependencies": {
     "@nomicfoundation/hardhat-toolbox-mocha-ethers": "4.0.0",

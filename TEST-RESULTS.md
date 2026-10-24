@@ -1,5 +1,28 @@
 # Hasil pengujian
 
+## Kelanjutan Prompt 4 — 24 Oktober 2026 WIB
+
+Seluruh receipt pada tes Hardhat di bawah adalah simulasi lokal chain 10143, bukan Monad Testnet publik. Kontrak Solidity dan 16 tes aturan lama tidak dihapus/diubah.
+
+| Pemeriksaan aktual | Hasil |
+|---|---|
+| Baca panduan pengguna, dokumen kanonis/arsitektur/keputusan/tes/desain, dan PDF workshop bagian 75–77 | Selesai; halaman 76 dirender lewat PyMuPDF dan ditinjau. Ringkasan aman masuk docs/references/MONAD-BLITZ.md; PDF utuh tidak disalin |
+| Dokumentasi Monad `.md`, ethers v6, Wrangler commands + help lokal | Diperiksa; RPC `eth_chainId` aktual `0x279f` = 10143 |
+| `npm run build` | LULUS terakhir: TypeScript + Vite, 174 modul. Kegagalan awal duplicate field `network` diperbaiki. Guard source awal gagal karena mapping path Hardhat; diperbaiki menggunakan `userSourceNameMap` dan normalisasi CRLF/LF, lalu build diulang lulus |
+| `npm run contracts:test` | LULUS 22 passing: 16 tes aturan/chain lama + 6 tes verifier deployment |
+| Receipt lokal sukses, view/bytecode cocok; receipt tak ditemukan; transfer biasa; init/runtime berbeda; hash malformed; deploy out-of-gas | LULUS: hanya deployment yang cocok menghasilkan proof, pending tetap belum jelas, out-of-gas menghasilkan failed |
+| `npm run deployment:test` | LULUS 4 tes: pulihkan intent/hash, broadcast tidak dapat dihapus sebagai rejection, hanya receipt failed dapat ditutup, storage rusak fail closed |
+| `node scripts/verify-deployment.mjs invalid-hash` dan cek record | Exit 1 sesuai harapan; `deployments/10143.json` tidak ditulis |
+| `npx wrangler deploy --dry-run --config wrangler.jsonc` | LULUS; 13 asset, tidak mengirim deployment |
+| `npx wrangler whoami` + daftar deployments `bom-oper` | Akun/Worker yang sama terverifikasi; tidak mengganti target |
+| `npm run deploy` | LULUS ke https://bom-oper.salmansegaf52.workers.dev, version `cab2e277-8d07-45f7-8c08-9a384452de30` |
+| curl GET `/`, `/setup`, `/wallet`, `/prototype`, `/room/123` | Semua HTTP 200; rute room adalah SPA fallback, bukan bukti room sungguhan |
+| Download bundle helper publik + SHA-256 vs build lokal + label tombol | LULUS: identik byte-for-byte; label pemeriksaan receipt/deploy/unduh tersedia. Python urllib sebelumnya mendapat HTTP 403; cek ulang lewat curl berhasil |
+| Inventory browser melalui cua | Kosong; tidak ada UI wallet/browser interaktif yang diuji. Pemeriksaan fungsi jurnal/receipt dilakukan lewat tes lokal, bukan browser |
+| Deploy kontrak publik, pembacaan kontrak publik, source verification explorer, dua pemain, HP | BELUM ADA / BELUM DIUJI; menunggu pengguna menyetujui deploy dan memberikan hash publik |
+
+`git diff --cached --check` lulus; 17 file staged diperiksa dengan heuristik kredensial dan pasangan code fence Markdown tanpa temuan. PDF utuh, kredensial lokal dan panduan asli pengguna yang sudah untracked tidak ikut staging. Hasil commit/SHA/push dilaporkan sesudah eksekusi. Prompt 4 belum lulus dan Prompt 8 belum tercapai.
+
 **Tahap 3 lokal lulus pada 24 Oktober 2026.** Tabel rencana awal di bawah diperbarui oleh hasil aktual Tahap 3 di bagian akhir. Uji melalui HP dan deployment kontrak testnet tetap belum dilakukan.
 
 | Kelompok | Kasus minimum | Hasil awal |

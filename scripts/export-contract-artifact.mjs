@@ -10,6 +10,10 @@ const buildInfoPath = resolve(root, `artifacts/hardhat/build-info/${artifact.bui
 const buildInfo = JSON.parse(await readFile(buildInfoPath, "utf8"));
 const sourcePath = resolve(root, "contracts/BomOper.sol");
 const source = await readFile(sourcePath);
+const inputSourceName = buildInfo.userSourceNameMap?.[artifact.sourceName] ?? artifact.sourceName;
+if (buildInfo.input.sources[inputSourceName]?.content.replace(/\r\n/g, "\n") !== source.toString("utf8").replace(/\r\n/g, "\n")) {
+  throw new Error("Source pada build info tidak cocok dengan contracts/BomOper.sol; compile ulang sebelum ekspor.");
+}
 const sourceRevision = execFileSync("git", ["log", "-1", "--format=%H", "--", "contracts/BomOper.sol"], { cwd: root, encoding: "utf8" }).trim();
 
 const requiredFunctions = [
@@ -32,6 +36,7 @@ const output = {
   sourceName: artifact.sourceName,
   abi: artifact.abi,
   bytecode: artifact.bytecode,
+  deployedBytecode: artifact.deployedBytecode,
   compiler: {
     version: buildInfo.solcLongVersion,
     evmVersion: buildInfo.input.settings.evmVersion,

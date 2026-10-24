@@ -1,8 +1,10 @@
-# BOM OPER ? aplikasi dan paket dokumen proyek
+# BOM OPER
 
-Repository ini berisi dokumen proyek dan scaffold aplikasi BOM OPER. **Gameplay dan kontrak belum dibuat; landing page sudah dapat dibuild lokal, tetapi belum dideploy publik.** Repository tujuan: [salmanfidinillah/monadproject](https://github.com/salmanfidinillah/monadproject).
+Game oper bom satu ronde untuk 2–4 pemain, dengan aturan di kontrak Monad Testnet. Repository: [salmanfidinillah/monadproject](https://github.com/salmanfidinillah/monadproject).
 
-Pada 24 Oktober 2026 WIB, Tahap 1 menambahkan React/Vite di `app/`, konfigurasi Hardhat di root untuk `contracts/` dan `test/`, serta Cloudflare Workers Static Assets. Landing page dibuild lokal. Belum ada deployment publik karena Wrangler belum terautentikasi. Bukti dan langkah tersisa dicatat di [status aktual](STATUS.md) dan [hasil pemeriksaan](TEST-RESULTS.md).
+**Status 24 Oktober 2026 WIB:** kontrak dan tes aturan lokal tersedia. [Landing publik](https://bom-oper.salmansegaf52.workers.dev), [pratinjau simulasi](https://bom-oper.salmansegaf52.workers.dev/prototype), [setup wallet bermain](https://bom-oper.salmansegaf52.workers.dev/wallet), dan [helper deploy](https://bom-oper.salmansegaf52.workers.dev/setup) berada pada Worker yang sama. Belum ada receipt/alamat deployment kontrak, operan testnet, hasil Finished publik, atau demo multiplayer nyata. Detail aktual: [STATUS.md](STATUS.md) dan [TEST-RESULTS.md](TEST-RESULTS.md).
+
+Konfirmasi deploy memakai wallet pengguna. Helper menyimpan metadata publik transaksi untuk pemeriksaan setelah refresh, memblokir deploy ulang yang belum jelas, dan mencocokkan init/runtime bytecode dengan artifact lokal. [Ringkasan PDF workshop dan langkah deploy](docs/references/MONAD-BLITZ.md) menjelaskan langkah berikutnya; tidak memerlukan private key di chat atau berkas.
 
 ## Cara memakai
 
@@ -48,4 +50,8 @@ npm run dev
 npm run build
 ```
 
-`npm run deploy` membuild `app/` lalu menjalankan Wrangler dengan `wrangler.jsonc`. Deployment publik memerlukan login Cloudflare. `npm run contracts:compile` dan `npm run contracts:test` diarahkan ke Hardhat; kontrak dan tes aturan belum dibuat pada Tahap 1.
+`npm run deploy` membuild `app/` lalu menjalankan Wrangler dengan `wrangler.jsonc`. Deployment publik memerlukan login Cloudflare. `npm run contracts:compile` dan `npm run contracts:test` menjalankan kompilasi/tes Hardhat. `npm run deployment:test` menguji pemulihan jurnal deployment. Hasil aktual tiap perintah ada di TEST-RESULTS.md.
+
+Setelah deploy dikonfirmasi pengguna, `npm run deployment:verify -- <hash-transaksi-deploy>` memverifikasi receipt, chain 10143, init/runtime bytecode, blok dan view melalui RPC publik. Record `deployments/10143.json` hanya ditulis bila seluruh pemeriksaan lulus; belum ada record sukses dalam repo ini.
+
+Aturan dan keadaan permainan ditujukan on-chain; UI dan animasi berjalan di browser. Kontribusi AI: Codex membantu implementasi, dokumentasi dan pengujian; tindakan wallet serta pengujian manusia tetap dibedakan pada catatan bukti.

@@ -1,12 +1,13 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import {
   BrowserProvider,
-  Contract,
   ContractFactory,
   JsonRpcProvider,
   formatEther,
 } from "ethers";
 import artifact from "./contract/BomOper.artifact.json";
+import { verifyDeployment, type DeploymentProof } from "./deploymentVerification";
+import { clearFailedDeployment, clearRejectedDeployment, readDeploymentJournal, writeDeploymentJournal, type DeploymentJournal } from "./deploymentJournal";
 import "./setup.css";
 
 const TARGET_CHAIN_ID = 10143n;
@@ -33,20 +34,6 @@ type Preflight = {
   maximumFee: bigint;
 };
 
-type DeploymentProof = {
-  chainId: number;
-  address: string;
-  transactionHash: string;
-  blockNumber: number;
-  gasUsed: string;
-  runtimeCodeBytes: number;
-  sourceRevision: string;
-  sourceSha256: string;
-  compiler: typeof artifact.compiler;
-  verified: false;
-  nextRoomId: string;
-};
-
 function getPublicProvider() {
   return new JsonRpcProvider(RPC_URL);
 }
@@ -66,41 +53,28 @@ function explorerTransaction(hash: string) {
 
 async function checkPreflight(wallet: InjectedWallet, address: string): Promise<Preflight> {
   const walletProvider = new BrowserProvider(wallet as never, "any");
-  const [walletNetwork, signer] = await Promise.all([
-    walletProvider.getNetwork(),
-    walletProvider.getSigner(address),
-  ]);
-  if (walletNetwork.chainId !== TARGET_CHAIN_ID) {
-    throw new Error("Wallet belum berada di Monad Testnet (Chain ID 10143).");
-  }
-
   const rpc = getPublicProvider();
-  const rpcNetwork = await rpc.getNetwork();
-  if (rpcNetwork.chainId !== TARGET_CHAIN_ID) {
-    throw new Error(`RPC mengembalikan chain ID ${rpcNetwork.chainId}, bukan 10143.`);
-  }
-
-  const factory = new ContractFactory(artifact.abi, artifact.bytecode, signer);
-  const unsignedDeployment = await factory.getDeployTransaction();
-  const [balance, feeData, gasLimit] = await Promise.all([
-    rpc.getBalance(address),
-    rpc.getFeeData(),
-    rpc.estimateGas({ ...unsignedDeployment, from: address }),
-  ]);
-  const feePerGas = feeData.maxFeePerGas ?? feeData.gasPrice;
-  if (feePerGas === null) throw new Error("RPC belum memberikan data fee untuk estimasi.");
-  const maximumFee = gasLimit * feePerGas;
-  if (balance < maximumFee) {
-    throw new Error(`Saldo kurang. Estimasi batas atas fee saat ini ${formatMon(maximumFee)}.`);
-  }
-  return { chainId: walletNetwork.chainId, address, balance, gasLimit, feePerGas, maximumFee };
+  try {
+    const [walletNetwork, signer, rpcNetwork] = await Promise.all([
+      walletProvider.getNetwork(), walletProvider.getSigner(address), rpc.getNetwork(),
+    ]);
+    if (walletNetwork.chainId !== TARGET_CHAIN_ID) throw new Error("Wallet belum berada di Monad Testnet (Chain ID 10143).");
+    if (rpcNetwork.chainId !== TARGET_CHAIN_ID) throw new Error(`RPC mengembalikan chain ID ${rpcNetwork.chainId}, bukan 10143.`);
+    const factory = new ContractFactory(artifact.abi, artifact.bytecode, signer);
+    const unsignedDeployment = await factory.getDeployTransaction();
+    const [balance, feeData, gasLimit] = await Promise.all([
+      rpc.getBalance(address), rpc.getFeeData(), rpc.estimateGas({ ...unsignedDeployment, from: address }),
+    ]);
+    const feePerGas = feeData.maxFeePerGas ?? feeData.gasPrice;
+    if (feePerGas === null) throw new Error("RPC belum memberikan data fee untuk estimasi.");
+    const maximumFee = gasLimit * feePerGas;
+    if (balance < maximumFee) throw new Error(`Saldo kurang. Estimasi batas atas fee saat ini ${formatMon(maximumFee)}.`);
+    return { chainId: walletNetwork.chainId, address, balance, gasLimit, feePerGas, maximumFee };
+  } finally { rpc.destroy(); walletProvider.destroy(); }
 }
 
 function serializeProof(proof: DeploymentProof) {
-  return `${JSON.stringify({
-    network: "Monad Testnet",
-    ...proof,
-  }, null, 2)}\n`;
+  return `${JSON.stringify(proof, null, 2)}\n`;
 }
 
 export default function DeploySetup() {
@@ -111,6 +85,55 @@ export default function DeploySetup() {
   const [message, setMessage] = useState("Hubungkan wallet secara manual untuk mulai pemeriksaan.");
   const [error, setError] = useState("");
   const [proof, setProof] = useState<DeploymentProof | null>(null);
+  const [journal, setJournal] = useState<DeploymentJournal | null>(() => {
+    try { return readDeploymentJournal(localStorage); } catch { return null; }
+  });
+  const [hashInput, setHashInput] = useState("");
+  const operationInFlight = useRef(false);
+
+  function saveJournal(value: DeploymentJournal) {
+    writeDeploymentJournal(localStorage, value);
+    setJournal(value);
+  }
+
+  async function checkDeploymentHash(hash: string) {
+    const rpc = getPublicProvider();
+    try {
+      const stored = readDeploymentJournal(localStorage);
+      if (stored) {
+        const transaction = await rpc.getTransaction(hash);
+        if (transaction && transaction.from.toLowerCase() !== stored.account.toLowerCase()) throw new Error("Pengirim hash tidak cocok dengan wallet pada catatan deployment.");
+      }
+      const result = await verifyDeployment(rpc, hash, artifact);
+      if (result.state === "pending") {
+        setMessage(`Receipt belum tersedia untuk ${hash}. Jangan deploy ulang. Periksa transaksi pada wallet/explorer.`);
+        return;
+      }
+      if (result.state === "failed") {
+        if (stored) saveJournal({ ...stored, hash, state: "failed" });
+        setMessage(`Receipt gagal pada blok ${result.blockNumber}. Tidak ada kontrak yang diklaim terbit.`);
+        return;
+      }
+      saveJournal({ account: result.proof.deployer, startedAt: Date.now(), hash: result.proof.transactionHash, state: "verified" });
+      setProof(result.proof);
+      setMessage("Deployment sukses. Receipt, init/runtime bytecode, blok kanonis, dan view kontrak cocok dengan artifact lokal.");
+      setPreflight(null);
+    } finally { rpc.destroy(); }
+  }
+
+  async function recoverDeployment() {
+    if (operationInFlight.current) return;
+    operationInFlight.current = true;
+    setChecking(true); setError(""); setProof(null);
+    try {
+      const stored = readDeploymentJournal(localStorage);
+      const hash = hashInput.trim() || stored?.hash;
+      if (!hash) throw new Error("Ambil hash deployment dari aktivitas wallet, lalu tempel di kolom ini. Jangan kirim transaksi baru.");
+      if (stored?.hash && stored.hash.toLowerCase() !== hash.toLowerCase()) throw new Error("Hash berbeda dari transaksi tersimpan. Periksa hash tersimpan terlebih dahulu.");
+      await checkDeploymentHash(hash);
+    } catch (cause) { setError(cause instanceof Error ? cause.message : "Pemeriksaan receipt gagal."); }
+    finally { operationInFlight.current = false; setChecking(false); }
+  }
 
   async function connectWallet() {
     setError("");
@@ -120,12 +143,13 @@ export default function DeploySetup() {
       setError("Wallet EVM belum terdeteksi. Buka halaman ini pada browser dengan ekstensi wallet.");
       return;
     }
+    let provider: BrowserProvider | undefined;
     try {
       const accounts = await wallet.request({ method: "eth_requestAccounts" }) as string[];
       const selected = accounts[0];
       if (!selected) throw new Error("Wallet tidak memberikan akun.");
       setAccount(selected);
-      const provider = new BrowserProvider(wallet as never, "any");
+      provider = new BrowserProvider(wallet as never, "any");
       const chain = await provider.getNetwork();
       setPreflight(null);
       if (chain.chainId === TARGET_CHAIN_ID) {
@@ -135,7 +159,7 @@ export default function DeploySetup() {
       }
     } catch (cause) {
       setError(cause instanceof Error ? cause.message : "Koneksi wallet gagal atau ditolak.");
-    }
+    } finally { provider?.destroy(); }
   }
 
   async function switchToMonad() {
@@ -191,56 +215,41 @@ export default function DeploySetup() {
 
   async function deployContract() {
     const wallet = window.ethereum;
-    if (!wallet || !account || !preflight) return;
+    if (!wallet || !account || !preflight || operationInFlight.current) return;
+    operationInFlight.current = true;
     setDeploying(true);
     setError("");
     setProof(null);
+    let walletProvider: BrowserProvider | undefined;
     try {
+      if (readDeploymentJournal(localStorage)) throw new Error("Ada deployment tersimpan. Periksa receipt lebih dulu; deploy ulang diblokir.");
       const fresh = await checkPreflight(wallet, account);
-      const walletProvider = new BrowserProvider(wallet as never, "any");
+      walletProvider = new BrowserProvider(wallet as never, "any");
       const signer = await walletProvider.getSigner(account);
       const factory = new ContractFactory(artifact.abi, artifact.bytecode, signer);
+      // Persist intent before asking the wallet. Refresh or an ambiguous transport error must not re-deploy.
+      saveJournal({ account, startedAt: Date.now(), state: "awaiting-wallet" });
       setMessage("Wallet akan menampilkan transaksi deploy. Periksa detailnya dan setujui sendiri di wallet.");
       const contract = await factory.deploy({ gasLimit: fresh.gasLimit });
       const transaction = contract.deploymentTransaction();
       if (!transaction) throw new Error("Hash transaksi deployment tidak tersedia.");
+      saveJournal({ account, startedAt: Date.now(), hash: transaction.hash, state: "broadcast" });
       setMessage(`Menunggu receipt deploy: ${transaction.hash}`);
-      const receipt = await transaction.wait();
-      if (!receipt || receipt.status !== 1 || !receipt.contractAddress) {
-        throw new Error("Transaksi tidak menghasilkan receipt deployment sukses.");
-      }
-
-      const address = await contract.getAddress();
-      const rpc = getPublicProvider();
-      const [code, network, deployedGame] = await Promise.all([
-        rpc.getCode(address),
-        rpc.getNetwork(),
-        Promise.resolve(new Contract(address, artifact.abi, rpc)),
-      ]);
-      if (network.chainId !== TARGET_CHAIN_ID) throw new Error("Chain RPC berubah sebelum verifikasi code.");
-      if (code === "0x") throw new Error("Receipt sukses tetapi runtime code belum terlihat pada RPC publik.");
-      const nextRoomId = await deployedGame.getFunction("nextRoomId").staticCall() as bigint;
-      const deploymentProof: DeploymentProof = {
-        chainId: Number(network.chainId),
-        address,
-        transactionHash: receipt.hash,
-        blockNumber: receipt.blockNumber,
-        gasUsed: receipt.gasUsed.toString(),
-        runtimeCodeBytes: (code.length - 2) / 2,
-        sourceRevision: artifact.sourceRevision,
-        sourceSha256: artifact.sourceSha256,
-        compiler: artifact.compiler,
-        verified: false,
-        nextRoomId: nextRoomId.toString(),
-      };
-      setProof(deploymentProof);
-      setMessage("Deployment sukses. Receipt, runtime code, dan pembacaan view nextRoomId() terverifikasi.");
-      setPreflight(null);
+      // A timeout never triggers another send. The saved hash remains recoverable.
+      try { await transaction.wait(1, 60_000); } catch { /* verify status independently through the public RPC */ }
+      await checkDeploymentHash(transaction.hash);
     } catch (cause) {
+      const code = (cause as { code?: string | number }).code;
+      if (code === "ACTION_REJECTED" || code === 4001) {
+        clearRejectedDeployment(localStorage);
+        setJournal(readDeploymentJournal(localStorage));
+      }
       setMessage("Deployment belum terverifikasi.");
       setError(cause instanceof Error ? cause.message : "Deployment dibatalkan atau gagal.");
       setPreflight(null);
     } finally {
+      walletProvider?.destroy();
+      operationInFlight.current = false;
       setDeploying(false);
     }
   }
@@ -288,9 +297,9 @@ export default function DeploySetup() {
         </dl>
 
         <div className="setup-actions">
-          {!account ? (
+          {!account && !journal ? (
             <button className="setup-button" type="button" onClick={connectWallet}>Hubungkan wallet</button>
-          ) : (
+          ) : account ? (
             <>
               <p className="account-line"><strong>Wallet:</strong> <code>{account}</code></p>
               <div className="setup-button-row">
@@ -302,10 +311,10 @@ export default function DeploySetup() {
                 </button>
               </div>
             </>
-          )}
+          ) : null}
         </div>
 
-        {preflight && (
+        {preflight && !journal && (
           <div className="preflight-panel" aria-live="polite">
             <h3>Pra-deploy lulus</h3>
             <dl className="setup-facts compact">
@@ -324,6 +333,21 @@ export default function DeploySetup() {
 
         <p className="setup-message" role="status">{message}</p>
         {error && <p className="setup-error" role="alert">{error}</p>}
+      </section>
+
+      <section className="setup-card" aria-labelledby="recover-title">
+        <p className="eyebrow">PEMULIHAN · HANYA MEMBACA RPC</p>
+        <h2 id="recover-title">Periksa deployment yang sudah dikirim</h2>
+        <p>Refresh atau koneksi putus? Jangan deploy ulang. Hash dari aktivitas wallet dapat diperiksa tanpa menghubungkan wallet.</p>
+        {journal && <p role="status">Catatan tersimpan: {journal.state === "awaiting-wallet" ? "menunggu wallet / status belum jelas" : journal.state}. {journal.hash && <a href={explorerTransaction(journal.hash)} target="_blank" rel="noreferrer">Lihat transaksi tersimpan ↗</a>}</p>}
+        <label className="wallet-amount" htmlFor="deploy-hash">Hash transaksi deploy
+          <input id="deploy-hash" type="text" value={hashInput} placeholder={journal?.hash ?? "0x…"} onChange={(event) => setHashInput(event.target.value)} autoComplete="off" spellCheck={false} disabled={checking || deploying} />
+        </label>
+        <button className="setup-button secondary" type="button" onClick={recoverDeployment} disabled={checking || deploying}>{checking ? "Memeriksa…" : "Periksa receipt tanpa kirim ulang"}</button>
+        {journal?.state === "failed" && <button className="setup-button secondary" type="button" disabled={checking || deploying} onClick={() => {
+          try { clearFailedDeployment(localStorage); setJournal(null); setHashInput(""); setMessage("Receipt gagal sudah ditutup. Hubungkan wallet untuk pemeriksaan baru."); }
+          catch (cause) { setError(cause instanceof Error ? cause.message : "Catatan belum bisa ditutup."); }
+        }}>Tutup transaksi gagal</button>}
       </section>
 
       {proof && (

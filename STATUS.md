@@ -1,5 +1,17 @@
 # Status aktual BOM OPER
 
+## Kelanjutan Prompt 4 — 24 Oktober 2026 WIB
+
+Arahan terbaru: lanjutkan panduan secara berurutan sampai Prompt 8 lalu berhenti; Prompt 9 tidak diotorisasi. Titik lanjut tetap Prompt 4 yang belum memiliki kontrak publik. Tidak membuat ulang tahap yang sudah terbukti. Sumber yang dibaca: AGENTS/SPEC/TASKS/STATUS, panduan pengguna dan BUILD-GUIDE, ARCHITECTURE, DECISIONS, TEST-RESULTS, desain README/MOTION, serta PDF workshop bagian integrasi. Ringkasan aman: `docs/references/MONAD-BLITZ.md`.
+
+- Helper `/setup` sekarang menyimpan intent/hash publik, memulihkan status setelah refresh, memblokir deploy ulang yang belum jelas, dan memeriksa receipt tanpa signature. Secret wallet tidak diminta/disimpan. Penolakan wallet berbeda dari error transport yang belum jelas.
+- Verifier mencocokkan receipt, chain, deploy langsung tanpa dana, pengirim/nonce/alamat, init/runtime bytecode, blok kanonis dan view pada satu blok. Source explorer tetap belum diverifikasi.
+- CLI `npm run deployment:verify -- <hash>` menulis record hanya setelah verifikasi RPC resmi sukses. Belum ada `deployments/10143.json`; hasil simulasi tidak disimpan sebagai bukti publik.
+- LULUS: build produksi, 22 tes Hardhat (16 aturan + 6 verifikasi), 4 tes jurnal, dry-run, deploy Worker `bom-oper`. Versi helper terbaru `cab2e277-8d07-45f7-8c08-9a384452de30`; GET `/`, `/setup`, `/wallet`, `/prototype`, `/room/123` HTTP 200. Bundle helper publik sama persis dengan build lokal.
+- Inventory browser kosong pada sesi ini. UI wallet, refresh di browser, HP dan multiplayer testnet belum diuji. HTTP 200 pada rute room hanya bukti SPA fallback, bukan room nyata.
+- Pengguna diminta menyetujui deploy di `/setup` lalu membalas hash publik. Sesudah hash tersedia: verifikasi/simpan record, konfigurasi kontrak bersama, lalu lanjut Prompt 5–8 berurutan. **Belum mencapai Prompt 8.**
+- Checkpoint perubahan diperiksa/di-commit/di-push setelah catatan ini; SHA dan hasil push dilaporkan di chat setelah eksekusi.
+
 ## Keadaan aktual
 
 **TAHAP 3 SELESAI; TAHAP 4 MASIH MENUNGGU DEPLOY KONTRAK. PERSIAPAN UI TAHAP 5 DAN PRATINJAU VISUAL TAHAP 6 TERSEDIA, TANPA GAMEPLAY ON-CHAIN.** URL `/setup` dan `/prototype` tersedia di Worker BOM OPER, tetapi belum ada bukti receipt/alamat deploy kontrak. Route `/wallet` belum diuji dengan dua pemain; transaksi game belum dapat diuji tanpa kontrak publik.
@@ -20,7 +32,7 @@
 | Desain Figma URL dan frame | https://www.figma.com/design/T8zhiDboW04KOC9sDJrlz6/BOM-OPER?node-id=11-60; detail node/frame di docs/design/README.md |
 | Build / tes lokal | Root `npm run build` LULUS: export artifact ABI/bytecode dan Vite build; `npm run contracts:test` LULUS 16 tes Tahap 3 |
 | URL publik landing | https://bom-oper.salmansegaf52.workers.dev; Worker `bom-oper`, versi `0b0c8d8a-350d-442f-a44f-1246795488a5` |
-| Helper deploy publik | https://bom-oper.salmansegaf52.workers.dev/setup; Worker `bom-oper`, versi `8d168b42-2e07-4490-b7d2-eb8decd07841`; root dan `/setup` HTTP 200 |
+| Helper deploy publik | https://bom-oper.salmansegaf52.workers.dev/setup; Worker `bom-oper`, versi `cab2e277-8d07-45f7-8c08-9a384452de30`; pemulihan hash tersedia, HTTP 200 dan bundle cocok dengan build |
 | Pratinjau visual publik | https://bom-oper.salmansegaf52.workers.dev/prototype; Worker `bom-oper`, versi `b5c621c4-f2a7-4d53-a148-32a636988d69`; `/prototype` merespons HTTP 200; simulasi saja |
 | Chain target | RPC Monad Testnet `eth_chainId` = 10143; simulasi lokal 10143; constructor menolak deployment pada ID lain |
 | Compiler/EVM target | solc 0.8.30; Cancun; optimizer 200 runs; dikompilasi lokal |
