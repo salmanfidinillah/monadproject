@@ -152,3 +152,21 @@ Gas dari receipt lokal (basis pembanding, bukan estimasi biaya MON testnet):
 | `settleRoom` | 87,740 |
 
 Deployment kontrak testnet dan verifikasi URL landing lewat HP tetap BELUM DILAKUKAN.
+
+## Pelaksanaan Tahap 4 - helper deployment, 24 Oktober 2026 WIB
+
+| Pemeriksaan/perintah aktual | Hasil |
+|---|---|
+| Baca SPEC/TASKS/STATUS, Prompt 4 di `docs/BUILD-GUIDE.md`, `docs/ARCHITECTURE.md`, `docs/DECISIONS.md`, `TEST-RESULTS.md`, dan skill Wrangler | LULUS; endpoint/hosting terpilih tetap digunakan |
+| `npm install ethers@6.17.0 --workspace @bom-oper/app --save-exact` | LULUS; ethers v6.17.0 ditambahkan eksplisit ke dependency app, 0 advisori pada operasi install ini |
+| `npm run contracts:export` | LULUS; ABI/bytecode BomOper diekspor dari artifact Hardhat; skrip memeriksa tujuh fungsi ABI, bytecode, build info/compiler dan source revision/hash |
+| RPC `eth_chainId` pada `https://testnet-rpc.monad.xyz` | LULUS: `0x279f` = 10143 |
+| Estimasi deployment melalui ethers v6 + RPC publik | LULUS: 986,825 gas; pada sampel fee cap 202,000,000,000 wei/gas, batas atas indikatif 0.19933865 MON. Ini baseline tanpa saldo akun pengguna |
+| `npm run build` | LULUS; TypeScript dan Vite; helper ethers/code-splitting berada di chunk khusus |
+| `npx wrangler deploy --dry-run --config wrangler.jsonc` | LULUS; konfigurasi static assets tetap memakai `app/dist` + SPA fallback |
+| Pemeriksaan target Cloudflare sebelum deploy | LULUS: authenticated account pemilik `bom-oper`; deployment sebelumnya diperiksa dan target Worker tetap nama yang sama |
+| `npm run deploy` | LULUS; Worker `bom-oper`, URL `https://bom-oper.salmansegaf52.workers.dev`, version `8d168b42-2e07-4490-b7d2-eb8decd07841` |
+| GET publik `/` dan `/setup`; GET asset JS helper | LULUS: HTTP 200 untuk semuanya |
+| Buka wallet/tekan deploy, receipt, runtime code, view call, file `deployments/10143.json` | MENUNGGU persetujuan dan transaksi pengguna melalui helper; tidak diklaim sukses |
+
+Helper tidak auto-connect dan tidak mengirim deploy saat dibuka. Saat pengguna menekan deploy, halaman mengulang pemeriksaan chain wallet/RPC, estimasi gas/fee, dan saldo; signer hanya wallet EIP-1193 yang terhubung. Sesudah transaksi, halaman menunggu receipt, memeriksa code runtime dan memanggil `nextRoomId()` melalui RPC. Link menggunakan MonadVision Testnet; status source verification akan ditandai belum diverifikasi sampai bukti ada.

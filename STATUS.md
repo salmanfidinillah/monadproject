@@ -2,12 +2,13 @@
 
 ## Keadaan aktual
 
-**TAHAP 3 SELESAI LOKAL; VERIFIKASI HP TAHAP 1 MASIH MENUNGGU.** Landing page publik dan SPA fallback merespons HTTP 200. `BomOper.sol` dikompilasi dengan solc 0.8.30/EVM Cancun; 16 tes aturan dan chain guard lulus pada simulasi chain ID 10143. Pengukuran gas receipt lokal tercatat di `TEST-RESULTS.md`. Deployment kontrak Monad belum dilakukan.
+**TAHAP 3 SELESAI; HELPER TAHAP 4 SUDAH PUBLIK DAN MENUNGGU PERSETUJUAN WALLET.** URL `/setup` tersedia di Worker BOM OPER. Pemeriksaan lokal dan RPC publik lulus; belum ada transaksi deploy kontrak, receipt, alamat, atau runtime code game.
 
 | Hal | Status/nilai aktual |
 |---|---|
-| Tahap terakhir selesai | Tahap 3 lokal: tes aturan lengkap, kasus batas receipt, kompetisi transaksi, dan gas lulus |
-| Tahap berikutnya | Tahap 4: deployment kontrak testnet; verifikasi URL landing lewat HP masih pending |
+| Tahap terakhir selesai penuh | Tahap 3 lokal: seluruh tes aturan dan gas simulasi lulus |
+| Status tahap berjalan | Tahap 4 persiapan helper selesai; menunggu pengguna menyetujui transaksi deploy di wallet |
+| Tahap berikutnya | Setelah receipt: verifikasi runtime code/view, simpan record dan ABI/address bersama; verifikasi URL landing lewat HP masih pending |
 | Repository GitHub tujuan | https://github.com/salmanfidinillah/monadproject |
 | Branch pembangunan | main; Git lokal diinisialisasi dan branch diperiksa |
 | Akun GitHub terhubung | salmanfidinillah; profil berhasil dibaca melalui plugin GitHub |
@@ -15,15 +16,16 @@
 | Push fondasi/game | Checkpoint Tahap 2 mencakup kontrak dan catatan progres; SHA dilaporkan setelah verifikasi push |
 | Checkpoint fondasi terverifikasi | fddf27fcf121c0cc8cca9b26526f1c65137a1c25; lihat bukti di bawah. SHA commit pembaruan catatan ini dilaporkan di chat setelah commit/push |
 | Checkpoint desain terverifikasi | f826af720c7ca88232bdd859d09df05a525e3076; commit desain sudah di-push. SHA commit catatan sesudahnya dilaporkan di chat |
-| Kode frontend/kontrak | Landing scaffold tersedia; `contracts/BomOper.sol` tersedia lokal; gameplay UI/wallet belum diimplementasikan |
+| Kode frontend/kontrak | Landing scaffold dan helper deploy `/setup` tersedia; gameplay UI/wallet permainan belum diimplementasikan |
 | Desain Figma URL dan frame | https://www.figma.com/design/T8zhiDboW04KOC9sDJrlz6/BOM-OPER?node-id=11-60; detail node/frame di docs/design/README.md |
-| Build / tes lokal | Build app LULUS; `npm run contracts:compile` LULUS; `npm run contracts:test` LULUS 2 tes chain guard; full rule tests belum dijalankan |
+| Build / tes lokal | Root `npm run build` LULUS: export artifact ABI/bytecode dan Vite build; `npm run contracts:test` LULUS 16 tes Tahap 3 |
 | URL publik landing | https://bom-oper.salmansegaf52.workers.dev; Worker `bom-oper`, versi `0b0c8d8a-350d-442f-a44f-1246795488a5` |
+| Helper deploy publik | https://bom-oper.salmansegaf52.workers.dev/setup; Worker `bom-oper`, versi `8d168b42-2e07-4490-b7d2-eb8decd07841`; root dan `/setup` HTTP 200 |
 | Chain target | RPC Monad Testnet `eth_chainId` = 10143; simulasi lokal 10143; constructor menolak deployment pada ID lain |
 | Compiler/EVM target | solc 0.8.30; Cancun; optimizer 200 runs; dikompilasi lokal |
-| Alamat kontrak aktual | BELUM ADA; belum deploy Monad Testnet |
+| Alamat kontrak aktual | BELUM ADA; helper menunggu wallet pengguna mengirim dan menyetujui deploy |
 | Tx deploy / blok / receipt | BELUM ADA |
-| ABI/artifact yang dipakai | Lokal: `artifacts/hardhat/contracts/BomOper.sol/BomOper.json`; ABI memuat enam fungsi MVP, snapshot tuple dan lima event |
+| ABI/artifact yang dipakai | Hardhat: `artifacts/hardhat/contracts/BomOper.sol/BomOper.json`; app: `app/src/contract/BomOper.artifact.json`; bytecode 4,227 byte, 32 item ABI |
 | Receipt oper / finalisasi | BELUM ADA |
 | Uji perangkat / jumlah pemain | BELUM DIUJI |
 | Mode wallet / durasi aktual | BELUM DIIMPLEMENTASIKAN; target EOA sementara / default 30 detik |
@@ -112,3 +114,13 @@ Desain arcade dibuat pada file Figma pengguna tanpa menghapus halaman lama. Open
 - Gas receipt simulasi lokal: create 142,383; join 75,827; start 83,139; pass biasa 60,105; pass panas 68,881; settle 87,740. Bukan biaya MON aktual.
 - Tidak ada perubahan spesifikasi atau pendekatan desain yang memerlukan keputusan baru. Belum dilakukan deployment kontrak testnet, UI/wallet, receipt permainan, atau uji URL melalui HP.
 - Tahap berikutnya: Tahap 4 deployment testnet sesuai otorisasi dan alur wallet pengguna; verifikasi HP landing page masih menunggu konfirmasi pengguna.
+
+### Progres Tahap 4 - helper dipersiapkan, 24 Oktober 2026 WIB
+
+- Dibaca: `SPEC.md`, `TASKS.md`, `STATUS.md`, `docs/BUILD-GUIDE.md` bagian Tahap 4, `docs/ARCHITECTURE.md`, `docs/DECISIONS.md`, dan `TEST-RESULTS.md`.
+- `ethers` v6.17.0 ditambahkan eksplisit pada workspace app. `npm run contracts:export` memvalidasi ABI, bytecode, compiler settings dan source revision artifact Hardhat lalu menghasilkan `app/src/contract/BomOper.artifact.json`; root build menjalankan ekspor ini sebelum Vite.
+- Route `/setup` meminta koneksi hanya saat tombol ditekan. Sebelum tombol deploy aktif, app memeriksa chain wallet dan RPC, estimasi gas deployment, fee saat ini dan saldo akun yang terhubung. Tombol deploy memunculkan prompt persetujuan wallet; halaman tidak mengirim transaksi otomatis dan tidak mengakses private key.
+- Sesudah receipt sukses, helper akan memeriksa status, alamat, code runtime dari RPC, dan panggilan view `nextRoomId()`. Helper menyediakan tautan MonadVision serta unduhan catatan receipt; source explorer diberi status belum diverifikasi.
+- `npm run build` lulus; asset setup dibagi menjadi chunk terpisah. `npx wrangler deploy --dry-run --config wrangler.jsonc` lulus. `npm run deploy` berhasil ke Worker terpilih `bom-oper`, URL tetap `https://bom-oper.salmansegaf52.workers.dev`, version `8d168b42-2e07-4490-b7d2-eb8decd07841`; GET `/` dan `/setup` sama-sama HTTP 200.
+- RPC publik `https://testnet-rpc.monad.xyz`: `eth_chainId` aktual 0x279f = 10143. `eth_estimateGas` untuk artifact deployment = 986,825 gas. Pada pemeriksaan ini fee cap ethers = 202,000,000,000 wei/gas; batas atas indikatif = 0.19933865 MON. Bukan saldo/biaya final wallet pengguna; halaman akan menghitung ulang dengan akun yang dipilih.
+- Belum deploy kontrak. Belum ada receipt, alamat, block, runtime code, atau panggilan view ke kontrak game. Menunggu pengguna membuka helper, memilih wallet/akun testnet, mengecek saldo/estimasi, lalu menekan tombol deploy dan mengonfirmasi transaksi di wallet.

@@ -12,6 +12,7 @@
     "preview": "vite preview --host 0.0.0.0"
   },
   "dependencies": {
+    "ethers": "6.17.0",
     "react": "19.3.1",
     "react-dom": "19.3.1"
   },

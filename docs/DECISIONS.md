@@ -31,6 +31,14 @@ Setiap perubahan berikutnya mencatat waktu aktual, pemicu, pilihan, alasan, damp
 - Alasan: membuktikan deadline tepat, hot-window tepat 6 detik, dan hasil transaksi kompetitif tanpa sleep dunia nyata atau sekadar membuat objek transaksi.
 - Dampak: 16 tes lokal lulus; receipt gas enam aksi dicatat di `TEST-RESULTS.md`. Ini bukti simulasi saja, belum bukti deploy atau biaya aktual di Monad Testnet.
 
+## 24 Oktober 2026 WIB - helper deployment Tahap 4
+
+- Pilihan: helper deploy dipublikasikan di route `/setup` pada Worker BOM OPER yang sama. ABI, bytecode, compiler metadata dan fingerprint source dihasilkan dari artifact Hardhat; ethers v6.17.0 menjadi dependency app langsung.
+- Dasar integrasi: [Monad Testnet Network Information](https://docs.monad.xyz/developer-essentials/testnet), [Monad Block Explorers](https://docs.monad.xyz/tooling-and-infra/block-explorers), dan [ethers v6 documentation](https://docs.ethers.org/v6/); live RPC `eth_chainId` tetap dicek oleh helper/runtime.
+- Keamanan/alur: koneksi wallet hanya setelah tombol ditekan; halaman memeriksa chain wallet/RPC, saldo akun dan estimasi gas/fee sebelum menampilkan tombol deploy. Transaksi kontrak hanya dikirim setelah pengguna menekan tombol dan menyetujui pop-up wallet; tak ada private key di app, env, atau log.
+- Setelah receipt rencana pemeriksaan runtime code dan view `nextRoomId()` melalui RPC publik, lalu pengguna mengunduh record. Belum ada record `deployments/10143.json` karena belum ada receipt; alamat tidak diisi placeholder.
+- Dampak: helper tersedia di URL publik `https://bom-oper.salmansegaf52.workers.dev/setup`. Kontrak testnet, konfigurasi alamat bersama frontend, dan verify source menunggu hasil transaksi nyata.
+
 ## 24 Oktober 2026 WIB — fondasi Prompt Induk
 
 - Pemicu: pengguna mengirim Prompt Induk dan meminta fondasi dokumen serta checkpoint GitHub sebelum Prompt 0.

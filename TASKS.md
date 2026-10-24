@@ -1,6 +1,6 @@
 # Rundown enam jam dan checklist
 
-Prompt Induk dan Prompt 0 selesai dengan checkpoint GitHub terverifikasi. Tahap 1 masih menunggu verifikasi HP; scaffold sudah dibuild dan URL publik merespons. Tahap 2 dan Tahap 3 selesai lokal; Tahap 4 sampai 9 belum dijalankan. Centang hanya setelah kriteria tahap terbukti. Jadwal relatif; contoh waktu 12.00-18.00 bukan konfirmasi panitia. Checkpoint GitHub 1-2 menit termasuk dalam slot yang sama.
+Prompt Induk dan Prompt 0 selesai dengan checkpoint GitHub terverifikasi. Tahap 1 masih menunggu verifikasi HP; scaffold sudah dibuild dan URL publik merespons. Tahap 2 dan Tahap 3 selesai lokal; helper Tahap 4 sudah publik, tetapi deployment kontrak menunggu persetujuan wallet pengguna. Tahap 5 sampai 9 belum dijalankan. Centang hanya setelah kriteria tahap terbukti. Jadwal relatif; contoh waktu 12.00-18.00 bukan konfirmasi panitia. Checkpoint GitHub 1-2 menit termasuk dalam slot yang sama.
 
 | Tahap | Slot | Syarat lulus |
 |---|---|---|
@@ -20,7 +20,7 @@ Prompt Induk dan Prompt 0 selesai dengan checkpoint GitHub terverifikasi. Tahap 
 - [ ] 1: app scaffold, lockfile, .gitignore, .env.example, SPA hosting dan URL publik sudah tersedia; verifikasi buka dari HP masih pending.
 - [x] 2: `BomOper.sol`, state machine/event/snapshot, expectedTurn, panas, deadline, compiler/EVM target dan guard chain 10143; compile, ABI, serta tes chain guard lulus. Full rule tests ada di Tahap 3.
 - [x] 3: tes aturan dan batas lulus di simulasi chain ID 10143 dengan pengaturan timestamp jaringan; gas enam aksi dicatat di TEST-RESULTS.md. Bukan sleep dunia nyata.
-- [ ] 4: deploy 10143 lewat wallet pengguna, receipt/code/ABI/record deploy.
+- [ ] 4: helper `/setup` publik dan pra-pemeriksaan siap; menunggu pengguna menyetujui deploy 10143, lalu verifikasi receipt/code/view dan simpan record.
 - [ ] 5: persetujuan wallet bermain, funding gas, pending/recovery; fallback bila perlu.
 - [ ] 6: Opening/Mulai Main, loading/error nyata, link room langsung, UI sesuai Figma, polling konsisten, settle, ronde publik.
 - [ ] 7: dua sampai empat konteks nyata, kasus gagal, hasil sama, perbaikan terbukti.
@@ -78,3 +78,12 @@ Revisi arcade lima layar dan storyboard motion sudah dibuat/diperiksa di Figma. 
 - [x] Catat gas receipt untuk create 142,383; join 75,827; start 83,139; pass normal 60,105; pass hot 68,881; settle 87,740. Nilai lokal simulasi, bukan estimasi biaya MON testnet.
 - [x] `npm run contracts:test` lulus 16 passing; `npm run contracts:compile` lulus (`No contracts to compile`, artefak sudah terbangun).
 - [ ] Tahap 4 deployment Monad Testnet masih belum dilakukan; verifikasi buka URL landing melalui HP masih menunggu pengguna.
+
+## Progres Tahap 4 - helper siap, menunggu persetujuan wallet
+
+- [x] `ethers` 6.17.0 tersedia eksplisit di workspace app; `contracts:export` menyalin ABI/bytecode/compiler/source fingerprint dari artifact Hardhat ke app.
+- [x] Route `/setup` memakai wallet EIP-1193 yang terhubung setelah klik pengguna; tidak auto-connect, tidak auto-deploy, dan tidak meminta/menyimpan private key.
+- [x] Pra-deploy memeriksa chain wallet dan RPC 10143, saldo akun, estimasi gas, dan fee saat itu; tombol deploy baru tersedia bila pemeriksaan lolos.
+- [x] Sesudah receipt, helper memeriksa status transaksi, runtime code dan `nextRoomId()` melalui RPC serta menampilkan link MonadVision/record JSON.
+- [x] Build Vite, Wrangler dry-run, deployment Worker `bom-oper`, GET publik `/` dan `/setup` lulus. URL helper: `https://bom-oper.salmansegaf52.workers.dev/setup`; version `8d168b42-2e07-4490-b7d2-eb8decd07841`.
+- [ ] Pengguna membuka helper, menghubungkan akun Monad Testnet yang dananya cukup, memeriksa estimasi, lalu menyetujui transaksi deploy di wallet. Setelah itu record kontrak publik dan konfigurasi alamat bersama perlu dicatat, dibuild ulang, diuji, dan dipush.

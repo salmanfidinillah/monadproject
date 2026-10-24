@@ -11,10 +11,11 @@
   ],
   "scripts": {
     "dev": "npm run dev --workspace @bom-oper/app",
-    "build": "npm run build --workspace @bom-oper/app",
+    "build": "npm run contracts:export && npm run build --workspace @bom-oper/app",
     "preview": "npm run preview --workspace @bom-oper/app",
     "deploy": "npm run build && wrangler deploy --config wrangler.jsonc",
     "contracts:compile": "hardhat compile",
+    "contracts:export": "npm run contracts:compile && node scripts/export-contract-artifact.mjs",
     "contracts:test": "hardhat test"
   },
   "devDependencies": {
