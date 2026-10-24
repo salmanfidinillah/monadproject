@@ -1,5 +1,15 @@
 # Status aktual BOM OPER
 
+## Hambatan berjalan — pengiriman deploy dibatasi RPC
+
+Pengguna secara eksplisit memilih melanjutkan koneksi wallet sendiri meskipun warning domain belum terjelaskan; tidak ada bukti klasifikasi sudah diperbaiki. Screenshot berikutnya menunjukkan pra-deploy lulus, chain 10143 dan saldo 5 MON. Setelah menekan deploy, pengguna memberi error RPC rate limited dan melaporkan Aktivitas MetaMask **Gagal**.
+
+- Dua RPC resmi dibaca: chain 10143, saldo saat pemeriksaan 5 MON, latest/pending nonce 0, code CREATE nonce 0 kosong. Belum ada hash/receipt atau kontrak publik yang diklaim berhasil.
+- Helper diperbaiki: error singkat tanpa dump bytecode, panduan RPC wallet alternatif, konfirmasi status Aktivitas, pemeriksaan dua RPC dan coba ulang manual memakai nonce/pengirim yang sama. Tidak ada auto-retry atau reset jurnal sembarang.
+- LULUS: build produksi, 23 tes Hardhat dan 15 tes pemulihan. Wrangler dry-run dan deploy ke Worker yang sama berhasil; version `6476e73c-b6d5-4e3a-8209-1d2cffa56b62`. GET `/setup` HTTP 200 dan bundle baru cocok persis dengan build lokal.
+- Probe fungsi pemulihan read-only pada akun pengguna menghasilkan kesiapan nonce 0 dengan input konfirmasi kegagalan sebagai fixture. Probe tidak memakai wallet, mengirim transaksi atau mengubah storage browser pengguna. Interaksi checkbox/signature/retry pengguna belum diuji end-to-end.
+- Langkah berikutnya: pengguna mengganti RPC wallet bila perlu, refresh helper, periksa akun lewat jalur pemulihan, lalu meninjau/menyetujui percobaan manual. Detail: `docs/DEPLOY-RECOVERY.md`. Prompt 4 belum lulus; target tetap sampai Prompt 8.
+
 ## Hambatan terbaru — peringatan domain MetaMask
 
 24 Oktober 2026 WIB: screenshot pengguna saat menghubungkan wallet ke `bom-oper.salmansegaf52.workers.dev` memperlihatkan **Berbahaya—ditandai sebagai tidak aman**. Pengguna diarahkan memilih **Kembali ke keamanan** dan menghentikan koneksi/deploy. Penyebab belum diketahui; belum dinyatakan false positive. Belum ada hash/receipt deployment kontrak.
@@ -38,7 +48,7 @@ Arahan terbaru: lanjutkan panduan secara berurutan sampai Prompt 8 lalu berhenti
 | Desain Figma URL dan frame | https://www.figma.com/design/T8zhiDboW04KOC9sDJrlz6/BOM-OPER?node-id=11-60; detail node/frame di docs/design/README.md |
 | Build / tes lokal | Root `npm run build` LULUS: export artifact ABI/bytecode dan Vite build; `npm run contracts:test` LULUS 16 tes Tahap 3 |
 | URL publik landing | https://bom-oper.salmansegaf52.workers.dev; Worker `bom-oper`, versi `0b0c8d8a-350d-442f-a44f-1246795488a5` |
-| Helper deploy publik | https://bom-oper.salmansegaf52.workers.dev/setup; Worker `bom-oper`, versi `cab2e277-8d07-45f7-8c08-9a384452de30`; pemulihan hash tersedia, HTTP 200 dan bundle cocok dengan build |
+| Helper deploy publik | https://bom-oper.salmansegaf52.workers.dev/setup; Worker `bom-oper`, versi `6476e73c-b6d5-4e3a-8209-1d2cffa56b62`; pemulihan hash dan coba ulang manual dengan nonce sama, HTTP 200/bundle cocok |
 | Pratinjau visual publik | https://bom-oper.salmansegaf52.workers.dev/prototype; Worker `bom-oper`, versi `b5c621c4-f2a7-4d53-a148-32a636988d69`; `/prototype` merespons HTTP 200; simulasi saja |
 | Chain target | RPC Monad Testnet `eth_chainId` = 10143; simulasi lokal 10143; constructor menolak deployment pada ID lain |
 | Compiler/EVM target | solc 0.8.30; Cancun; optimizer 200 runs; dikompilasi lokal |

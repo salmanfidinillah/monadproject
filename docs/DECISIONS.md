@@ -1,5 +1,14 @@
 # Keputusan dan perubahan
 
+## 24 Oktober 2026 WIB — RPC rate limited, retry manual dengan nonce sama
+
+- Pengguna memilih melanjutkan warning secara manual, mendanai akun dan mencapai pra-deploy lulus. Error berikutnya berasal dari pengiriman RPC wallet, bukan aturan kontrak. Status warning domain tetap belum diselesaikan; tidak mengubah proteksi atas nama pengguna.
+- Bug pemulihan: intent tanpa hash terjaga tetapi tidak punya jalur untuk error pengiriman yang ditandai Gagal oleh wallet. Jangan menghapus jurnal atau auto-send. Tambahkan jalur eksplisit yang memerlukan pemeriksaan Aktivitas pengguna dan kesepakatan nonce/code dari dua RPC resmi.
+- Jurnal baru menyimpan nonce sebelum send dan setiap request deploy mengisinya eksplisit. Retry mempertahankan nonce/pengirim; nonce yang sudah terpakai memblokir percobaan, bukan menaikkan nomor untuk membuat kontrak baru. Jurnal lama tanpa nonce dibatasi pada kasus pertama nonce 0. Penolakan konfirmasi retry tidak menghapus jejak nonce asal.
+- Alternatif RPC Foundation berasal dari docs resmi dan diuji chain ID 10143. Karena batch tidak didukung, recovery memakai request tunggal. RPC wallet harus dipilih pengguna di MetaMask; mengubah provider pembacaan saja tidak memperbaiki jalur send wallet.
+- Error ditampilkan singkat tanpa dump bytecode/payload. Semua gerbang receipt/code/view publik tetap diperlukan; perubahan ini tidak menandai Prompt 4 selesai atau memulai Prompt 5.
+- Bukti aktual dan batas tes di TEST-RESULTS.md; langkah pengguna di docs/DEPLOY-RECOVERY.md.
+
 ## 24 Oktober 2026 WIB — hentikan koneksi saat domain ditandai
 
 - Screenshot MetaMask memperlihatkan domain BOM OPER ditandai berbahaya. Ini bukti nyata hambatan baru sebelum deploy, bukan alasan mengubah aturan/wallet/chain.

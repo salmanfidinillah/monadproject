@@ -8,6 +8,7 @@ import {
 import artifact from "./contract/BomOper.artifact.json";
 import { verifyDeployment, type DeploymentProof } from "./deploymentVerification";
 import { clearFailedDeployment, clearRejectedDeployment, readDeploymentJournal, writeDeploymentJournal, type DeploymentJournal } from "./deploymentJournal";
+import { checkDeploymentRetry, deploymentErrorMessage, WALLET_ALTERNATIVE_RPC } from "./deploymentRecovery";
 import "./setup.css";
 
 const TARGET_CHAIN_ID = 10143n;
@@ -89,6 +90,7 @@ export default function DeploySetup() {
     try { return readDeploymentJournal(localStorage); } catch { return null; }
   });
   const [hashInput, setHashInput] = useState("");
+  const [walletFailureConfirmed, setWalletFailureConfirmed] = useState(false);
   const operationInFlight = useRef(false);
 
   function saveJournal(value: DeploymentJournal) {
@@ -132,6 +134,20 @@ export default function DeploySetup() {
       if (stored?.hash && stored.hash.toLowerCase() !== hash.toLowerCase()) throw new Error("Hash berbeda dari transaksi tersimpan. Periksa hash tersimpan terlebih dahulu.");
       await checkDeploymentHash(hash);
     } catch (cause) { setError(cause instanceof Error ? cause.message : "Pemeriksaan receipt gagal."); }
+    finally { operationInFlight.current = false; setChecking(false); }
+  }
+
+  async function prepareManualRetry() {
+    if (operationInFlight.current) return;
+    operationInFlight.current = true; setChecking(true); setError("");
+    try {
+      const stored = readDeploymentJournal(localStorage);
+      if (!stored) throw new Error("Tidak ada percobaan deploy tersimpan untuk diperiksa.");
+      const checked = await checkDeploymentRetry(stored, walletFailureConfirmed);
+      saveJournal(checked);
+      setAccount(checked.account); setPreflight(null);
+      setMessage(`Dua RPC cocok: nonce ${checked.nonce} belum digunakan dan kontrak belum terlihat. Jalankan Periksa saldo & biaya; pengiriman berikutnya tetap memakai nonce yang sama, bukan transaksi otomatis.`);
+    } catch (cause) { setError(deploymentErrorMessage(cause)); }
     finally { operationInFlight.current = false; setChecking(false); }
   }
 
@@ -207,7 +223,7 @@ export default function DeploySetup() {
       setMessage("Pemeriksaan lulus. Transaksi belum dikirim; tombol deploy akan meminta persetujuan wallet.");
     } catch (cause) {
       setMessage("Pemeriksaan belum lulus.");
-      setError(cause instanceof Error ? cause.message : "Pemeriksaan RPC gagal.");
+      setError(deploymentErrorMessage(cause));
     } finally {
       setChecking(false);
     }
@@ -221,19 +237,31 @@ export default function DeploySetup() {
     setError("");
     setProof(null);
     let walletProvider: BrowserProvider | undefined;
+    let publicProvider: JsonRpcProvider | undefined;
+    let retryRecord: DeploymentJournal | null = null;
     try {
-      if (readDeploymentJournal(localStorage)) throw new Error("Ada deployment tersimpan. Periksa receipt lebih dulu; deploy ulang diblokir.");
+      const stored = readDeploymentJournal(localStorage);
+      if (stored && stored.state !== "retry-ready") throw new Error("Ada deployment tersimpan. Periksa receipt lebih dulu; deploy ulang diblokir.");
+      if (stored && stored.account.toLowerCase() !== account.toLowerCase()) throw new Error("Akun berubah; percobaan ulang tidak boleh mengganti pengirim.");
+      const retry = stored ? await checkDeploymentRetry(stored, walletFailureConfirmed) : null;
+      retryRecord = retry;
       const fresh = await checkPreflight(wallet, account);
       walletProvider = new BrowserProvider(wallet as never, "any");
       const signer = await walletProvider.getSigner(account);
       const factory = new ContractFactory(artifact.abi, artifact.bytecode, signer);
+      publicProvider = getPublicProvider();
+      const [latestNonce, pendingNonce] = await Promise.all([
+        publicProvider.getTransactionCount(account, "latest"), publicProvider.getTransactionCount(account, "pending"),
+      ]);
+      const nonce = retry?.nonce ?? latestNonce;
+      if (latestNonce !== nonce || pendingNonce !== nonce) throw new Error("Nonce berubah atau masih ada transaksi pending. Periksa Aktivitas MetaMask sebelum deploy.");
       // Persist intent before asking the wallet. Refresh or an ambiguous transport error must not re-deploy.
-      saveJournal({ account, startedAt: Date.now(), state: "awaiting-wallet" });
+      saveJournal({ account, startedAt: stored?.startedAt ?? Date.now(), nonce, state: "awaiting-wallet" });
       setMessage("Wallet akan menampilkan transaksi deploy. Periksa detailnya dan setujui sendiri di wallet.");
-      const contract = await factory.deploy({ gasLimit: fresh.gasLimit });
+      const contract = await factory.deploy({ gasLimit: fresh.gasLimit, nonce, chainId: TARGET_CHAIN_ID });
       const transaction = contract.deploymentTransaction();
       if (!transaction) throw new Error("Hash transaksi deployment tidak tersedia.");
-      saveJournal({ account, startedAt: Date.now(), hash: transaction.hash, state: "broadcast" });
+      saveJournal({ account, startedAt: Date.now(), nonce, hash: transaction.hash, state: "broadcast" });
       setMessage(`Menunggu receipt deploy: ${transaction.hash}`);
       // A timeout never triggers another send. The saved hash remains recoverable.
       try { await transaction.wait(1, 60_000); } catch { /* verify status independently through the public RPC */ }
@@ -241,14 +269,17 @@ export default function DeploySetup() {
     } catch (cause) {
       const code = (cause as { code?: string | number }).code;
       if (code === "ACTION_REJECTED" || code === 4001) {
-        clearRejectedDeployment(localStorage);
+        // Rejecting the new confirmation must not discard the unresolved original attempt's nonce.
+        if (retryRecord) saveJournal(retryRecord);
+        else clearRejectedDeployment(localStorage);
         setJournal(readDeploymentJournal(localStorage));
       }
       setMessage("Deployment belum terverifikasi.");
-      setError(cause instanceof Error ? cause.message : "Deployment dibatalkan atau gagal.");
+      setError(deploymentErrorMessage(cause));
       setPreflight(null);
     } finally {
       walletProvider?.destroy();
+      publicProvider?.destroy();
       operationInFlight.current = false;
       setDeploying(false);
     }
@@ -314,7 +345,7 @@ export default function DeploySetup() {
           ) : null}
         </div>
 
-        {preflight && !journal && (
+        {preflight && (!journal || journal.state === "retry-ready") && (
           <div className="preflight-panel" aria-live="polite">
             <h3>Pra-deploy lulus</h3>
             <dl className="setup-facts compact">
@@ -348,6 +379,24 @@ export default function DeploySetup() {
           try { clearFailedDeployment(localStorage); setJournal(null); setHashInput(""); setMessage("Receipt gagal sudah ditutup. Hubungkan wallet untuk pemeriksaan baru."); }
           catch (cause) { setError(cause instanceof Error ? cause.message : "Catatan belum bisa ditutup."); }
         }}>Tutup transaksi gagal</button>}
+
+        {journal && !journal.hash && ["awaiting-wallet", "retry-ready"].includes(journal.state) && (
+          <div className="preflight-panel">
+            <h3>Wallet gagal sebelum hash diterima?</h3>
+            <p>Periksa tab Aktivitas MetaMask. Jika ada transaksi pending atau hash, gunakan pemeriksaan receipt di atas. Status RPC yang kosong saja belum membuktikan antrean wallet kosong.</p>
+            <label className="retry-confirm"><input type="checkbox" checked={walletFailureConfirmed} onChange={(event) => setWalletFailureConfirmed(event.target.checked)} />
+              <span>Saya sudah memeriksa Aktivitas MetaMask: percobaan ditandai Gagal dan tidak ada transaksi deploy tertunda.</span>
+            </label>
+            <button className="setup-button secondary" type="button" onClick={prepareManualRetry} disabled={checking || deploying || !walletFailureConfirmed}>Periksa akun & siapkan coba ulang</button>
+            <p>Pemeriksaan ini hanya membaca dua RPC, tidak mengirim transaksi. Percobaan berikut tetap meminta konfirmasi wallet dengan nonce yang sama.</p>
+          </div>
+        )}
+
+        <details className="rpc-help"><summary>Panduan jika RPC wallet dibatasi</summary>
+          <p>Permintaan transaksi dikirim melalui RPC yang dipilih di MetaMask. Mengganti RPC pembacaan aplikasi tidak mengganti RPC pengiriman wallet.</p>
+          <ol><li>Buka menu MetaMask → Networks/Jaringan.</li><li>Pilih tiga titik pada Monad Testnet → edit jaringan.</li><li>Pada Default RPC URL, pilih Add RPC URL. Masukkan <code>{WALLET_ALTERNATIVE_RPC}</code> dan simpan/pilih sebagai RPC default. Tetap chain ID 10143.</li><li>Kembali ke sini, periksa akun lebih dahulu sebelum mengirim percobaan manual.</li></ol>
+          <p><a href="https://support.metamask.io/configure/networks/how-to-add-a-custom-network-rpc" target="_blank" rel="noreferrer">Panduan resmi MetaMask ↗</a> · <a href="https://docs.monad.xyz/developer-essentials/testnet" target="_blank" rel="noreferrer">Daftar RPC resmi Monad ↗</a></p>
+        </details>
       </section>
 
       {proof && (

@@ -1,5 +1,23 @@
 # Hasil pengujian
 
+## Perbaikan RPC rate limit dan percobaan manual — 24 Oktober 2026 WIB
+
+| Pemeriksaan aktual | Hasil |
+|---|---|
+| Baca error pengguna dari attachment dan jawaban Aktivitas wallet | Error `-32603`, `eth_sendRawTransaction` rate limited; tidak berisi hash deploy. Pengguna melaporkan **Gagal**. Tidak menganggap error transport sebagai receipt revert |
+| Read-only akun dari `testnet-rpc.monad.xyz` dan `rpc-testnet.monadinfra.com` | Keduanya chain 10143; saldo 5 MON; nonce latest 0, pending 0; code di kandidat nonce 0 `0x`. Tidak membuktikan antrean lokal wallet kosong |
+| Docs Monad Testnet `.md`, MetaMask edit RPC, ethers providers, Wrangler commands/skill | Diperiksa. Endpoint Foundation resmi tidak mendukung batch; recovery provider memakai `batchMaxCount: 1` |
+| `npm run build` | LULUS TypeScript/Vite, 175 modul; kontrak/ABI/aturan tidak berubah |
+| `npm run deployment:test` | LULUS 15 tes: jurnal refresh/corrupt/rejection/failed, retry-ready nonce, konfirmasi pengguna, dua RPC berbeda, hash existing, pending/consumed nonce, code existing, wrong chain, nonce tetap, legacy nonce 0 dan sanitasi error |
+| `npm run contracts:test` | LULUS 23 passing; mencakup 16 aturan/guard lama, 6 verifier, dan bukti retry dengan nonce terpakai ditolak sehingga tidak ada kontrak kedua. Seluruh receipt di tes ini simulasi lokal |
+| Probe langsung `checkDeploymentRetry` ke dua RPC, input konfirmasi sebagai fixture | Menghasilkan retry-ready nonce 0. Read-only tanpa wallet, tanpa transaksi, tanpa perubahan browser storage; bukan hasil interaksi UI pengguna |
+| Wrangler dry-run, whoami, `npm run deploy` | LULUS; target Worker/akun yang sama. URL tetap, version `6476e73c-b6d5-4e3a-8209-1d2cffa56b62` |
+| GET `/setup`, SHA-256 bundle publik vs build lokal, label recovery/RPC | LULUS HTTP 200 dan bundle identik; tombol pemeriksaan coba ulang dan panduan RPC ada dalam bundle |
+| `git diff --exit-code HEAD -- contracts/BomOper.sol SPEC.md test/BomOper.chain.ts package-lock.json` | Exit 0; aturan/tes inti/dependency tidak diubah |
+| Wallet retry nyata, receipt deploy publik, code/view publik, multiplayer | BELUM DIUJI / BELUM ADA. Menunggu tindakan wallet pengguna; tidak ada auto-retry yang dikirim agen |
+
+`git diff --check` dan `git diff --cached --check` lulus; 13 file staged diperiksa dengan heuristik kredensial dan pasangan code fence tanpa temuan. Panduan untracked pengguna tetap tidak berubah/tidak ikut commit. Request deploy juga mengisi chain ID 10143 eksplisit; build/23 tes Hardhat diulang sesudah perubahan guard ini dan lulus. Hasil commit/push dilaporkan sesudah eksekusi. Warning domain terdahulu belum dinyatakan selesai; pengguna memilih melanjutkan secara manual.
+
 ## Peringatan domain MetaMask — 24 Oktober 2026 WIB
 
 | Pemeriksaan aktual | Hasil |

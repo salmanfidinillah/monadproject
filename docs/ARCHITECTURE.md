@@ -37,3 +37,7 @@ Satu transaksi pending per pemain, simpan hash untuk pemulihan refresh. Oper men
 6. Build/deploy Cloudflare, uji perangkat lain dan link room, catat URL/receipt aktual di STATUS dan tes.
 
 Snapshot minimal memuat status, anggota/kapasitas, holder, turn, deadline, jatah panas dan loser; event mendukung riwayat. Tidak perlu scan semua event dari genesis setiap render.
+
+## Pemulihan pengiriman deploy
+
+Helper menyimpan metadata publik intent/hash/nonce di localStorage, terpisah dari secret sesi bermain. Hash yang tersedia wajib diperiksa melalui receipt. Untuk intent tanpa hash yang dilaporkan Gagal di wallet, pemulihan manual memerlukan konfirmasi pemeriksaan Aktivitas dan pembacaan dua RPC resmi yang sepakat nonce belum terpakai, tidak ada pending, dan code kandidat kosong. Jurnal lama tanpa nonce hanya mendukung pemulihan percobaan pertama nonce 0. Tombol pemeriksaan hanya menyiapkan status; tombol deploy tetap membutuhkan persetujuan wallet dan memakai nonce/pengirim yang sama setelah pemeriksaan ulang. Tidak ada retry transaksi otomatis. Lihat docs/DEPLOY-RECOVERY.md untuk langkah dan batasnya.

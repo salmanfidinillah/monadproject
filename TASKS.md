@@ -3,7 +3,9 @@
 ## Kelanjutan terbaru sampai Prompt 8 — 24 Oktober 2026 WIB
 
 - [x] Investigasi awal peringatan domain MetaMask dari screenshot pengguna; siapkan draf review di `docs/references/METAMASK-REVIEW.md`. Pemeriksaan awal tidak membuktikan false positive.
-- [ ] Peninjauan/remediasi domain dan konfirmasi peringatan sudah selesai sebelum koneksi/deploy dilanjutkan. Laporan belum dikirim; proteksi tetap aktif.
+- [ ] Peninjauan/remediasi domain masih belum selesai dan laporan belum dikirim. Pengguna kemudian memilih melanjutkan sendiri; ini bukan bukti warning sudah diperbaiki. Agen tidak mengubah proteksi wallet.
+- [x] Tangani error pengiriman rate limited: dua RPC read-only, error singkat, panduan RPC wallet, guard coba ulang manual dengan nonce/pengirim sama; 23 tes Hardhat + 15 tes pemulihan lulus, helper terbaru dideploy.
+- [ ] Pengguna menjalankan pemeriksaan pemulihan dan konfirmasi deploy manual; hash/receipt sukses tetap belum tersedia.
 
 - [x] Baca panduan enam jam, cocokkan progres/Git dan Prompt 4; tahap terbukti tidak dibuat ulang. Verifikasi HP Tahap 1 tetap pending.
 - [x] Baca PDF workshop integrasi Monad; simpan ringkasan aman di `docs/references/MONAD-BLITZ.md`.

@@ -40,3 +40,14 @@ test("corrupted storage fails closed rather than appearing ready for another dep
   writeDeploymentJournal(storage, { ...broadcast, hash: "garbled" });
   assert.throws(() => readDeploymentJournal(storage), /tidak valid/);
 });
+
+test("retry-ready journal survives refresh only with a nonnegative nonce and without a hash", () => {
+  const storage = memoryStorage();
+  const ready = { ...intent, state: "retry-ready", nonce: 0 };
+  writeDeploymentJournal(storage, ready);
+  assert.deepEqual(readDeploymentJournal(storage), ready);
+  for (const invalid of [{ ...ready, nonce: -1 }, { ...ready, nonce: undefined }, { ...ready, hash: broadcast.hash }]) {
+    writeDeploymentJournal(storage, invalid);
+    assert.throws(() => readDeploymentJournal(storage), /tidak valid/);
+  }
+});

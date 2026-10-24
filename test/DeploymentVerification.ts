@@ -55,4 +55,14 @@ describe("Deployment proof verifier (local simulation only)", function () {
       assert.equal(result.state, "failed");
     } finally { await ethers.provider.send("evm_setAutomine", [true]); }
   });
+
+  it("a manual attempt pinned to a consumed nonce cannot create a second contract", async function () {
+    const [sender] = await ethers.getSigners();
+    const nonce = Number(BigInt(await ethers.provider.send("eth_getTransactionCount", [sender.address, "latest"])));
+    const factory = await ethers.getContractFactory("BomOper", sender);
+    const deployed = await factory.deploy({ nonce, chainId: 10143n });
+    await deployed.waitForDeployment();
+    await assert.rejects(factory.deploy({ nonce, chainId: 10143n }), /nonce too low|already been used|NONCE_EXPIRED/i);
+    assert.equal(Number(BigInt(await ethers.provider.send("eth_getTransactionCount", [sender.address, "latest"]))), nonce + 1);
+  });
 });
