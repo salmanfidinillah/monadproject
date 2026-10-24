@@ -1,5 +1,13 @@
 # Keputusan dan perubahan
 
+## 24 Oktober 2026 WIB — gameplay live Prompt 5–6
+
+- Pilihan: pakai ABI/address yang dihasilkan dan diverifikasi terhadap record deployment chain 10143; seluruh room state dibaca dari `getRoomSnapshot`/timestamp pada satu blok dan polling 2 detik. Create/join/start/pass/settle masuk melalui helper wallet yang menjaga hash/nonce pending sebelum broadcast dan menunggu receipt.
+- Keamanan wallet: sesi EOA sementara berlaku 10 menit; pada expiry secret dibersihkan sementara metadata room/transaksi dipertahankan agar identitas tak dapat berotasi saat ada room/pending. Guard menghitung biaya aksi dengan estimasi dan fee saat itu, bukan angka gasUsed simulasi; transaksi tanpa `value` ke kontrak yang diizinkan saja.
+- UI: route `/play` terpisah dari simulasi `/prototype`; tautan room langsung ke Arena. Poll/manual refresh, retry baca, inspeksi receipt, seleksi penerima, hot-pass, dan settle manual setelah waktu chain tercapai. Gerak bom resmi dimulai setelah receipt lalu snapshot. Tidak ada settle otomatis atau retry transaksi otomatis.
+- Batas bukti: implementasi/build lokal bukan transaksi on-chain. Belum menguji 2 wallet, receipt pass/settle, kasus adversarial dari browser, atau deploy final URL. Karena itu Prompt 5–8 tetap belum lulus acceptance sampai bukti tersebut tersedia.
+- Update Prompt 8: setelah build dan Wrangler dry-run, versi frontend `dc4678cf-4b64-4904-bd43-aa6bb4540acf` berhasil dipublish ke Worker yang sama. Pemeriksaan HTTP publik `/`, `/play`, room contoh dan chunk JS memberi 200. ID room contoh tidak ada di kontrak; tidak ada transaksi game yang dikirim dalam deployment ini.
+
 ## 24 Oktober 2026 WIB — simpan hash sebelum broadcast
 
 - Risiko: jika RPC menerima raw transaksi tetapi koneksi putus sebelum respons kembali, aplikasi lama belum menyimpan hash dan pemulihan sulit dilakukan.

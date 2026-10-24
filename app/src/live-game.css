@@ -1,0 +1,76 @@
+.live-game .button-cyan { background: var(--cyan); }
+.live-opening { min-height: 700px; padding: 12px 0 28px; }
+.live-opening .opening-copy h1 { font-size: clamp(76px, 9vw, 122px); line-height: .82; }
+.live-disclaimer { max-width: 490px; margin: 17px 0 0 !important; font-size: 12px !important; line-height: 1.45; opacity: .78; }
+.live-hero-arena { position: relative; display: grid; place-items: center; min-height: 475px; }
+.live-hero-arena .sun-disc { position: absolute; top: 7%; right: 12%; width: min(260px, 48vw); aspect-ratio: 1; border-radius: 50%; background: var(--cream); }
+.live-hero-arena .arena-rim { position: relative; width: 84%; height: 265px; margin-top: 155px; }
+.live-hero-characters { position: absolute; inset: -125px 0 0; display: flex; align-items: center; justify-content: space-around; }
+.live-hero-characters .character { width: clamp(75px, 10vw, 125px); }
+.live-hero-characters .bomb-art { width: 62px; position: absolute; top: 34%; left: 49%; }
+.live-rules { grid-column: 1 / -1; display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 12px 25px; padding: 12px 18px; border-radius: 18px; background: rgb(255 242 199 / 75%); font-size: 13px; }
+.live-rules strong { font-weight: 1000; }
+.live-lobby, .live-room { width: min(100%, 1100px); min-height: 72vh; margin: 32px auto; }
+.live-lobby h1 { margin: 14px 0 22px; font: 48px/1.05 "Lilita One", "Arial Rounded MT Bold", sans-serif; }
+.live-wallet-status { display: flex; align-items: center; justify-content: space-between; gap: 15px; margin: 18px 0; padding: 15px 18px; border: 2px solid var(--ink); border-radius: 18px; background: rgb(255 250 240 / 88%); }
+.live-wallet-status div { display: grid; gap: 4px; min-width: 0; }
+.live-wallet-status strong { font-size: 12px; }.live-wallet-status span { font-size: 13px; }
+.live-lobby-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; margin: 20px 0; }
+.live-card { display: grid; gap: 13px; padding: 22px; border: 3px solid var(--ink); border-radius: 22px; background: #fffaf0; box-shadow: 5px 6px 0 var(--ink); }
+.live-card h2 { margin: 0; font: 30px "Lilita One", "Arial Rounded MT Bold", sans-serif; }
+.live-card label { display: grid; gap: 6px; font-weight: 900; }
+.live-card select, .live-card input { min-height: 48px; width: 100%; padding: 9px 12px; border: 2px solid var(--ink); border-radius: 12px; background: white; color: var(--ink); font: 700 16px "Nunito", sans-serif; }
+.live-card .arcade-button { width: 100%; }.live-card p { margin: 0; font-size: 12px; }
+.live-simulation-link { display: inline-block; margin: 16px 0; color: var(--ink); font-weight: 900; }
+.live-room-meta { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; margin: 14px auto 22px; }
+.live-room-meta span { padding: 7px 12px; border: 2px solid var(--ink); border-radius: 999px; background: var(--cream); font-size: 11px; font-weight: 1000; }
+.live-timer { margin: 12px auto -8px; }.live-timer small { color: var(--ink); }.live-timer.timer-danger { color: #c33b4f; }
+.live-arena { max-width: 900px; margin: 12px auto 0; }
+.live-arena .arena-player { cursor: default; border: 0; padding: 0; background: transparent; color: inherit; appearance: none; }
+.live-arena .arena-player:disabled { opacity: 1; }
+.live-arena .arena-player.is-holder.is-pass-pending { animation: holder-windup .35s ease-in-out infinite alternate; }
+.live-arena .arena-player.is-selected:not(:disabled) .character { filter: drop-shadow(0 0 10px var(--violet)); }
+.live-arena .bomb-small { width: 58px; right: -2px; bottom: 30px; }
+.pass-bomb-flight { position: absolute; z-index: 7; left: var(--from-x); top: var(--from-y); width: 44px; pointer-events: none; animation: bomb-pass-flight .62s cubic-bezier(.2,.65,.25,1) forwards; }
+.pass-bomb-flight .bomb-small { position: static; width: 100%; }
+.pass-bomb-flight.is-hot { filter: drop-shadow(0 0 9px #ff694c); }
+.pass-bomb-flight.is-hot::after { content: "✦"; position: absolute; right: -13px; top: -8px; color: #ff694c; font-size: 23px; animation: hot-spark .3s ease-in-out infinite alternate; }
+@keyframes bomb-pass-flight { 0% { left: var(--from-x); top: var(--from-y); transform: rotate(-12deg) scale(.86); } 55% { transform: rotate(175deg) scale(1.12) translateY(-30px); } 100% { left: var(--to-x); top: var(--to-y); transform: rotate(360deg) scale(.9); } }
+@keyframes holder-windup { from { transform: translateY(0) rotate(0); } to { transform: translateY(-5px) rotate(-3deg); } }
+@keyframes hot-spark { from { opacity: .45; transform: scale(.8); } to { opacity: 1; transform: scale(1.2); } }
+.live-empty-seat { position: absolute; z-index: 2; width: 100px; padding: 8px; border: 2px dashed var(--ink); border-radius: 999px; background: rgb(255 250 240 / 60%); text-align: center; font-size: 10px; font-weight: 1000; }
+.live-room-actions, .live-controls { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 12px; margin: 18px auto; text-align: center; }
+.live-room-actions p { flex-basis: 100%; margin: 0 0 4px; }
+.live-controls { display: grid; justify-items: center; max-width: 720px; }
+.live-recipient-list { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; }
+.live-recipient { min-width: 125px; display: grid; gap: 4px; padding: 10px 14px; border: 2px solid var(--ink); border-radius: 14px; background: var(--cream); color: var(--ink); font: 900 13px "Nunito", sans-serif; cursor: pointer; }
+.live-recipient small { font-size: 10px; }.live-recipient.is-selected { background: var(--violet); box-shadow: 0 0 0 3px var(--ink); }
+.live-recipient:disabled { cursor: not-allowed; opacity: .6; }
+.live-controls .pass-actions { width: min(100%, 610px); }.live-controls > .arcade-button { width: min(100%, 420px); }
+.live-result { display: grid; justify-items: center; gap: 12px; margin: 18px auto; padding: 20px; border: 3px solid var(--ink); border-radius: 20px; background: var(--cream); text-align: center; }
+.live-result h1 { margin: 2px 0; font: 44px "Lilita One", "Arial Rounded MT Bold", sans-serif; }.live-result p { margin: 0; }.live-result .arcade-button { margin-top: 7px; }
+.live-history { width: min(100%, 760px); margin: 18px auto; padding: 15px 18px; border: 2px solid var(--ink); border-radius: 18px; background: rgb(255 250 240 / 84%); }
+.live-history h2 { margin: 0 0 8px; font: 23px "Lilita One", "Arial Rounded MT Bold", sans-serif; }.live-history ol { margin: 0; padding-left: 22px; }.live-history li, .live-history p { margin: 5px 0; font-size: 12px; }
+.live-status-area { display: grid; justify-items: center; gap: 8px; margin: 20px auto; text-align: center; overflow-wrap: anywhere; }
+.live-status-area p { margin: 0; }.live-status-area .setup-error { color: #8e1730; font-weight: 900; }
+.live-room > .text-button { display: block; margin: 12px auto; }
+@media (max-width: 720px) {
+  .live-opening { min-height: 0; gap: 4px; padding-top: 18px; }
+  .live-opening .opening-copy { order: 0; }.live-opening .opening-copy h1 { font-size: 84px; }
+  .live-hero-arena { order: -1; min-height: 290px; margin: 0 -18px; }
+  .live-hero-arena .sun-disc { width: 180px; }.live-hero-arena .arena-rim { width: 88%; height: 170px; margin-top: 94px; }
+  .live-hero-characters { inset: -83px 0 0; }.live-hero-characters .character { width: 78px; }.live-hero-characters .bomb-art { width: 46px; }
+  .live-rules { justify-content: flex-start; gap: 7px 12px; font-size: 11px; }
+  .live-lobby, .live-room { margin: 22px auto; }.live-lobby h1 { font-size: 38px; }
+  .live-wallet-status { align-items: flex-start; flex-direction: column; }.live-wallet-status .arcade-button { width: 100%; text-align: center; }
+  .live-lobby-grid { grid-template-columns: 1fr; }.live-card { padding: 17px; }
+  .live-arena { height: 370px; margin-inline: -10px; }.live-arena .arena-rim { left: 2%; right: 2%; height: 220px; bottom: 78px; }
+  .live-arena .arena-shadow { bottom: 54px; }.live-arena .arena-player { width: 100px; }
+  .live-arena .slot-0 { left: -1%; top: 29%; }.live-arena .slot-1 { right: -1%; top: 29%; }.live-arena .slot-2 { top: -9%; }.live-arena .slot-3 { bottom: 12%; }
+  .live-arena .character-label { font-size: 9px; padding: 4px 7px; }.live-arena .bomb-small { width: 48px; right: -6px; bottom: 27px; }
+  .live-empty-seat { width: 82px; padding: 6px; font-size: 8px; }
+  .live-room-actions { display: grid; }.live-room-actions .arcade-button { width: 100%; }
+  .live-recipient-list { width: 100%; }.live-recipient { flex: 1 1 42%; min-width: 0; }
+  .live-result h1 { font-size: 36px; }.live-result .arcade-button { width: 100%; }
+}
+@media (prefers-reduced-motion: reduce) { .live-game *, .live-game *::before, .live-game *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; } }

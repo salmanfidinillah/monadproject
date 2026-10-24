@@ -3,6 +3,7 @@ import { lazy, Suspense } from "react";
 const DeploySetup = lazy(() => import("./DeploySetup"));
 const PlayWalletSetup = lazy(() => import("./PlayWalletSetup"));
 const GamePreview = lazy(() => import("./GamePreview"));
+const LiveGame = lazy(() => import("./LiveGame"));
 
 const rules = [
   {
@@ -31,6 +32,9 @@ function App() {
   }
   if (window.location.pathname === "/prototype") {
     return <Suspense fallback={<main className="page-shell"><p>Memuat pratinjau…</p></main>}><GamePreview /></Suspense>;
+  }
+  if (window.location.pathname === "/play") {
+    return <Suspense fallback={<main className="page-shell"><p>Memuat data game…</p></main>}><LiveGame /></Suspense>;
   }
 
   return (
@@ -61,12 +65,12 @@ function App() {
             habis—pemegang terakhir yang kalah.
           </p>
           <div className="hero-actions">
-            <a className="primary-link" href="/prototype">
-              Coba demo di HP <span aria-hidden="true">→</span>
+            <a className="primary-link" href="/play">
+              Mulai main <span aria-hidden="true">→</span>
             </a>
             <a className="secondary-link" href="#aturan">Lihat cara main</a>
           </div>
-          <p className="build-note">Demo layar bisa dicoba tanpa wallet. Room dan aksi masih simulasi.</p>
+          <p className="build-note">Game memakai kontrak Monad Testnet. Siapkan wallet bermain sebelum membuat atau bergabung.</p>
         </div>
 
         <aside className="round-card" aria-label="Ringkasan ronde">
@@ -104,11 +108,12 @@ function App() {
         </ol>
       </section>
 
-      <a className="mobile-demo-cta" href="/prototype">Coba demo BOM OPER <span aria-hidden="true">→</span></a>
+      <a className="mobile-demo-cta" href="/play">Mulai main BOM OPER <span aria-hidden="true">→</span></a>
 
       <footer className="footer">
         <span>BOM OPER</span>
-        <a href="/prototype">Pratinjau layar game (simulasi)</a>
+        <a href="/play">Main dengan kontrak</a>
+        <a href="/prototype">Pratinjau layar (simulasi)</a>
         <a href="/wallet">Setup wallet pemain</a>
         <a href="/setup">Setup kontrak · developer</a>
         <span>Target jaringan: Monad Testnet · Chain ID 10143</span>

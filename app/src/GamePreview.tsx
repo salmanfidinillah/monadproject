@@ -2,7 +2,8 @@ import { useState } from "react";
 import "./game-preview.css";
 
 type Screen = "opening" | "lobby" | "arena" | "result";
-type Player = { label: string; color: "orange" | "cyan" | "violet" | "pink"; address: string };
+export type ArcadeColor = "orange" | "cyan" | "violet" | "pink";
+type Player = { label: string; color: ArcadeColor; address: string };
 
 const players: Player[] = [
   { label: "KAMU", color: "orange", address: "0x91c4…20af" },
@@ -37,7 +38,7 @@ function getRoomUrl(roomId: string, capacity: number, duration: number) {
   return url;
 }
 
-function Character({ color, className = "", label }: { color: Player["color"]; className?: string; label?: string }) {
+export function Character({ color, className = "", label }: { color: ArcadeColor; className?: string; label?: string }) {
   return <div className={`character character-${color} ${className}`} aria-label={label ?? "Karakter pemain"}>
     <svg viewBox="0 0 120 145" role="img" aria-hidden="true">
       <ellipse cx="60" cy="137" rx="38" ry="7" fill="#212346" opacity=".22" />
@@ -58,7 +59,7 @@ function Character({ color, className = "", label }: { color: Player["color"]; c
   </div>;
 }
 
-function Bomb({ small = false }: { small?: boolean }) {
+export function Bomb({ small = false }: { small?: boolean }) {
   return <span className={`bomb-art ${small ? "bomb-small" : ""}`} aria-label="Bom menyala">
     <svg viewBox="0 0 90 100" aria-hidden="true">
       <path d="M55 20 C57 7 69 8 75 3" fill="none" stroke="#212346" strokeWidth="7" strokeLinecap="round" />

@@ -1,4 +1,4 @@
-import { JsonRpcProvider, Wallet, getAddress, isAddress, keccak256, resolveAddress, type TransactionRequest } from "ethers";
+import { JsonRpcProvider, Wallet, getAddress, isAddress, keccak256, parseEther, resolveAddress, type TransactionReceipt, type TransactionRequest } from "ethers";
 import deploymentConfig from "./contract/deploymentConfig.json";
 
 export const MONAD_CHAIN_ID = 10143n;
@@ -12,6 +12,7 @@ type StoredSession = {
   expiresAt: number;
   pending?: { hash: string; purpose: string; startedAt: number; nonce: number };
   activeRoomId?: string;
+  lastReceiptBlock?: number;
 };
 
 export type PublicPlaySession = {
@@ -24,21 +25,31 @@ export type PublicPlaySession = {
 
 let writeInFlight = false;
 
-function readStoredSession(): StoredSession | null {
+function readSessionRecord(): StoredSession | null {
   const raw = sessionStorage.getItem(SESSION_KEY);
   if (!raw) return null;
   try {
     const stored = JSON.parse(raw) as StoredSession;
-    if (!stored.privateKey || !Number.isFinite(stored.expiresAt)) throw new Error("invalid session");
+    if (!Number.isFinite(stored.expiresAt) || (Date.now() < stored.expiresAt && !stored.privateKey)) throw new Error("invalid session");
     if (Date.now() >= stored.expiresAt) {
-      sessionStorage.removeItem(SESSION_KEY);
-      return null;
+      // Retain only non-secret recovery metadata so an active room identity and
+      // pending transaction hash survive expiry. The private key is erased.
+      if (stored.privateKey) {
+        stored.privateKey = "";
+        saveStoredSession(stored);
+      }
     }
     return stored;
   } catch {
     sessionStorage.removeItem(SESSION_KEY);
     return null;
   }
+}
+
+function readStoredSession(): StoredSession | null {
+  const stored = readSessionRecord();
+  if (!stored?.privateKey || Date.now() >= stored.expiresAt) return null;
+  return stored;
 }
 
 function saveStoredSession(stored: StoredSession) {
@@ -61,6 +72,9 @@ export function restorePlaySession(): PublicPlaySession | null {
 /** Called only by the explicit user-consent action; never call during render. */
 export function createPlaySessionAfterConsent(consented: boolean): PublicPlaySession {
   if (!consented) throw new Error("Persetujuan wallet bermain belum diberikan.");
+  const previous = readSessionRecord();
+  if (previous?.activeRoomId) throw new Error("Wallet lama terikat ke room aktif/tersimpan. Sesi baru diblokir agar identitas pemain tidak berganti.");
+  if (previous?.pending) throw new Error(`Periksa transaksi pending ${previous.pending.hash} sebelum membuat wallet baru.`);
   if (restorePlaySession()) throw new Error("Sesi wallet bermain yang masih berlaku sudah ada di tab ini.");
   const now = Date.now();
   const wallet = Wallet.createRandom();
@@ -109,10 +123,12 @@ export async function sendAllowedContractTransaction(
   populate: (signer: Wallet) => Promise<TransactionRequest>,
   purpose: string,
   onHash: (hash: string) => void,
-  refreshSnapshotAfterReceipt: () => Promise<void>,
+  refreshSnapshotAfterReceipt: (receipt: TransactionReceipt) => Promise<void>,
+  onStatus?: (status: string) => void,
 ) {
   const allowedContractAddress = getConfiguredGameAddress();
   await assertMonadRpc(provider);
+  if ((await provider.getCode(allowedContractAddress)) === "0x") throw new Error("Alamat kontrak allowlist tidak memiliki code pada RPC ini.");
   const stored = readStoredSession();
   if (!stored) throw new Error("Sesi wallet bermain sudah habis. Mode penonton aktif.");
   if (stored.pending) throw new Error(`Transaksi sebelumnya masih perlu diperiksa: ${stored.pending.hash}`);
@@ -125,18 +141,40 @@ export async function sendAllowedContractTransaction(
     if (!tx.to || (await resolveAddress(tx.to)).toLowerCase() !== allowedContractAddress.toLowerCase()) {
       throw new Error("Transaksi diblokir: tujuan bukan kontrak allowlist.");
     }
+    if (tx.value != null && BigInt(tx.value.toString()) !== 0n) {
+      throw new Error("Transaksi game tidak boleh mengirim MON ke kontrak.");
+    }
+    if (tx.from && (await resolveAddress(tx.from)).toLowerCase() !== signer.address.toLowerCase()) {
+      throw new Error("Transaksi diblokir: pengirim bukan wallet bermain aktif.");
+    }
+    let balance = await provider.getBalance(signer.address);
+    if (balance < parseEther("10") && stored.lastReceiptBlock !== undefined) {
+      const targetBlock = stored.lastReceiptBlock + 3;
+      const currentBlock = await provider.getBlockNumber();
+      if (currentBlock < targetBlock) {
+        onStatus?.("Menunggu tiga blok sejak aksi sebelumnya karena saldo wallet di bawah 10 MON…");
+        await provider.waitForBlock(targetBlock);
+        balance = await provider.getBalance(signer.address);
+      }
+    }
     const nonce = await provider.getTransactionCount(signer.address, "pending");
-    const balance = await provider.getBalance(signer.address);
-    const feeData = await provider.getFeeData();
-    const feePerGas = feeData.maxFeePerGas ?? feeData.gasPrice;
-    if (feePerGas === null) throw new Error("RPC belum memberikan data fee.");
     const gasLimit = await provider.estimateGas({ ...tx, from: signer.address });
-    const maximumFee = gasLimit * feePerGas;
+    // Populate current fee fields after any reserve-related wait, then check the
+    // same gasLimit and fee cap that will be signed and broadcast.
+    const prepared = await signer.populateTransaction({ ...tx, nonce, gasLimit });
+    const feePerGas = prepared.maxFeePerGas ?? prepared.gasPrice;
+    if (feePerGas === undefined || feePerGas === null) throw new Error("RPC belum memberikan fee untuk transaksi.");
+    const maximumFee = gasLimit * BigInt(feePerGas.toString()) + BigInt((prepared.value ?? 0n).toString());
+    balance = await provider.getBalance(signer.address);
     if (balance < maximumFee) throw new Error("Saldo MON testnet tidak cukup untuk estimasi aksi ini.");
+
+    const stillActive = readStoredSession();
+    if (!stillActive || new Wallet(stillActive.privateKey).address.toLowerCase() !== signer.address.toLowerCase()) {
+      throw new Error("Sesi wallet habis sebelum transaksi ditandatangani. Aksi diblokir.");
+    }
 
     // Persist a deterministic hash before broadcast. If the RPC drops its response
     // after accepting the raw transaction, the UI still has the hash to reconcile.
-    const prepared = await signer.populateTransaction({ ...tx, nonce, gasLimit });
     const rawTransaction = await signer.signTransaction(prepared);
     const hash = keccak256(rawTransaction);
     stored.pending = { hash, purpose, startedAt: Date.now(), nonce };
@@ -145,9 +183,10 @@ export async function sendAllowedContractTransaction(
     await provider.broadcastTransaction(rawTransaction);
     const receipt = await provider.waitForTransaction(hash);
     if (!receipt) throw new Error(`Receipt belum tersedia. Periksa transaksi ${hash}; jangan kirim ulang.`);
-    await refreshSnapshotAfterReceipt();
+    await refreshSnapshotAfterReceipt(receipt);
     const latest = readStoredSession();
     if (latest?.pending?.hash === hash) {
+      latest.lastReceiptBlock = receipt.blockNumber;
       delete latest.pending;
       saveStoredSession(latest);
     }
@@ -159,13 +198,14 @@ export async function sendAllowedContractTransaction(
 }
 
 export async function inspectPendingTransaction(provider: JsonRpcProvider, refreshSnapshotAfterReceipt?: () => Promise<void>) {
-  const stored = readStoredSession();
+  const stored = readSessionRecord();
   const pending = stored?.pending;
   if (!stored || !pending) return { pending: null, receipt: null };
   await assertMonadRpc(provider);
   const receipt = await provider.getTransactionReceipt(pending.hash);
   if (receipt && refreshSnapshotAfterReceipt) await refreshSnapshotAfterReceipt();
   if (receipt && refreshSnapshotAfterReceipt && stored.pending?.hash === pending.hash) {
+    stored.lastReceiptBlock = receipt.blockNumber;
     delete stored.pending;
     saveStoredSession(stored);
   }
@@ -173,5 +213,9 @@ export async function inspectPendingTransaction(provider: JsonRpcProvider, refre
 }
 
 export function getStoredPendingTransaction() {
-  return readStoredSession()?.pending ?? null;
+  return readSessionRecord()?.pending ?? null;
+}
+
+export function getStoredSessionExpiry() {
+  return readSessionRecord()?.expiresAt ?? null;
 }

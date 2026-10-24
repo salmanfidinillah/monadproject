@@ -1,5 +1,26 @@
 # Hasil pengujian
 
+## Route gameplay on-chain lokal — 24 Oktober 2026 WIB
+
+| Pemeriksaan aktual | Hasil |
+|---|---|
+| `npm run build` (compile/export artifact, TypeScript, Vite) | LULUS; 178 modules transformed, alamat artifact cocok deployment record |
+| `npm run contracts:test` | LULUS; 23 tes (termasuk aturan kontrak dan deployment verifier lokal) |
+| `npm run deployment:test` | LULUS; 15 tes pemulihan |
+| `npx wrangler deploy --dry-run --config wrangler.jsonc` | LULUS; membaca 18 aset lokal, tanpa deploy |
+| `npm run deployment:verify -- 0x2ea47703572772f2f32ccb65421b921ebf728b62008fc41c0340d8deb879ed82` | LULUS; receipt, bytecode, alamat, blok/view diperiksa ulang di Monad RPC. Source explorer belum diverifikasi. |
+| `git diff --check` | LULUS sebelum perubahan dokumentasi akhir; ulangi sebelum commit |
+| Deploy final `npm run deploy` | LULUS; Worker `bom-oper`, URL `https://bom-oper.salmansegaf52.workers.dev`, version `dc4678cf-4b64-4904-bd43-aa6bb4540acf` |
+| HTTP GET `/`, `/play`, `/play?room=1`, `/assets/LiveGame-CdtcwdXg.js` | Semua HTTP 200; verifikasi aset/SPA saja |
+| Browser Chrome publik `/play` Opening | LULUS observasi; label Monad Testnet, aturan, CTA tampil; tidak meminta wallet otomatis |
+| Browser Chrome klik “Mulai main” | LULUS observasi Lobby; status wallet belum siap dan tombol transaksi disabled, tanpa popup wallet |
+| UI `/play?room=1` pada RPC publik | Room tidak ada (`UnknownRoom`); UI menampilkan error room tak tersedia; hanya pembacaan, tidak ada transaksi. Room ID berikutnya pada kontrak saat ini masih 1. |
+| Create/join/start/pass/settle dengan wallet berbeda | BELUM DIUJI; tidak ada tx/receipt game |
+| Reload saat transaksi pending, saldo rendah dan batas wallet | Sebagian logika telah dibangun; uji live belum dilakukan |
+| Browser lain/perangkat HP/reduced motion final | BELUM DIUJI pada perangkat terpisah |
+
+Perubahan ini menghubungkan `/play` ke kontrak deployed, namun pengujian kontrak lokal dan HTTP 200 tidak membuktikan transaksi atau ronde publik. Deployment Worker berhasil tetapi acceptance MVP masih menunggu dua wallet dan receipt game.
+
 ## Hardening pending wallet bermain — 24 Oktober 2026 WIB
 
 | Pemeriksaan aktual | Hasil |

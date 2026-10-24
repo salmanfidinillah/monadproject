@@ -1,5 +1,15 @@
 # Rundown enam jam dan checklist
 
+## Kelanjutan terbaru sampai Prompt 8 — 24 Oktober 2026 WIB
+
+- [x] Prompt 5 implementasi lokal: sesi EOA 10 menit, biaya/gas diperiksa saat aksi, transaksi ditandatangani lokal dan hash disimpan sebelum broadcast, receipt/pemulihan, room aktif mengikat identitas.
+- [x] Prompt 6 implementasi lokal: route `/play` membuka Opening/Lobby/Arena/Hasil dari snapshot Monad, create/join/start/pass/finalisasi, tautan room, poll dan refresh, error yang dapat dipahami, gerak oper setelah receipt/snapshot, reduced motion.
+- [x] Build, 23 tes Hardhat, 15 tes recovery, Wrangler dry-run, dan verifikasi ulang kontrak publik lulus. Bukti rinci di `TEST-RESULTS.md`.
+- [ ] Prompt 5–7 belum lulus acceptance: belum ada dua wallet berbeda yang memainkan ronde sampai `Finished`; kasus gagal dan receipt oper/settle belum diuji publik.
+- [x] Prompt 8 build/deploy frontend ke Worker yang sama; versi `dc4678cf-4b64-4904-bd43-aa6bb4540acf`. URL `/`, `/play`, `/play?room=1`, dan bundle gameplay merespons HTTP 200.
+- [ ] Prompt 8 ronde final dua pemain, operan dan finalisasi masih belum terbukti. Jangan menyatakan MVP selesai sebelum receipt nyata.
+- [ ] Fallback 60 detik, pemeriksaan browser HP terpisah, dan bukti video belum dilakukan. Jangan jalankan Prompt 9.
+
 ## Kelanjutan hardening wallet dan inspeksi Figma — 24 Oktober 2026 WIB
 
 - [x] Inspeksi visual frame Opening, Lobby, Arena desktop, Hasil, dan Arena mobile pada file Figma yang disambungkan pengguna. Tidak mengedit file desain.

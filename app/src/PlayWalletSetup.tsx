@@ -14,9 +14,6 @@ type InjectedWallet = { request: (args: { method: string; params?: unknown[] }) 
 declare global { interface Window { ethereum?: InjectedWallet } }
 
 const EXPLORER_URL = "https://testnet.monadvision.com";
-const GAS_BASELINE = { create: 142383n, join: 75827n, start: 83139n, normalPass: 60105n, hotPass: 68881n, settle: 87740n };
-const BUDGET_GAS = GAS_BASELINE.create + GAS_BASELINE.join + GAS_BASELINE.start + 4n * GAS_BASELINE.normalPass + GAS_BASELINE.hotPass + GAS_BASELINE.settle;
-
 function mon(value: bigint | null) {
   if (value === null) return "Belum diperiksa";
   return `${Number(formatEther(value)).toFixed(6)} MON`;
@@ -29,7 +26,7 @@ export default function PlayWalletSetup() {
   const [session, setSession] = useState<PublicPlaySession | null>(null);
   const [consented, setConsented] = useState(false);
   const [balance, setBalance] = useState<bigint | null>(null);
-  const [budget, setBudget] = useState<bigint | null>(null);
+  const [feePerGas, setFeePerGas] = useState<bigint | null>(null);
   const [walletAddress, setWalletAddress] = useState("");
   const [amount, setAmount] = useState("");
   const [status, setStatus] = useState("Wallet tidak dibuat sampai kamu menekan tombol persetujuan.");
@@ -41,7 +38,7 @@ export default function PlayWalletSetup() {
   useEffect(() => {
     setSession(restorePlaySession());
     const timer = window.setInterval(() => setDeadlineNow(Date.now()), 1000);
-    return () => { window.clearInterval(timer); void rpc.destroy(); };
+    return () => { window.clearInterval(timer); };
   }, [rpc]);
 
   const expired = session !== null && deadlineNow >= session.expiresAt;
@@ -75,8 +72,8 @@ export default function PlayWalletSetup() {
       if (network.chainId !== MONAD_CHAIN_ID) throw new Error("RPC bukan Monad Testnet (10143).");
       const perGas = fee.maxFeePerGas ?? fee.gasPrice;
       if (perGas === null) throw new Error("RPC tidak memberi fee saat ini.");
-      setBudget(BUDGET_GAS * perGas);
-      setStatus("Anggaran indikatif dihitung dari gas receipt simulasi dan fee RPC saat ini.");
+      setFeePerGas(perGas);
+      setStatus("Fee RPC terbaru dibaca. Estimasi gas setiap aksi dilakukan lagi sebelum transaksi dikirim.");
     } catch (cause) {
       setError(cause instanceof Error ? cause.message : "Fee RPC tidak dapat dibaca.");
     } finally { setBusy(false); }
@@ -123,10 +120,12 @@ export default function PlayWalletSetup() {
       setStatus(`Transfer menunggu receipt: ${tx.hash}`);
       const receipt = await tx.wait();
       if (!receipt || receipt.status !== 1) throw new Error(`Transfer tidak sukses. Hash: ${tx.hash}`);
+      setStatus(`Transfer sukses pada blok ${receipt.blockNumber}. Menunggu state funding matang di 3 blok Monad…`);
+      await provider.waitForBlock(receipt.blockNumber + 3);
       const refreshed = await rpc.getBalance(activeSession.address);
       setBalance(refreshed);
       setAmount("");
-      setStatus(`Transfer sukses pada blok ${receipt.blockNumber}. Saldo bermain dibaca ulang dari RPC.`);
+      setStatus(`Funding matang setelah blok ${receipt.blockNumber + 3}. Saldo dibaca ulang; estimasi tiap aksi tetap diperiksa saat transaksi.`);
     } catch (cause) { setError(cause instanceof Error ? cause.message : "Transfer gagal atau dibatalkan."); }
     finally { setBusy(false); }
   }
@@ -151,8 +150,8 @@ export default function PlayWalletSetup() {
     finally { setBusy(false); }
   }
 
-  const estimatedSingleAction = budget === null ? null : (budget * 60105n) / BUDGET_GAS;
-  const fundedForEntry = balance !== null && estimatedSingleAction !== null && balance >= estimatedSingleAction;
+  const fundedForEntry = balance !== null && balance > 0n;
+  const feeGwei = feePerGas === null ? null : Number(formatEther(feePerGas)) * 1e9;
 
   return (
     <main className="wallet-shell">
@@ -183,7 +182,7 @@ export default function PlayWalletSetup() {
               <div><dt>Alamat publik</dt><dd><code>{activeSession.address}</code></dd></div>
               <div><dt>Saldo MON</dt><dd>{mon(balance)}</dd></div>
               <div><dt>Sisa sesi</dt><dd>{Math.max(0, Math.ceil((activeSession.expiresAt - deadlineNow) / 1000))} detik</dd></div>
-              <div><dt>Kesiapan masuk</dt><dd>{fundedForEntry ? "Saldo melewati estimasi satu oper biasa" : "Isi saldo dan periksa ulang sebelum join"}</dd></div>
+              <div><dt>Kesiapan masuk</dt><dd>{fundedForEntry ? "Saldo terdeteksi; biaya gas diperiksa lagi tiap aksi" : "Isi saldo lalu periksa ulang sebelum join"}</dd></div>
             </dl>
             <button className="setup-button secondary" type="button" onClick={copyAddress}>Salin alamat untuk didanai manual</button>
             {activeSession.pending && <div className="wallet-warning"><p>Transaksi pending perlu diperiksa: <a href={`${EXPLORER_URL}/tx/${activeSession.pending.hash}`} target="_blank" rel="noreferrer">{activeSession.pending.hash}</a>. Jangan kirim ulang otomatis.</p><button className="setup-button secondary" type="button" onClick={checkPendingTransaction} disabled={busy}>Periksa receipt tersimpan</button>{pendingCheck && <p>{pendingCheck}</p>}</div>}
@@ -205,13 +204,14 @@ export default function PlayWalletSetup() {
       </section>
 
       <section className="wallet-card budget-card" aria-labelledby="budget-title">
-        <p className="eyebrow">DASAR PERKIRAAN GAS</p><h2 id="budget-title">Kamu yang tentukan batas isi.</h2>
-        <p className="wallet-copy">Model contoh: satu create, satu join, satu start, empat oper biasa, satu oper panas, dan satu settle; gas action memakai receipt Hardhat lokal. Biaya memakai fee RPC saat diperiksa. Simulasi lokal bukan biaya aktual testnet dan jumlah ini tidak menjamin cukup. Tidak termasuk deployment, transaksi gagal, dan fluktuasi fee.</p>
-        <p className="wallet-budget">{mon(budget)}</p>
-        <button className="setup-button secondary" type="button" onClick={refreshBudget} disabled={busy}>{busy ? "Memeriksa RPC…" : "Periksa fee RPC & hitung contoh"}</button>
-        {budget !== null && <p className="wallet-copy">Gas baseline {BUDGET_GAS.toLocaleString()} × fee RPC; pembanding satu oper biasa kira-kira {mon(estimatedSingleAction)}.</p>}
+        <p className="eyebrow">PERKIRAAN BIAYA TRANSAKSI</p><h2 id="budget-title">Kamu yang tentukan batas isi.</h2>
+        <p className="wallet-copy">Monad mengenakan gas berdasarkan gasLimit, bukan gas yang benar-benar terpakai. Setiap aksi game memperkirakan gasLimit dan fee saat itu sebelum ditandatangani; saldo dan fee dapat berubah. Jangan menganggap contoh gas Hardhat sebagai biaya testnet yang pasti.</p>
+        <p className="wallet-budget">{feeGwei === null ? "Belum diperiksa" : `${feeGwei.toFixed(2)} MON-gwei / gas`}</p>
+        <button className="setup-button secondary" type="button" onClick={refreshBudget} disabled={busy}>{busy ? "Memeriksa RPC…" : "Periksa fee RPC"}</button>
+        {feePerGas !== null && <p className="wallet-copy">Batas atas fee per aksi dihitung dari gasLimit hasil eth_estimateGas × fee RPC. Jumlah indikatif, bukan jaminan cukup. Saldo di bawah reserve 10 MON dapat dibatasi satu transaksi tiap tiga blok.</p>}
       </section>
 
+      {activeSession && <a className="setup-button" href="/play">Masuk ke game BOM OPER</a>}
       {error && <p className="setup-error" role="alert">{error}</p>}
       <p className="wallet-status" role="status">{expired ? "Sesi habis. Mode penonton aktif; jangan buat identitas baru untuk room aktif." : status}</p>
       <footer className="setup-footer"><span>RPC publik: {MONAD_RPC_URL}</span><a href={`${EXPLORER_URL}/`} target="_blank" rel="noreferrer">MonadVision Testnet Explorer ↗</a><a href="/">Kembali ke BOM OPER</a></footer>
