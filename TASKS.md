@@ -11,6 +11,13 @@
 
 MVP belum boleh disebut teruji sebelum ronde live dua pemain punya receipt dan hasil kontrak `Finished`. Riwayat di bawah ini mencatat checkpoint sebelumnya; status di atas adalah ringkasan terkini.
 
+## Checkpoint video explainer - 24 Oktober 2026 WIB
+
+- [x] Dibuat video explainer berbahasa Inggris, sekitar 30 detik, 1280×720, dengan voiceover dan tautan unduh dari README.
+- [x] Naskah menjelaskan aturan BOM OPER, Monad sebagai L1 kompatibel EVM dengan eksekusi paralel, dan integrasi testnet yang ada.
+- [x] Status penutup menyatakan receipt ronde multiplayer belum dibuktikan; visual arena/hasil ditandai sebagai konsep desain.
+- [ ] Ronde dua wallet publik, receipt oper/finalisasi, dan status `Finished` tetap perlu dibuktikan terpisah.
+
 ## Checkpoint tampilan repository - 24 Oktober 2026 WIB
 
 - [x] README disusun ulang sebagai halaman pengenalan proyek dengan tautan game live, Figma editable, profil/repository GitHub, LinkedIn, Monad Testnet, kontrak dan panduan main.

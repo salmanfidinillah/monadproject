@@ -1,5 +1,11 @@
 # Keputusan dan perubahan
 
+## 24 Oktober 2026 WIB - video explainer
+
+- Pilihan: buat explainer berbahasa Inggris sekitar 30 detik dengan voiceover, pakai artwork/storyboard Figma yang sudah ada dan beri label bahwa arena/hasil adalah konsep desain.
+- Alasan: pengguna meminta video motion yang menjelaskan BOM OPER dan Monad, lalu menetapkan bahasa Inggris dan durasi 30 detik.
+- Batas bukti: video menerangkan integrasi dan status proyek; bukan rekaman gameplay atau bukti receipt. Penutup menyebut bahwa ronde dua pemain masih memerlukan bukti transaksi publik.
+
 ## 24 Oktober 2026 WIB - satu alur game live
 
 - Pemicu: pengguna meminta MVP yang benar-benar siap dimainkan dan tidak menginginkan simulasi.

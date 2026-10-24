@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>BOM OPER · motion explainer renderer</title>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Lilita+One&family=Nunito:wght@500;700;800;900&display=swap');
+      :root { color-scheme: dark; font-family: Nunito, Arial, sans-serif; background: #15162d; color: #fff2c7; }
+      body { margin: 0; min-height: 100vh; display: grid; place-items: center; padding: 24px; box-sizing: border-box; }
+      main { width: min(100%, 980px); text-align: center; }
+      h1 { font: 42px 'Lilita One', Impact, sans-serif; margin: 0 0 8px; }
+      p { margin: 8px 0 18px; color: #b9c1d7; }
+      canvas { display: block; width: 100%; aspect-ratio: 16 / 9; background: #212346; border-radius: 16px; box-shadow: 0 20px 80px #080917; }
+      #result { width: 100%; margin-top: 18px; border-radius: 12px; }
+      button { border: 0; border-radius: 999px; padding: 14px 24px; margin: 18px 0 8px; color: #212346; background: #ffaf3e; font: 900 16px Nunito, Arial, sans-serif; cursor: pointer; }
+      button:disabled { opacity: .55; cursor: wait; }
+      #status { min-height: 24px; font-size: 14px; color: #91dad9; }
+      video, audio { display: none; }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>BOM OPER · 30-second motion explainer</h1>
+      <p>Local preview renderer. The exported video includes English narration and labels design concepts clearly.</p>
+      <canvas id="video" width="1280" height="720" aria-label="Animated BOM OPER explainer"></canvas>
+      <video id="result" controls playsinline hidden></video>
+      <button id="start">Render video</button>
+      <div id="status" role="status">Ready · 1280 × 720 · 30 seconds · English voiceover</div>
+      <video id="storyboard" src="../design/preview/BOM-OPER-Arcade-Motion.mp4" muted loop playsinline></video>
+    </main>
+    <script type="module" src="renderer.js"></script>
+  </body>
+</html>

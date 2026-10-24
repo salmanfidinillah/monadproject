@@ -1,5 +1,17 @@
 # Hasil pengujian
 
+## Video explainer Inggris - 24 Oktober 2026
+
+| Pemeriksaan aktual | Hasil |
+|---|---|
+| Render browser MediaRecorder | LULUS; WebM 1280×720, voiceover Inggris disertakan; ukuran berkas 8,305,874 byte |
+| Pemutaran video | LULUS observasi di Chrome sampai kartu penutup; player menampilkan 0:29/0:29 (sekitar 30 detik) |
+| Isi visual dan teks | Terlihat intro BOM OPER, aturan oper/hot-pass, penjelasan Monad, Chain ID 10143, alur kontrak/receipt, dan status multiplayer yang jujur. Artwork arena/hasil diberi label konsep desain. |
+| Bukti permainan | Tidak ada transaksi atau receipt game yang dibuat. Video bukan rekaman ronde multiplayer; receipt dua pemain dan `Finished` tetap BELUM DIUJI. |
+| Monad source | Klaim L1, kompatibilitas EVM, dan eksekusi paralel merujuk [dokumentasi resmi Monad](https://docs.monad.xyz/). |
+| Pemeriksaan sumber renderer | `node --check docs/video/renderer.js` dan `node --check docs/video/render-server.mjs` LULUS; `git diff --check` LULUS. |
+| Tes aplikasi | Tidak dijalankan; perubahan tahap ini hanya video/dokumentasi. |
+
 ## Prompt 9 — persiapan, belum submission — 24 Oktober 2026 WIB
 
 Draft pitch dan daftar isian ada di `docs/SUBMISSION-DRAFT.md`. Tidak ada formulir dibuka/dikirim dan belum ada bukti penerimaan. Belum ada video/screenshot ronde live; jangan gunakan simulasi `/prototype` sebagai pengganti bukti gameplay.

@@ -2,6 +2,7 @@
 
 ## Ringkasan terbaru - 24 Oktober 2026 WIB
 
+- Video explainer Inggris sekitar 30 detik tersedia di `docs/video/BOM-OPER-Monad-Explainer.webm`; video memakai konsep desain berlabel dan menyebut bukti ronde multiplayer masih pending.
 - Permintaan terbaru: jadikan aplikasi alur MVP sungguhan tanpa mode permainan simulasi.
 - Implementasi live sudah ada pada `/play`: RPC Monad Testnet chain 10143, alamat kontrak dari record deployment, pembacaan snapshot, dan transaksi create/join/start/pass/settle memakai wallet bermain.
 - Mode `/prototype` dan tautan simulasinya dihapus. Komponen gambar karakter/bom tetap digunakan game live.

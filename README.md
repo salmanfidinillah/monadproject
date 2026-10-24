@@ -22,6 +22,8 @@
 
 > **Status:** aplikasi sudah dipublikasikan dan alur `/play` menggunakan kontrak Monad Testnet. Ronde dua pemain dengan receipt operan dan finalisasi belum dibuktikan, jadi MVP belum dinyatakan lulus uji multiplayer.
 
+**Video explainer (English, ~30 seconds): [watch or download](docs/video/BOM-OPER-Monad-Explainer.webm) · [narration script](docs/video/narration-en.md).** The video uses clearly labeled design concepts; it is not a recording of a completed multiplayer round.
+
 ## Tentang game
 
 BOM OPER adalah party game satu ronde untuk 2–4 pemain. Pemegang bom mengoper ke pemain lain sebelum waktu habis. Oper panas memangkas 3 detik dan tiap pemain dapat memakainya sekali. Saat deadline tercapai, siapa pun dapat meminta kontrak menyelesaikan ronde; pemegang terakhir kalah.
