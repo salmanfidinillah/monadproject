@@ -1,6 +1,6 @@
 # Keputusan dan perubahan
 
-Catatan awal ini berisi keputusan rencana dari pengguna/panduan; belum ada bukti implementasi atau fallback yang diaktifkan.
+Tabel ini memuat keputusan rencana dari pengguna/panduan dan status aktual fondasi. Implementasi game dan fallback belum dijalankan.
 
 | Keputusan rencana | Alasan | Status |
 |---|---|---|
@@ -9,7 +9,7 @@ Catatan awal ini berisi keputusan rencana dari pengguna/panduan; belum ada bukti
 | Frontend statis tanpa backend | Mengurangi komponen yang perlu dibangun/deploy | Direncanakan |
 | Figma sebelum UI, sekitar20menit | Acuan visual konkret dan editable | Diminta pengguna, belum dibuat |
 | Opening + loading nyata sebelum lobby | Sambutan game dan status persiapan yang mudah dipahami; tanpa menambah waktu buatan | Diminta pengguna, belum diimplementasikan |
-| Commit/push tiap prompt bermakna | Riwayat pembangunan nyata dan pemulihan konteks | Diminta pengguna, belum dijalankan |
+| Commit/push tiap prompt bermakna | Riwayat pembangunan nyata dan pemulihan konteks | Diterapkan pada Prompt Induk; checkpoint fondasi terverifikasi |
 | Dokumen sejak awal dan AGENTS sebagai pengarah | Codex di VS Code dapat melanjutkan dengan konteks berkas | Paket dokumen tersedia |
 | EOA sementara testnet/sessionStorage10menit | Mengurangi popup saat demo; kompromi prototipe | Direncanakan, belum diuji |
 | Fallback ekstensi+60detik | Jika wallet bermain belum stabil jam ketiga | Belum diaktifkan |
@@ -27,3 +27,5 @@ Setiap perubahan berikutnya mencatat waktu aktual, pemicu, pilihan, alasan, damp
 - Bukti: STATUS.md dan TEST-RESULTS.md mencatat perintah serta hasil pemeriksaan aktual; SHA commit dilaporkan di chat sesudah commit dijalankan.
 
 Pembaruan: pengguna memilih salmanfidinillah/monadproject melalui URL repository. Metadata serta git ls-remote membuktikan remote awal kosong dan default branch main; origin lokal ditetapkan ke URL yang diberikan. Tidak ada perubahan pilihan stack atau aturan permainan.
+
+Hasil: pada 24 Oktober 2026 pukul 09.19 WIB, push fondasi berhasil dan SHA lokal cocok dengan origin/main. Bukti commit yang sudah terbit tersimpan di STATUS.md dan TEST-RESULTS.md. Prompt Induk selesai; menunggu Prompt 0 sesuai urutan yang diminta.

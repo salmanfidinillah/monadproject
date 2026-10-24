@@ -1,22 +1,22 @@
 # Status aktual BOM OPER
 
-## Keadaan awal
+## Keadaan aktual
 
-**PROMPT INDUK DIKERJAKAN; GAME BELUM DIBANGUN.** Dokumen fondasi diperiksa dan Git lokal diinisialisasi pada 24 Oktober 2026 WIB. Repository tujuan sudah diberikan dan diperiksa; commit/push masih menunggu pemeriksaan final. Checkbox, prompt, dan desain yang direncanakan bukan bukti implementasi.
+**PROMPT INDUK SELESAI; GAME BELUM DIBANGUN.** Dokumen fondasi diperiksa, Git lokal disiapkan, dan checkpoint fondasi berhasil di-push serta diverifikasi terhadap remote pada 24 Oktober 2026 pukul 09.19 WIB. Desain, kode game, dan deployment belum dikerjakan.
 
 | Hal | Status/nilai aktual |
 |---|---|
-| Tahap terakhir selesai | Pemeriksaan fondasi lokal Prompt Induk; tahap Induk keseluruhan belum selesai |
-| Tahap berikutnya | Commit dan push fondasi, verifikasi SHA; lalu tunggu Prompt 0 |
+| Tahap terakhir selesai | Prompt Induk: dokumen, fondasi Git, commit/push dan verifikasi SHA checkpoint fondasi |
+| Tahap berikutnya | Tunggu Prompt 0: desain Figma editable sesuai brief |
 | Repository GitHub tujuan | https://github.com/salmanfidinillah/monadproject |
 | Branch pembangunan | main; Git lokal diinisialisasi dan branch diperiksa |
 | Akun GitHub terhubung | salmanfidinillah; profil berhasil dibaca melalui plugin GitHub |
-| Remote origin / izin push | origin = https://github.com/salmanfidinillah/monadproject.git; plugin melaporkan permissions.push = true; Git push aktual belum diuji |
-| Push fondasi/game | BELUM DILAKUKAN; remote sudah siap untuk checkpoint awal |
-| Checkpoint lokal | Dokumen dan .gitignore disiapkan pada main; hasil commit serta SHA dilaporkan di chat setelah perintah dijalankan |
+| Remote origin / izin push | origin = https://github.com/salmanfidinillah/monadproject.git; Git push aktual berhasil |
+| Push fondasi/game | Fondasi BERHASIL di-push dan SHA diverifikasi; kode game belum ada |
+| Checkpoint fondasi terverifikasi | fddf27fcf121c0cc8cca9b26526f1c65137a1c25; lihat bukti di bawah. SHA commit pembaruan catatan ini dilaporkan di chat setelah commit/push |
 | Kode frontend/kontrak | BELUM ADA dalam paket ini |
 | Desain Figma URL dan frame | BELUM ADA |
-| Build / tes lokal | BELUM DIJALANKAN |
+| Build / tes lokal | Pemeriksaan dokumen/Git lulus; build dan tes game BELUM DIJALANKAN |
 | URL publik game | BELUM ADA |
 | Chain target rencana | Monad Testnet 10143; verifikasi jaringan saat pelaksanaan |
 | Alamat kontrak aktual | BELUM ADA |
@@ -50,3 +50,12 @@ Isi waktu aktual, tahap, perubahan, perintah/verifikasi yang benar-benar dijalan
 - Berikutnya: setelah tujuan diterima, periksa repository dan akses, pasang origin yang benar, push main, bandingkan git rev-parse HEAD dengan git ls-remote origin refs/heads/main, lalu laporkan hasil. Prompt 0 menunggu instruksi pengguna setelah fondasi selesai.
 
 Pembaruan pada tahap yang sama: pengguna memberikan https://github.com/salmanfidinillah/monadproject.git. Metadata plugin membuktikan repository publik milik akun tersebut, ukuran awal 0, default branch main, serta permissions.push = true. git ls-remote berhasil dengan keluaran ref kosong; origin sudah dipasang ke URL tersebut. Commit/push dan verifikasi SHA dilakukan sesudah pemeriksaan final, dengan hasil dicatat setelah eksekusi.
+
+### 24 Oktober 2026, 09.19 WIB — bukti checkpoint GitHub
+
+- Commit fondasi: [fddf27fcf121c0cc8cca9b26526f1c65137a1c25](https://github.com/salmanfidinillah/monadproject/commit/fddf27fcf121c0cc8cca9b26526f1c65137a1c25), pesan docs: define bomb oper MVP and delivery plan, branch main.
+- git push -u origin main berhasil membuat main pada origin dan memasang tracking origin/main.
+- git rev-parse HEAD dan git ls-remote origin refs/heads/main sama-sama menghasilkan fddf27fcf121c0cc8cca9b26526f1c65137a1c25; pencocokan skrip lulus.
+- git status --short --branch setelah push hanya menampilkan main...origin/main; working tree bersih pada checkpoint tersebut.
+- Catatan hasil ini ditulis sesudah bukti tersedia, dalam commit dokumentasi berikutnya. SHA commit yang memuat pembaruan ini dan verifikasi remote final dilaporkan di chat, bukan ditulis ke commit yang sama.
+- Tidak ada hambatan Prompt Induk yang tersisa. Berikutnya menunggu Prompt 0; belum membuat desain atau kode game.

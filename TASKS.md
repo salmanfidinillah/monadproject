@@ -1,6 +1,6 @@
 # Rundown enam jam dan checklist
 
-Semua kotak tahap awalnya kosong: belum ada kode atau pengujian game. Progres fondasi lokal dicatat di bawah; Prompt Induk belum lulus sebelum push diverifikasi. Centang hanya setelah kriteria tahap terbukti. Jadwal relatif; contoh waktu 12.00–18.00 bukan konfirmasi panitia. Checkpoint GitHub 1–2 menit termasuk dalam slot yang sama.
+Prompt Induk selesai dengan checkpoint GitHub terverifikasi; belum ada kode atau pengujian game. Tahap 0–9 masih belum dijalankan. Centang hanya setelah kriteria tahap terbukti. Jadwal relatif; contoh waktu 12.00–18.00 bukan konfirmasi panitia. Checkpoint GitHub 1–2 menit termasuk dalam slot yang sama.
 
 | Tahap | Slot | Syarat lulus |
 |---|---|---|
@@ -15,7 +15,7 @@ Semua kotak tahap awalnya kosong: belum ada kode atau pengujian game. Progres fo
 | 8 | 05:00–05:30 | Build final, ronde final, README dan bukti demo |
 | 9 | 05:30–06:00 | Presentasi, submission, dan bukti penerimaan |
 
-- [ ] Induk: baca/periksa dokumen, Git/remote tujuan, commit/push fondasi.
+- [x] Induk: baca/periksa dokumen, Git/remote tujuan, commit/push fondasi; SHA checkpoint cocok dengan origin/main (bukti di STATUS.md).
 - [ ] 0: Figma Opening/Lobby/Arena/Hasil desktop + Arena mobile, anotasi opening mobile/loading, URL/frame/tokens/preview.
 - [ ] 1: app scaffold, lockfile, .gitignore, .env.example, SPA hosting, URL awal.
 - [ ] 2: kontrak state machine/event/snapshot, expectedTurn, panas, deadline.
@@ -36,5 +36,5 @@ Pada tiap tahap: perbarui STATUS/tes, cek diff/rahasia, commit/push, verifikasi 
 - [x] Tambahkan .gitignore; periksa tautan dokumen, code fence, aturan ignore, dan pola kredensial (hasil aktual: TEST-RESULTS.md).
 - [x] Periksa koneksi profil GitHub: akun terhubung salmanfidinillah.
 - [x] Tetapkan repository tujuan dari jawaban pengguna: salmanfidinillah/monadproject; metadata plugin melaporkan izin push, origin dipasang dan git ls-remote berhasil (remote awal kosong).
-- [ ] Selesaikan checkpoint commit/push dan buktikan SHA HEAD lokal sama dengan refs/heads/main di origin; hasil commit lokal dilaporkan di chat.
-- [ ] Setelah fondasi lengkap, tunggu Prompt 0 untuk desain Figma.
+- [x] Commit/push fondasi berhasil; SHA fddf27fcf121c0cc8cca9b26526f1c65137a1c25 sama dengan refs/heads/main di origin, diverifikasi 24 Oktober 2026 pukul 09.19 WIB.
+- [x] Fondasi lengkap; menunggu Prompt 0 untuk desain Figma.
