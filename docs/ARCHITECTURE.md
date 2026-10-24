@@ -1,6 +1,6 @@
-# Arsitektur rencana
+# Arsitektur dan status aktual
 
-Kontrak BomOper telah dibuat lokal pada Tahap 2; frontend game dan deployment kontrak belum ada. Aturan kanonis: SPEC.md. Versi dependency, perintah, jaringan dan deployment aktual harus diverifikasi saat pembangunan; jangan mengisi bukti dari perkiraan.
+`/play` adalah alur permainan live: React/Vite memakai ethers v6 untuk membaca dan mengirim transaksi ke kontrak BomOper di Monad Testnet. Room, holder, giliran, deadline, jatah oper panas, dan hasil resmi berasal dari snapshot kontrak. Tidak ada mode simulasi yang disajikan di aplikasi. Aturan kanonis: `SPEC.md`. Deployment kontrak dibuktikan di `deployments/10143.json`; ronde multiplayer publik masih perlu diuji.
 
 ## Komponen dan struktur
 

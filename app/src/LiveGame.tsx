@@ -1,6 +1,6 @@
 import { Contract, Interface, JsonRpcProvider, formatEther, getAddress, type InterfaceAbi } from "ethers";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { Character, Bomb, type ArcadeColor } from "./GamePreview";
+import { Character, Bomb, type ArcadeColor } from "./GameArt";
 import artifact from "./contract/BomOper.artifact.json";
 import {
   MONAD_RPC_URL,
@@ -14,7 +14,7 @@ import {
   updateActiveRoom,
   type PublicPlaySession,
 } from "./temporaryWallet";
-import "./game-preview.css";
+import "./game-art.css";
 import "./live-game.css";
 
 type RoomSnapshot = {
@@ -336,7 +336,6 @@ export default function LiveGame() {
       <div className="live-wallet-status"><div><strong>{activeSession ? `WALLET · ${compact(activeSession.address)}` : expired || sessionExpired ? "SESI HABIS · MODE PENONTON" : "WALLET BELUM SIAP"}</strong><span>{activeSession ? `Saldo ${mono(balance)}` : expired || sessionExpired ? "Baca room boleh; aksi tetap berhenti. Selesaikan room aktif tanpa mengganti identitas." : "Sesi sementara berlaku 10 menit dan butuh MON untuk gas."}</span></div>{!activeSession && !sessionExpired && <a className="arcade-button button-violet" href="/wallet">Siapkan wallet</a>}</div>
       <div className="live-lobby-grid"><section className="live-card"><h2>Buat room</h2><label>Jumlah pemain<select value={capacity} onChange={(e) => setCapacity(Number(e.target.value))}><option value={2}>2 pemain</option><option value={3}>3 pemain</option><option value={4}>4 pemain</option></select></label><label>Durasi<select value={duration} onChange={(e) => setDuration(Number(e.target.value))}><option value={30}>30 detik</option><option value={60}>60 detik</option></select></label><button className="arcade-button button-orange" disabled={!activeSession || busy || Boolean(pending)} onClick={() => void createRoom()}>Buat room on-chain</button></section>
         <section className="live-card"><h2>Gabung room</h2><label>ID room<input inputMode="numeric" value={joinId} onChange={(e) => setJoinId(e.target.value)} placeholder="Contoh: 7" /></label><button className="arcade-button button-cyan" disabled={!joinId || busy || (Boolean(pending) && Boolean(activeSession))} onClick={() => activeSession ? void joinRoom() : void viewRoom()}>{activeSession ? "Gabung dengan wallet ini" : "Lihat room"}</button><p>Room dari tautan dapat dibuka sebagai penonton tanpa membuat wallet.</p></section></div>
-      <a className="live-simulation-link" href="/prototype">Buka pratinjau simulasi</a>
     </section>}
 
     {screen === "room" && <section className="live-room">

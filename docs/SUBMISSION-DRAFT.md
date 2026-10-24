@@ -35,7 +35,7 @@ Kami memilih Monad karena game ini membutuhkan banyak aksi on-chain kecil yang b
 
 Sekarang kami akan menunjukkan dua wallet berbeda membuat dan bergabung ke room, mengoper bom, lalu memfinalisasi hasil. Pemegang dan hasil akhir akan kami cocokkan dengan receipt MonadVision. Terima kasih.”
 
-**Catatan pemakaian:** paragraf demo terakhir hanya dibacakan setelah ronde nyata dua pemain berhasil direkam. Sebelum itu, sebut demo belum lengkap; jangan tampilkan simulasi `/prototype` sebagai gameplay live.
+**Catatan pemakaian:** paragraf demo terakhir hanya dibacakan setelah ronde nyata dua pemain berhasil direkam. Sebelum itu, sebut demo belum lengkap. Aplikasi hanya menampilkan alur gameplay live; receipt ronde tetap harus dikumpulkan.
 
 ## Short English pitch
 

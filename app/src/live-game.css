@@ -21,7 +21,6 @@
 .live-card label { display: grid; gap: 6px; font-weight: 900; }
 .live-card select, .live-card input { min-height: 48px; width: 100%; padding: 9px 12px; border: 2px solid var(--ink); border-radius: 12px; background: white; color: var(--ink); font: 700 16px "Nunito", sans-serif; }
 .live-card .arcade-button { width: 100%; }.live-card p { margin: 0; font-size: 12px; }
-.live-simulation-link { display: inline-block; margin: 16px 0; color: var(--ink); font-weight: 900; }
 .live-room-meta { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; margin: 14px auto 22px; }
 .live-room-meta span { padding: 7px 12px; border: 2px solid var(--ink); border-radius: 999px; background: var(--cream); font-size: 11px; font-weight: 1000; }
 .live-timer { margin: 12px auto -8px; }.live-timer small { color: var(--ink); }.live-timer.timer-danger { color: #c33b4f; }

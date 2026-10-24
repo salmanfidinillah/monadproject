@@ -347,3 +347,21 @@ Input publik dari `C:\Users\acer\Downloads\10143.json`; diperlakukan sebagai dat
 | `git diff --check` | LULUS sesudah perubahan konfigurasi; pemeriksaan final dokumen dilakukan sebelum checkpoint. |
 
 Status explorer source: **belum diverifikasi**. `verified:false` pada record menerangkan status source explorer; receipt dan kecocokan bytecode/view sudah diverifikasi. Tidak ada transaksi baru yang dikirim oleh pemeriksaan ini. Gameplay kontrak dan uji wallet/multiplayer belum dilakukan.
+
+## Hapus mode permainan simulasi dan publikasikan alur live - 24 Oktober 2026
+
+| Pemeriksaan/perintah aktual | Hasil |
+|---|---|
+| `npm run build` | LULUS; TypeScript/Vite production build menghasilkan 178 modul. Tidak ada chunk `GamePreview`; game live tetap ada pada chunk `LiveGame`. |
+| `npm run contracts:test` | LULUS: 23 tes aturan kontrak. Seluruh tes berjalan di simulasi lokal; bukan transaksi multiplayer publik. |
+| `npm run deployment:test` | LULUS: 15 tes jurnal/pemulihan. |
+| `npx wrangler deploy --dry-run --config wrangler.jsonc` | LULUS; Wrangler 4.152.0 memaketkan 16 aset. |
+| `npx wrangler whoami` dan `npx wrangler deployments list --name bom-oper` | LULUS; akun yang sama terautentikasi dan Worker tujuan `bom-oper` sudah memiliki deployment sebelumnya. |
+| `npm run deploy` | LULUS; dipublikasikan ke Worker `bom-oper`, URL `https://bom-oper.salmansegaf52.workers.dev`, version `f8fd2923-5e65-44f7-9c1c-ecfc066fd6e4`. |
+| HTTP GET `/`, `/play`, `/play?room=1`, `/wallet`, `/prototype` | Semuanya HTTP 200. `/prototype` mendapat SPA fallback ke landing; tidak ada lagi route/komponen game simulasi. |
+| Pemeriksaan HTML dan bundle publik | LULUS; chunk `LiveGame` terdaftar, string/rute `/prototype` dan chunk `GamePreview` tidak ditemukan. |
+| `git diff --check` | LULUS sebelum checkpoint. |
+| RPC Monad Testnet read-only | Chain ID 10143, code kontrak 4.148 byte, receipt deploy status sukses, dan `nextRoomId() = 1`. Tidak mengirim transaksi. |
+| Dua wallet, receipt operan/finalisasi, QA browser HP | BELUM DIUJI; memerlukan dua pemain/wallet terpisah, saldo MON testnet, dan persetujuan transaksi. |
+
+Perubahan produk: `/play` satu-satunya alur permainan. Landing/README mengarahkan pemain ke live gameplay; README memberi langkah wallet, funding, room, oper, dan finalisasi. Penghapusan mode simulasi tidak membuktikan readiness multiplayer: deployment kontrak saat ini belum memiliki room, dan belum ada receipt gameplay.

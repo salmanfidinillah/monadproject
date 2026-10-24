@@ -1,5 +1,12 @@
 # Keputusan dan perubahan
 
+## 24 Oktober 2026 WIB - satu alur game live
+
+- Pemicu: pengguna meminta MVP yang benar-benar siap dimainkan dan tidak menginginkan simulasi.
+- Pilihan: hapus route `/prototype`, komponen permainan mock, tombol/tautan simulasi, serta ubah ajakan utama ke `/play`. Pisahkan artwork karakter/bom yang dipakai arena live agar tetap bisa digunakan tanpa kode permainan simulasi.
+- Dampak: satu-satunya alur game yang ditampilkan memakai Monad Testnet dan transaksi sungguhan. Build dan publish berhasil; uji dua wallet/receipt tetap harus dilakukan. Deployment kontrak ada, tetapi belum ada bukti ronde live.
+- Batas: UI, polling, dan animasi tetap berjalan di browser. Hanya aturan dan keadaan room/hasil yang berasal dari kontrak. Pemain masih perlu menyiapkan wallet testnet dan menyetujui tindakan wallet/funding.
+
 ## 24 Oktober 2026 WIB — mulai Prompt 9 atas permintaan terbaru
 
 - Pengguna meminta melanjutkan sampai MVP/submission; arahan sebelumnya berhenti di Prompt 8 kini digantikan.

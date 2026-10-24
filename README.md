@@ -2,7 +2,7 @@
 
 Game oper bom satu ronde untuk 2–4 pemain, dengan aturan di kontrak Monad Testnet. Repository: [salmanfidinillah/monadproject](https://github.com/salmanfidinillah/monadproject).
 
-**Status 24 Oktober 2026 WIB:** kontrak BomOper sudah dideploy dan receipt/bytecode/view diverifikasi di Monad Testnet. Alamat `0x18097A160477E49d52A5A637d51D6B831144aDDd`; source explorer belum diverifikasi. [Landing publik](https://bom-oper.salmansegaf52.workers.dev), [gameplay on-chain](https://bom-oper.salmansegaf52.workers.dev/play), [pratinjau simulasi](https://bom-oper.salmansegaf52.workers.dev/prototype), [setup wallet bermain](https://bom-oper.salmansegaf52.workers.dev/wallet), dan [helper deploy](https://bom-oper.salmansegaf52.workers.dev/setup) ada di Worker yang sama. Route `/play` membaca room dari kontrak dan menyediakan create/join/start/pass/settle dengan session EOA sementara. Build dan tes lokal lulus; deploy frontend versi `dc4678cf-4b64-4904-bd43-aa6bb4540acf` sukses dan URL `/`, `/play`, `/play?room=1`, serta bundle gameplay merespons HTTP 200. Ronde dua pemain, operan, dan hasil Finished masih belum dibuktikan. Detail: [STATUS.md](STATUS.md), [record deploy](deployments/10143.json), dan [TEST-RESULTS.md](TEST-RESULTS.md).
+**Status 24 Oktober 2026 WIB:** kontrak BomOper sudah dideploy di Monad Testnet dan receipt, bytecode, serta pembacaan view-nya diverifikasi. Alamat `0x18097A160477E49d52A5A637d51D6B831144aDDd`. Gameplay live berada di [URL publik](https://bom-oper.salmansegaf52.workers.dev/play); room, giliran, timer chain, dan hasil dibaca dari kontrak. Aplikasi tidak menyediakan mode simulasi. Ronde dua pemain dengan receipt operan dan finalisasi masih perlu dibuktikan sebelum MVP disebut teruji. Lihat [STATUS.md](STATUS.md), [record deployment](deployments/10143.json), dan [hasil pemeriksaan](TEST-RESULTS.md).
 
 Konfirmasi deploy memakai wallet pengguna. Helper menyimpan metadata publik transaksi untuk pemeriksaan setelah refresh, memblokir deploy ulang yang belum jelas, dan mencocokkan init/runtime bytecode dengan artifact lokal. [Ringkasan PDF workshop dan langkah deploy](docs/references/MONAD-BLITZ.md) menjelaskan langkah berikutnya; tidak memerlukan private key di chat atau berkas.
 
@@ -55,16 +55,27 @@ npm run build
 
 Setelah deploy dikonfirmasi pengguna, `npm run deployment:verify -- <hash-transaksi-deploy>` memverifikasi receipt, chain 10143, init/runtime bytecode, blok dan view melalui RPC publik. Record `deployments/10143.json` hanya ditulis bila seluruh pemeriksaan lulus; record kontrak saat ini tersedia di repo.
 
+## Cara mulai bermain
+
+1. Setiap pemain membuka `/wallet`, membaca persetujuan, lalu membuat wallet bermain tersendiri.
+2. Isi wallet itu dengan MON Testnet melalui wallet ekstensi atau transfer manual. Saldo ini membayar gas transaksi; setiap pemain perlu wallet dan saldo sendiri.
+3. Buka `/play`. Pemain pertama membuat room untuk 2â€“4 pemain dengan durasi 30 atau 60 detik, lalu membagikan tautan room.
+4. Pemain lain membuka tautan dan menekan **Gabung dengan wallet ini**. Setelah semua kursi terisi, anggota room dapat memulai ronde.
+5. Pemegang bom memilih pemain lain lalu melakukan oper biasa atau oper panas. Setiap aksi adalah transaksi nyata; perubahan resmi muncul setelah receipt dan pembacaan snapshot kontrak.
+6. Saat waktu chain habis, pemain yang masih punya sesi menekan **Finalisasi room**. Hasil muncul setelah kontrak berstatus `Finished`.
+
+Jangan membuat sesi wallet baru untuk menggantikan identitas di room aktif. Jika receipt belum diketahui, gunakan **Periksa receipt** sebelum mencoba aksi lagi.
+
 ## Aturan dan alur main
 
 - Buat room kapasitas 2–4 pemain dengan durasi 30 atau 60 detik; pembuat room memegang bom pertama. Gabung memakai ID atau tautan `/play?room=<ID>`.
 - Pemegang bom memilih pemain lain. Oper biasa meneruskan giliran; tiap pemain dapat memakai oper panas satu kali untuk memangkas 3 detik. Kontrak memeriksa pemegang, giliran, penerima, jatah panas, dan deadline.
 - Setelah deadline, pemegang terakhir dapat difinalisasi melalui transaksi settle; layar hasil hanya menganggap ronde selesai setelah snapshot kontrak berstatus `Finished`.
-- `/prototype` hanya simulasi. `/play` menggunakan Monad Testnet; animasi adalah tampilan browser, sedangkan state permainan resmi berasal dari kontrak.
+- `/play` adalah satu-satunya alur permainan. Animasi berjalan di browser; state resmi tetap berasal dari kontrak Monad Testnet.
 
 ## Wallet, gas, dan bukti
 
-Wallet bermain adalah EOA sementara yang dibuat setelah klik dan persetujuan pengguna. Private key berada di `sessionStorage` paling lama 10 menit; dananya testnet saja. Jangan gunakan wallet utama atau bagikan seed/private key. Isi wallet bermain dari ekstensi, lalu tunggu saldo/estimasi aksi dibaca ulang. Biaya gas aktual bergantung pada `gasLimit` dan fee RPC pada saat transaksi; saldo MON testnet diperlukan untuk setiap aksi. Jangan mengirim ulang transaksi yang hash/receipt-nya belum jelas; gunakan Periksa receipt.
+Setiap pemain membuat EOA sementara setelah persetujuan. Private key tersimpan di `sessionStorage` tab itu paling lama 10 menit. Transaksi game ditandatangani wallet bermain di browser; ekstensi hanya dipakai bila pemain memilih funding lewat wallet sumber. Isi wallet bermain dengan MON Testnet untuk gas; saldo dan perkiraan biaya diperiksa lagi sebelum aksi. Jangan gunakan wallet ini untuk aset bernilai atau membagikan seed/private key. Biaya aktual bergantung pada `gasLimit` dan fee RPC saat transaksi. Jangan mengirim ulang transaksi yang hash/receipt-nya belum jelas; gunakan **Periksa receipt**.
 
 Alamat kontrak: `0x18097A160477E49d52A5A637d51D6B831144aDDd` di chain 10143. [Receipt deploy](https://testnet.monadvision.com/tx/0x2ea47703572772f2f32ccb65421b921ebf728b62008fc41c0340d8deb879ed82). Receipt operan dan finalisasi belum tersedia. Untuk main: buka `/play`, pilih Mulai main, buat room, salin tautan/ID, lalu pemain lain membuka link dan memilih Gabung. Pastikan masing-masing memakai wallet berbeda, Monad Testnet, dan saldo testnet.
 

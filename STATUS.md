@@ -1,23 +1,32 @@
 # Status aktual BOM OPER
 
+## Ringkasan terbaru - 24 Oktober 2026 WIB
+
+- Permintaan terbaru: jadikan aplikasi alur MVP sungguhan tanpa mode permainan simulasi.
+- Implementasi live sudah ada pada `/play`: RPC Monad Testnet chain 10143, alamat kontrak dari record deployment, pembacaan snapshot, dan transaksi create/join/start/pass/settle memakai wallet bermain.
+- Mode `/prototype` dan tautan simulasinya dihapus. Komponen gambar karakter/bom tetap digunakan game live.
+- Kontrak tersedia di `0x18097A160477E49d52A5A637d51D6B831144aDDd`; receipt deploy sukses, runtime code ada, `nextRoomId() = 1` saat pemeriksaan terakhir. Belum ada transaksi gameplay yang tercatat.
+- Build, 23 tes kontrak, 15 tes recovery, Wrangler dry-run, dan deploy frontend sudah lulus. Worker versi `f8fd2923-5e65-44f7-9c1c-ecfc066fd6e4`; `/`, `/play`, `/play?room=1`, dan `/wallet` publik HTTP 200. Bundle mencantumkan game live dan tidak memuat chunk/rute simulasi.
+- Masih perlu uji dua wallet berbeda sampai status `Finished`. Belum boleh mengklaim MVP teruji sebelum receipt operan/finalisasi dan pembacaan hasil publik tersedia.
+- Jalur singkat: setiap pemain siapkan sesi di `/wallet`, isi MON Testnet untuk gas, buka `/play`; pemain pertama membuat room dan membagikan tautan, pemain kedua bergabung dengan wallet berbeda.
+
 ## Kondisi terbaru — 24 Oktober 2026 WIB
 
 Pengguna kini meminta kelanjutan sampai submission. Draft pitch Indonesia/Inggris dan checklist isian dibuat di `docs/SUBMISSION-DRAFT.md`. Belum ada ronde dengan dua wallet, receipt game, video/screenshot gameplay, form panitia, atau bukti penerimaan; proyek belum disubmit dan belum bisa disebut MVP teruji. Permintaan terbaru menggantikan catatan lama yang berhenti di Prompt 8.
 
-Prompt 5 dan implementasi layar Prompt 6 kini tersedia lokal di `/play`. Kontrak publik 10143 terverifikasi di `0x18097A160477E49d52A5A637d51D6B831144aDDd`; transaksi game belum pernah dikirim. Route membaca snapshot pada blok yang konsisten, dan UI hanya mengubah holder/hasil resmi setelah receipt dan baca ulang. Wallet sementara tetap per-session/tab, 10 menit, dan tidak boleh diganti selama room aktif/pending.
+Prompt 5 dan implementasi layar Prompt 6 tersedia di `/play`. Kontrak publik 10143 terverifikasi di `0x18097A160477E49d52A5A637d51D6B831144aDDd`; transaksi game belum pernah dikirim. Route membaca snapshot pada blok yang konsisten, dan UI hanya mengubah holder/hasil resmi setelah receipt dan baca ulang. Wallet sementara tetap per-session/tab, 10 menit, dan tidak boleh diganti selama room aktif/pending.
 
 Pemeriksaan lokal terbaru: `npm run build` lulus; `npm run contracts:test` 23 passing; `npm run deployment:test` 15 passing; Wrangler dry-run lulus; `npm run deployment:verify -- 0x2ea47703572772f2f32ccb65421b921ebf728b62008fc41c0340d8deb879ed82` memverifikasi ulang deployment publik. Tidak ada transaksi gameplay/receipt operan atau finalisasi.
 
-Prompt 8: frontend berhasil dideploy ke Worker `bom-oper`, version `dc4678cf-4b64-4904-bd43-aa6bb4540acf`. HTTP GET `/`, `/play`, `/play?room=1`, dan bundle `LiveGame-CdtcwdXg.js` memberi status 200. Ini membuktikan aset terpublikasi/SPA fallback, bukan ronde game.
+Prompt 8: frontend sebelumnya dideploy pada versi `dc4678cf-4b64-4904-bd43-aa6bb4540acf`. Pembaruan terbaru menghapus simulasi dan dipublikasikan ke Worker `bom-oper` versi `f8fd2923-5e65-44f7-9c1c-ecfc066fd6e4`. HTTP GET `/`, `/play`, `/play?room=1`, dan `/wallet` merespons 200. `/prototype` sekarang hanya mendapat fallback landing SPA, tanpa game simulasi. Ini bukti publikasi aset, bukan bukti ronde game.
 
-Masih terbuka: dua konteks/wallet berbeda sampai Finished; receipt operan dan finalisasi; kasus error Prompt 7; QA perangkat HP; bukti demo; tautan form resmi dan data tim yang diminta. Pemain perlu mengisi wallet bermain testnet dan melakukan aksi yang meminta konfirmasi wallet sendiri. Submission belum dilakukan.
+Masih terbuka: dua konteks/wallet berbeda sampai Finished; receipt operan dan finalisasi; kasus error Prompt 7; QA perangkat HP; bukti demo; tautan form resmi dan data tim yang diminta. Pemain perlu mendanai wallet bermain di Monad Testnet; persetujuan popup ekstensi diperlukan bila memakai funding wallet. Aksi game ditandatangani wallet bermain di browser. Submission belum dilakukan.
 
 ## Kelanjutan terbaru — 24 Oktober 2026 WIB
 
 - Kontrak Monad Testnet terverifikasi: chain ID 10143, alamat `0x18097A160477E49d52A5A637d51D6B831144aDDd`; catatan lengkap dan receipt di `deployments/10143.json`.
 - Figma terlihat melalui tab browser yang tersambung; frame Opening, Lobby, Arena desktop/mobile, dan Hasil sudah diperiksa. Tool design-context Figma tidak muncul pada sesi Codex, jadi tidak ada klaim bahwa MCP context/assets berhasil diambil.
-- `app/src/temporaryWallet.ts` kini menghitung hash dari raw tx yang ditandatangani dan menyimpan hash/nonce pending sebelum broadcast. Build lulus. Guard pengiriman ini masih belum dipanggil dari UI game; gameplay tetap simulasi lokal.
-- Tahap berikutnya: integrasikan pembacaan snapshot dan aksi room memakai wallet sesi, sambil mempertahankan pemulihan pending dan batas expiry. Prompt 5–8 masih terbuka; jangan lanjut Prompt 9.
+- Catatan pada bagian ini merekam kondisi sebelum integrasi commit `895436c`; sudah digantikan route live `/play` yang membaca snapshot dan mengirim aksi room memakai wallet sesi.
 
 ## Deployment kontrak terverifikasi — 24 Oktober 2026
 
@@ -26,7 +35,7 @@ Pengguna memberikan `10143.json` di folder Downloads. Hash transaksi diverifikas
 - Chain 10143; alamat `0x18097A160477E49d52A5A637d51D6B831144aDDd`; blok `73761560`.
 - Receipt sukses, transaksi deploy tanpa value, init bytecode cocok, alamat cocok dengan pengirim/nonce, runtime bytecode cocok, hash blok kanonis cocok, serta `TARGET_CHAIN_ID=10143` dan `nextRoomId=1` terbaca pada blok receipt.
 - Record tersimpan di `deployments/10143.json`; source explorer belum diverifikasi. `verified:false` pada record menunjukkan source explorer belum diverifikasi, bukan receipt gagal.
-- Build exporter membuat `app/src/contract/deploymentConfig.json` dari record dan menggagalkan build bila source revision/hash/compiler tidak cocok. Guard transaksi pemain sudah membaca alamat dari konfigurasi itu, tetapi belum ada alur gameplay yang memanggil guard tersebut.
+- Build exporter membuat `app/src/contract/deploymentConfig.json` dari record dan menggagalkan build bila source revision/hash/compiler tidak cocok. Route `/play` memakai alamat ini untuk transaksi permainan.
 - Build, 23 tes Hardhat, dan 15 tes pemulihan lulus setelah perubahan konfigurasi. Wallet browser, aksi game, dua pemain, dan ronde publik belum diuji.
 - MetaMask pernah menandai domain berbahaya; keberhasilan deploy tidak membuktikan warning sudah dihapus atau ditinjau resmi.
 
@@ -37,8 +46,7 @@ Working tree awal: perubahan belum terlacak `.agents/`, `BOM-OPER-Panduan-6-Jam.
 - Build produksi, 23 tes Hardhat, 15 tes pemulihan, dan Wrangler dry-run lulus pada pemeriksaan ini; detail ada di `TEST-RESULTS.md`.
 - Audit npm terbaru: 0 advisori dependency produksi; full dependency tree masih melaporkan 16 advisori pada tooling development (14 high, 2 moderate). Belum ada upgrade dependency karena fix aman/kompatibel belum diverifikasi.
 - Tidak ada transaksi dikirim, wallet/browser pengguna tidak diakses, dan tidak ada klaim kontrak testnet berhasil.
-- Kekurangan penghalang MVP tetap: peringatan reputasi MetaMask belum ditinjau resmi; deployment kontrak menunggu tindakan/hash pengguna; `/wallet` dan gameplay kontrak belum terintegrasi/diuji; tidak ada uji dua pemain, HP, atau ronde Finished publik. `/prototype` tetap simulasi.
-- Lanjut paling aman: pengguna menuntaskan peninjauan warning sesuai `docs/references/METAMASK-REVIEW.md`; sesudah aman, periksa receipt/hash yang sama atau ulangi hanya melalui langkah terkonfirmasi di `docs/DEPLOY-RECOVERY.md`. Setelah alamat/receipt diverifikasi, lanjutkan Prompt 5–8 secara berurutan. Prompt 9 tetap di luar lingkup.
+- Snapshot terdahulu pada bagian ini sudah digantikan. Penghalang yang masih berlaku: uji dua wallet, receipt game, QA HP/browser, serta status warning MetaMask yang belum diketahui.
 
 ## Riwayat insiden — pengiriman deploy dibatasi RPC
 
@@ -72,13 +80,13 @@ Arahan terbaru: lanjutkan panduan secara berurutan sampai Prompt 8 lalu berhenti
 
 ## Keadaan aktual
 
-**TAHAP 3 SELESAI; GERBANG DEPLOY TAHAP 4 SELESAI. TAHAP 5–8 MASIH BERJALAN.** Receipt kontrak publik terverifikasi. URL `/setup` dan `/prototype` ada, tetapi `/prototype` masih simulasi. Route `/wallet` belum diuji dengan dua pemain dan belum ada transaksi gameplay.
+**Kontrak dan alur live tersedia; penerimaan MVP multiplayer belum lulus.** `/play` memanggil kontrak di Monad Testnet dan menjadi satu-satunya alur permainan. Tidak ada route simulasi. Receipt deploy terverifikasi, tetapi belum ada room atau receipt operan/finalisasi.
 
 | Hal | Status/nilai aktual |
 |---|---|
-| Tahap terakhir selesai | Gerbang Tahap 4: receipt/code/view kontrak terverifikasi; Tahap 5–8 belum lulus |
-| Status tahap berjalan | Pratinjau `/prototype` dipublikasikan untuk review visual; semua room, timer, oper, dan hasil adalah contoh lokal. Tahap 5 belum diuji dengan dua pemain; Tahap 6 belum lulus |
-| Tahap berikutnya | Prompt 5: lanjutkan integrasi wallet pemain dan aksi menggunakan alamat terverifikasi; lalu Prompt 6–8. Plugin Figma/design context belum tersedia di sesi ini |
+| Tahap terakhir selesai | Implementasi dan publikasi alur live; build, tes lokal, dan dry-run lulus |
+| Status tahap berjalan | Uji acceptance dua wallet, transaksi room, receipt pass/settle, dan konsistensi hasil masih menunggu |
+| Tahap berikutnya | Jalankan ronde publik dengan dua alamat berbeda; catat hash/receipt, lalu QA refresh dan perangkat lain |
 | Repository GitHub tujuan | https://github.com/salmanfidinillah/monadproject |
 | Branch pembangunan | main; Git lokal diinisialisasi dan branch diperiksa |
 | Akun GitHub terhubung | salmanfidinillah; profil berhasil dibaca melalui plugin GitHub |
