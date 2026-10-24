@@ -2,21 +2,22 @@
 
 ## Keadaan aktual
 
-**PROMPT 0: DESAIN SIAP, CHECKPOINT GIT SEDANG DISELESAIKAN; GAME BELUM DIBANGUN.** Lima frame Figma editable dan anotasi dibuat serta diperiksa pada 24 Oktober 2026 WIB. Prompt Induk sudah selesai; kode game dan deployment belum dikerjakan.
+**PROMPT 0 SELESAI; GAME BELUM DIBANGUN.** Lima frame Figma editable dan anotasi dibuat serta diperiksa. Acuan desain berhasil di-push dan SHA lokal cocok dengan remote pada 24 Oktober 2026 pukul 09.41 WIB. Kode game dan deployment belum dikerjakan.
 
 | Hal | Status/nilai aktual |
 |---|---|
-| Tahap terakhir selesai | Prompt Induk: dokumen, fondasi Git, commit/push dan verifikasi SHA checkpoint fondasi |
-| Tahap berikutnya | Selesaikan commit/push acuan desain dan verifikasi remote; kemudian tunggu Prompt 1 |
+| Tahap terakhir selesai | Prompt 0: lima frame Figma editable, anotasi, token, preview, audit serta checkpoint GitHub terverifikasi |
+| Tahap berikutnya | Tunggu Prompt 1: scaffold React/Vite/TypeScript dan URL awal Cloudflare |
 | Repository GitHub tujuan | https://github.com/salmanfidinillah/monadproject |
 | Branch pembangunan | main; Git lokal diinisialisasi dan branch diperiksa |
 | Akun GitHub terhubung | salmanfidinillah; profil berhasil dibaca melalui plugin GitHub |
 | Remote origin / izin push | origin = https://github.com/salmanfidinillah/monadproject.git; Git push aktual berhasil |
 | Push fondasi/game | Fondasi BERHASIL di-push dan SHA diverifikasi; kode game belum ada |
 | Checkpoint fondasi terverifikasi | fddf27fcf121c0cc8cca9b26526f1c65137a1c25; lihat bukti di bawah. SHA commit pembaruan catatan ini dilaporkan di chat setelah commit/push |
+| Checkpoint desain terverifikasi | f826af720c7ca88232bdd859d09df05a525e3076; commit desain sudah di-push. SHA commit catatan sesudahnya dilaporkan di chat |
 | Kode frontend/kontrak | BELUM ADA dalam paket ini |
 | Desain Figma URL dan frame | https://www.figma.com/design/T8zhiDboW04KOC9sDJrlz6; frame 2:59–2:63, anotasi 2:64; detail docs/design/README.md |
-| Build / tes lokal | Pemeriksaan dokumen/Git lulus; build dan tes game BELUM DIJALANKAN |
+| Build / tes lokal | Audit Figma, preview/JSON, dokumen/Git lulus; build dan tes game BELUM DIJALANKAN |
 | URL publik game | BELUM ADA |
 | Chain target rencana | Monad Testnet 10143; verifikasi jaringan saat pelaksanaan |
 | Alamat kontrak aktual | BELUM ADA |
@@ -69,3 +70,10 @@ Pembaruan pada tahap yang sama: pengguna memberikan https://github.com/salmanfid
 - Audit lima frame utama: 139 teks, 32 instance, 30 vektor, 60 frame; tanpa image fill pengganti UI. Font dan bounds lulus setelah perbaikan clipping awal. Enam PNG dan dua JSON bukti disimpan di docs/design/.
 - Seluruh identitas, saldo, room, timer, riwayat dan hasil adalah mock berlabel. Tidak ada hash/receipt palsu; belum ada game atau transaksi. Aturan SPEC tetap.
 - Commit/push desain dilakukan setelah pemeriksaan lokal; SHA/status aktual dilaporkan setelah eksekusi. Prompt 1 belum dimulai.
+
+### 24 Oktober 2026, 09.41 WIB — checkpoint desain terverifikasi
+
+- Commit [f826af720c7ca88232bdd859d09df05a525e3076](https://github.com/salmanfidinillah/monadproject/commit/f826af720c7ca88232bdd859d09df05a525e3076), pesan design: add Figma screens and visual tokens, branch main, memuat acuan desain dan enam preview (14 berkas berubah).
+- git push origin main berhasil. git rev-parse HEAD sama dengan git ls-remote origin refs/heads/main: f826af720c7ca88232bdd859d09df05a525e3076. Working tree bersih setelah checkpoint tersebut.
+- Bukti hasil disimpan sesudah eksekusi dalam pembaruan catatan ini; SHA commit catatan dan verifikasi remote final dilaporkan di chat, bukan ditulis ke commit yang sama.
+- Tidak ada hambatan desain/API. Edit manual pengguna, prototype dan runtime frontend belum diuji; bukan syarat klaim transaksi pada tahap ini. Prompt 1 menunggu instruksi pengguna.

@@ -1,6 +1,6 @@
 # Rundown enam jam dan checklist
 
-Prompt Induk selesai dengan checkpoint GitHub terverifikasi. Desain Prompt 0 sudah dibuat dan diperiksa; checkpoint Git desain diselesaikan sebelum tahap 0 dicentang. Tahap 1–9 belum dijalankan; belum ada kode atau pengujian game. Centang hanya setelah kriteria tahap terbukti. Jadwal relatif; contoh waktu 12.00–18.00 bukan konfirmasi panitia. Checkpoint GitHub 1–2 menit termasuk dalam slot yang sama.
+Prompt Induk dan Prompt 0 selesai dengan checkpoint GitHub terverifikasi. Desain editable, token, anotasi dan preview tersedia. Tahap 1–9 belum dijalankan; belum ada kode atau pengujian game. Centang hanya setelah kriteria tahap terbukti. Jadwal relatif; contoh waktu 12.00–18.00 bukan konfirmasi panitia. Checkpoint GitHub 1–2 menit termasuk dalam slot yang sama.
 
 | Tahap | Slot | Syarat lulus |
 |---|---|---|
@@ -16,7 +16,7 @@ Prompt Induk selesai dengan checkpoint GitHub terverifikasi. Desain Prompt 0 sud
 | 9 | 05:30–06:00 | Presentasi, submission, dan bukti penerimaan |
 
 - [x] Induk: baca/periksa dokumen, Git/remote tujuan, commit/push fondasi; SHA checkpoint cocok dengan origin/main (bukti di STATUS.md).
-- [ ] 0: Figma Opening/Lobby/Arena/Hasil desktop + Arena mobile, anotasi opening mobile/loading, URL/frame/tokens/preview.
+- [x] 0: Figma Opening/Lobby/Arena/Hasil desktop + Arena mobile, anotasi opening mobile/loading, URL/frame/tokens/preview; push desain dan SHA remote terverifikasi.
 - [ ] 1: app scaffold, lockfile, .gitignore, .env.example, SPA hosting, URL awal.
 - [ ] 2: kontrak state machine/event/snapshot, expectedTurn, panas, deadline.
 - [ ] 3: tes aturan dan batas (lihat TEST-RESULTS.md); bukan sleep dunia nyata.
@@ -45,5 +45,5 @@ Pada tiap tahap: perbarui STATUS/tes, cek diff/rahasia, commit/push, verifikasi 
 - [x] Buat Opening/Lobby/Arena/Hasil desktop serta Arena mobile sebagai layer editable.
 - [x] Tambahkan anotasi responsif/loading/error/wallet/pending/gas/finalisasi/sesi.
 - [x] Periksa visual dan struktur; perbaiki clipping; simpan 6 PNG, token, ID dan audit di docs/design/.
-- [ ] Commit/push acuan desain dan verifikasi kesamaan SHA dengan origin/main.
-- [ ] Setelah checkpoint selesai, tunggu Prompt 1.
+- [x] Commit/push acuan desain; SHA f826af720c7ca88232bdd859d09df05a525e3076 cocok dengan origin/main, 24 Oktober 2026 pukul 09.41 WIB.
+- [x] Checkpoint selesai; menunggu Prompt 1.

@@ -1,6 +1,6 @@
 # Desain Figma BOM OPER — MVP
 
-Status 24 Oktober 2026 WIB: **lima frame utama editable dibuat dan diperiksa** melalui plugin Figma. Checkpoint GitHub dicatat di STATUS.md dan chat setelah push diverifikasi. Semua data permainan adalah contoh; belum ada transaksi atau game yang dapat dimainkan.
+Status 24 Oktober 2026 WIB: **Prompt 0 selesai; lima frame utama editable dibuat dan diperiksa** melalui plugin Figma. Commit desain f826af720c7ca88232bdd859d09df05a525e3076 berhasil di-push dan cocok dengan origin/main pada pukul 09.41 WIB. Bukti di STATUS.md; SHA commit catatan berikutnya dilaporkan di chat. Semua data permainan adalah contoh; belum ada transaksi atau game yang dapat dimainkan.
 
 ## File dan akses
 
