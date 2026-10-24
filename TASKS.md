@@ -1,6 +1,6 @@
 # Rundown enam jam dan checklist
 
-Prompt Induk selesai dengan checkpoint GitHub terverifikasi; belum ada kode atau pengujian game. Tahap 0–9 masih belum dijalankan. Centang hanya setelah kriteria tahap terbukti. Jadwal relatif; contoh waktu 12.00–18.00 bukan konfirmasi panitia. Checkpoint GitHub 1–2 menit termasuk dalam slot yang sama.
+Prompt Induk selesai dengan checkpoint GitHub terverifikasi. Desain Prompt 0 sudah dibuat dan diperiksa; checkpoint Git desain diselesaikan sebelum tahap 0 dicentang. Tahap 1–9 belum dijalankan; belum ada kode atau pengujian game. Centang hanya setelah kriteria tahap terbukti. Jadwal relatif; contoh waktu 12.00–18.00 bukan konfirmasi panitia. Checkpoint GitHub 1–2 menit termasuk dalam slot yang sama.
 
 | Tahap | Slot | Syarat lulus |
 |---|---|---|
@@ -38,3 +38,12 @@ Pada tiap tahap: perbarui STATUS/tes, cek diff/rahasia, commit/push, verifikasi 
 - [x] Tetapkan repository tujuan dari jawaban pengguna: salmanfidinillah/monadproject; metadata plugin melaporkan izin push, origin dipasang dan git ls-remote berhasil (remote awal kosong).
 - [x] Commit/push fondasi berhasil; SHA fddf27fcf121c0cc8cca9b26526f1c65137a1c25 sama dengan refs/heads/main di origin, diverifikasi 24 Oktober 2026 pukul 09.19 WIB.
 - [x] Fondasi lengkap; menunggu Prompt 0 untuk desain Figma.
+
+## Progres Prompt 0 — 24 Oktober 2026 WIB
+
+- [x] Periksa koneksi/plan, buat file BOM OPER — MVP yang sebenarnya di Figma.
+- [x] Buat Opening/Lobby/Arena/Hasil desktop serta Arena mobile sebagai layer editable.
+- [x] Tambahkan anotasi responsif/loading/error/wallet/pending/gas/finalisasi/sesi.
+- [x] Periksa visual dan struktur; perbaiki clipping; simpan 6 PNG, token, ID dan audit di docs/design/.
+- [ ] Commit/push acuan desain dan verifikasi kesamaan SHA dengan origin/main.
+- [ ] Setelah checkpoint selesai, tunggu Prompt 1.

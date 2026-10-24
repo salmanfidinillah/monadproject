@@ -2,12 +2,12 @@
 
 ## Keadaan aktual
 
-**PROMPT INDUK SELESAI; GAME BELUM DIBANGUN.** Dokumen fondasi diperiksa, Git lokal disiapkan, dan checkpoint fondasi berhasil di-push serta diverifikasi terhadap remote pada 24 Oktober 2026 pukul 09.19 WIB. Desain, kode game, dan deployment belum dikerjakan.
+**PROMPT 0: DESAIN SIAP, CHECKPOINT GIT SEDANG DISELESAIKAN; GAME BELUM DIBANGUN.** Lima frame Figma editable dan anotasi dibuat serta diperiksa pada 24 Oktober 2026 WIB. Prompt Induk sudah selesai; kode game dan deployment belum dikerjakan.
 
 | Hal | Status/nilai aktual |
 |---|---|
 | Tahap terakhir selesai | Prompt Induk: dokumen, fondasi Git, commit/push dan verifikasi SHA checkpoint fondasi |
-| Tahap berikutnya | Tunggu Prompt 0: desain Figma editable sesuai brief |
+| Tahap berikutnya | Selesaikan commit/push acuan desain dan verifikasi remote; kemudian tunggu Prompt 1 |
 | Repository GitHub tujuan | https://github.com/salmanfidinillah/monadproject |
 | Branch pembangunan | main; Git lokal diinisialisasi dan branch diperiksa |
 | Akun GitHub terhubung | salmanfidinillah; profil berhasil dibaca melalui plugin GitHub |
@@ -15,7 +15,7 @@
 | Push fondasi/game | Fondasi BERHASIL di-push dan SHA diverifikasi; kode game belum ada |
 | Checkpoint fondasi terverifikasi | fddf27fcf121c0cc8cca9b26526f1c65137a1c25; lihat bukti di bawah. SHA commit pembaruan catatan ini dilaporkan di chat setelah commit/push |
 | Kode frontend/kontrak | BELUM ADA dalam paket ini |
-| Desain Figma URL dan frame | BELUM ADA |
+| Desain Figma URL dan frame | https://www.figma.com/design/T8zhiDboW04KOC9sDJrlz6; frame 2:59–2:63, anotasi 2:64; detail docs/design/README.md |
 | Build / tes lokal | Pemeriksaan dokumen/Git lulus; build dan tes game BELUM DIJALANKAN |
 | URL publik game | BELUM ADA |
 | Chain target rencana | Monad Testnet 10143; verifikasi jaringan saat pelaksanaan |
@@ -59,3 +59,13 @@ Pembaruan pada tahap yang sama: pengguna memberikan https://github.com/salmanfid
 - git status --short --branch setelah push hanya menampilkan main...origin/main; working tree bersih pada checkpoint tersebut.
 - Catatan hasil ini ditulis sesudah bukti tersedia, dalam commit dokumentasi berikutnya. SHA commit yang memuat pembaruan ini dan verifikasi remote final dilaporkan di chat, bukan ditulis ke commit yang sama.
 - Tidak ada hambatan Prompt Induk yang tersisa. Berikutnya menunggu Prompt 0; belum membuat desain atau kode game.
+
+### 24 Oktober 2026 WIB — Prompt 0, desain Figma
+
+- Dibaca ulang SPEC, TASKS, STATUS, TEST-RESULTS, DECISIONS, brief desain dan bagian Prompt 0 pada BUILD-GUIDE. Git bersih pada main dengan origin proyek yang sama.
+- Satu plan student terdeteksi; file BOM OPER — MVP dibuat memakai plan itu. API create/read/write/screenshot berhasil meski seat dilaporkan View; tidak memilih plan lain atau mengubah akses akun.
+- Lima frame: Opening desktop 2:59, Lobby desktop 2:60, Arena desktop 2:61, Hasil desktop 2:62, Arena mobile 2:63. Anotasi 2:64 meliputi opening mobile, loading/error, wallet, pending, gas, giliran, finalisasi dan sesi.
+- Fondasi minimum: 36 variable, 7 text style, 4 komponen tombol dan 1 kartu pemain. Palet navy/oranye/biru/ungu; Space Grotesk dan Inter diverifikasi tersedia.
+- Audit lima frame utama: 139 teks, 32 instance, 30 vektor, 60 frame; tanpa image fill pengganti UI. Font dan bounds lulus setelah perbaikan clipping awal. Enam PNG dan dua JSON bukti disimpan di docs/design/.
+- Seluruh identitas, saldo, room, timer, riwayat dan hasil adalah mock berlabel. Tidak ada hash/receipt palsu; belum ada game atau transaksi. Aturan SPEC tetap.
+- Commit/push desain dilakukan setelah pemeriksaan lokal; SHA/status aktual dilaporkan setelah eksekusi. Prompt 1 belum dimulai.

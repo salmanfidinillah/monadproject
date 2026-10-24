@@ -56,3 +56,24 @@ Path yang berhasil diabaikan: .env, .env.local, app/.env.production, .dev.vars, 
 Path yang tetap dapat dilacak: .env.example, app/.env.example, package-lock.json, deployments/10143.json, docs/design/README.md. Ini hanya uji nama path; bukan bukti file tersebut sudah dibuat.
 
 Bukti hasil GitHub di atas merujuk commit fondasi yang sudah dibuat dan di-push sebelum catatan ini ditambahkan. Commit pembaruan dokumentasi serta pemeriksaan SHA final dilaporkan di chat setelah dijalankan. Tidak ada tes game, hasil testnet, atau deployment yang dinyatakan lulus.
+
+## Pelaksanaan Prompt 0 — 24 Oktober 2026 WIB
+
+Lingkungan: plugin Figma + PowerShell lokal, branch main. File T8zhiDboW04KOC9sDJrlz6, page 0:1. Bukti: docs/design/figma-audit.json, docs/design/tokens.json, enam PNG di docs/design/previews/. Semua contoh permainan adalah mock, bukan tes kontrak.
+
+| Pemeriksaan aktual | Hasil |
+|---|---|
+| whoami, create_new_file, create_session, pembacaan file/font/style/variable melalui use_figma | LULUS: satu plan student, file Design dibuat, file awal kosong, font dipilih dari daftar aktual |
+| rg --files -g '*.figma.*'; get_libraries; search_design_system button/input/background/body di Simple Design System | Tidak ada Code Connect; hasil library diperiksa. Fondasi lokal minimum dibuat sesuai brief |
+| Penulisan variable/style/komponen/frame melalui use_figma | LULUS: 36 variable, 7 text style, 5 komponen lokal, 5 frame utama dan satu anotasi |
+| get_screenshot dan tinjauan visual pertama | GAGAL awal: tinggi teks/auto-layout memotong dan menumpuk konten; belum dianggap selesai |
+| Perbaikan text HEIGHT/HUG, axis sizing, lebar teks pemain mobile, spacing dan tinggi anotasi/mobile; screenshot ulang | LULUS visual setelah perbaikan. Ikon bom vektor + teks holder ditambahkan; screenshot kedua arena diperiksa ulang |
+| Pembacaan hierarchy, node types, image fill, font family, bounds dan placeholder | LULUS: 5 frame utama, 261 descendant (139 TEXT, 32 INSTANCE, 30 VECTOR, 60 FRAME); anotasi 25 descendant; image fill kosong, fontProblems/boundsProblems kosong, placeholder false |
+| Audit variable/scope/alias/code syntax/component properties | LULUS: mode Default, alias semantic ke primitive, scope eksplisit, syntax WEB var(); Label/Nama/Alamat/Status tersedia |
+| Luminansi sRGB pada 8 pasangan palet yang digunakan | LULUS palet: white/navy 17,70; muted/raised 8,25; blue/raised 6,44; purple/raised 6,85; green/surface 10,51; red/surface 8,56; navy/orange 10,27; navy/yellow 14,68 |
+| get_screenshot → Invoke-WebRequest -OutFile → view_image | LULUS: 6 PNG diekspor dan ditinjau; URL sementara tidak disimpan ke repository |
+| Edit manual browser Figma, prototype interaktif, browser frontend, transaksi/testnet | BELUM DIUJI / BELUM ADA; tahap ini desain dan dokumentasi |
+
+Token visual tidak mengubah SPEC. Data room/saldo/hasil ditandai contoh; bukti explorer nonaktif sampai ada receipt nyata. Tes kontrak dan runtime aplikasi pada tabel awal tetap BELUM DIUJI.
+
+Pemeriksaan lokal setelah ekspor: ConvertFrom-Json untuk dua JSON, kecocokan inventory audit, dan System.Drawing.Image.FromFile untuk dimensi enam PNG lulus (desktop 1440 × 1000, mobile 390 × 1240, anotasi 1440 × 1050). Pemeriksaan inline pertama berhenti karena cara menghitung PSObject.Properties keliru; setelah memakai array count eksplisit, seluruh inventory lulus tanpa mengubah token/desain. Pemeriksaan ulang 10 Markdown, 22 tautan lokal dan code fence lulus; git diff --check bersih. Pemindaian pola kredensial, URL screenshot sementara dan session ID tidak menemukan kecocokan di berkas yang akan disimpan (pemeriksaan heuristik).
